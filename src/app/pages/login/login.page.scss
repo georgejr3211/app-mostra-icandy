@@ -1,0 +1,51 @@
+:host {
+  ion-content {
+    --background: url("../../../assets/images/bg.png");
+  }
+}
+
+form {
+  position: absolute;
+  bottom: 50px;
+}
+
+.input {
+  margin-top: 10px;
+  background: #ffffff;
+  border: 1px solid #766f74;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 5px;
+}
+
+.buttons {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-login {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 450;
+
+  --background: #533661;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.btn-cadastro {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 450;
+
+  --background: #B41661;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.forgot-password {
+  margin-top: 20px;
+  text-transform: uppercase;
+  color: #FFF;
+  font-weight: 500;
+  letter-spacing: 2px;
+  cursor: pointer;
+}

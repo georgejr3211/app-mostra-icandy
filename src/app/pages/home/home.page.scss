@@ -1,0 +1,57 @@
+ion-title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: #ffffff;
+}
+
+.btn-cart {
+  color: #fff;
+  font-size: 23px;
+  text-align: right;
+  align-self: center;
+  position: absolute;
+  right: 10px;
+}
+
+.title {
+  text-align: left;
+}
+
+ion-card {
+  padding: 0;
+}
+
+.card-img {
+  height: 130px;
+  width: 100px;
+  margin-right: 10px;
+}
+
+ion-card-header {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+}
+
+ion-card-title {
+  /* CUPCAKE */
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  /* identical to box height */
+  display: flex;
+  text-align: center;
+  letter-spacing: 0.1em;
+
+  color: #000000;
+}
