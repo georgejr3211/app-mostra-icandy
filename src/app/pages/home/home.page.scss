@@ -17,12 +17,14 @@ ion-title {
   font-size: 23px;
   text-align: right;
   align-self: center;
-  position: absolute;
-  right: 10px;
+  margin-right: 10px;
+  // position: absolute;
+  // right: 10px;
 }
 
 .title {
-  text-align: left;
+  margin: 0 auto;
+  text-align: center;
 }
 
 ion-card {
