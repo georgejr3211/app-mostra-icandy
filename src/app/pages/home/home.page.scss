@@ -45,8 +45,9 @@ ion-card {
 }
 
 .card-img {
-  height: 130px;
   width: 100px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   margin-right: 10px;
 }
 
@@ -56,39 +57,47 @@ ion-card-header {
   padding: 0;
 }
 
-ion-card-title {
-  /* CUPCAKE */
-
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
+.card-title {
+  margin-top: 5px;
+  font-size: 14px;
   line-height: 21px;
-  /* identical to box height */
-  display: flex;
-  text-align: center;
+  font-family: Roboto;
+  text-align: left;
   letter-spacing: 0.1em;
-
-  color: #000000;
+  text-transform: uppercase;
 }
 
-.rating {
-  /* 4.5 */
+.star {
+  font-size: 12px;
+  margin-left: 3px;
+}
 
-  position: absolute;
-  width: 39px;
-  height: 28px;
-  left: 272px;
-  top: 159px;
+.margin-5px {
+  margin-top: 5px;
+}
 
+.price {
+  /* R$ 2,50 */
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 28px;
-  display: flex;
-  align-items: center;
-  text-align: center;
   letter-spacing: 0.1em;
+  display: flex;
+  justify-content: flex-end;
+}
 
-  color: #000000;
+.btn-add-remove {
+  padding: 0;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+ion-grid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
