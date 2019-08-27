@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-row>
+      <h5 class="title">Avaliacao</h5>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-row style="padding-top: 15px;">
+    <ion-img class="imgLogo" src="assets/images/logo.png"></ion-img>
+  </ion-row>
+  <ion-row class="icandy">
+    ICANDY
+  </ion-row>
+
+  <ion-grid>
+    <ion-col>
+      <ion-row class="centralizado">
+        Parabéns!
+      </ion-row>
+      <ion-row class="centralizado">
+        Pedido finalizado com sucesso
+      </ion-row>
+    </ion-col>
+
+    <ion-grid>
+      <ion-row class="centralizado">
+        Avalie o nosso serviço
+      </ion-row>
+    </ion-grid>
+  </ion-grid>
+  <form [formGroup]="formCRUD">
+    <ion-rating class="centralizado" formControlName="rate" readonly="false" size="5"></ion-rating>
+  </form>
+
+
+  <ion-footer style="padding-top: 15px;">
+    <ion-toolbar color="primary">
+      <ion-button id="btn" expand="full">Enviar</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+
+</ion-content>
