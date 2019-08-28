@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-row>
+      <h5 class="title">Pagamento</h5>
+      <ion-icon name="cart" class="btn-cart"></ion-icon>
+    </ion-row>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Forma de Pagamento</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-select value="0" interface="action-sheet" okText="Confirmar" cancelText="Cancelar">
+        <ion-select-option value="0">Dinheiro</ion-select-option>
+        <ion-select-option value="1">Cartão</ion-select-option>
+      </ion-select>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>1x</ion-col>
+          <ion-col>Brigadeiro</ion-col>
+          <ion-col>R$ 15,00</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>1x</ion-col>
+          <ion-col>Brigadeiro</ion-col>
+          <ion-col>R$ 15,00</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>1x</ion-col>
+          <ion-col>Brigadeiro</ion-col>
+          <ion-col>R$ 15,00</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>1x</ion-col>
+          <ion-col>Brigadeiro</ion-col>
+          <ion-col>R$ 15,00</ion-col>
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Total</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-label>R$ 60,00</ion-label>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
