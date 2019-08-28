@@ -1,22 +1,22 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-item>
-      <ion-title id="titulo">Carrinho</ion-title>
-      <ion-icon name="cart"></ion-icon>
-    </ion-item>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-row>
+      <h5 class="title">Carrinho</h5>
+      <ion-icon name="cart" class="btn-cart"></ion-icon>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
   <ion-card>
-    <ion-item>
-      <ion-icon name="pin" slot="start"></ion-icon>
-      <ion-label class="center">Local de entrega</ion-label>
-    </ion-item>
 
     <ion-item>
-      <ion-select id="endEntrega" placeholder="Endereço" value=1>
+      <ion-icon name="pin" slot="start"></ion-icon>
+      <ion-select id="endEntrega" placeholder="Local de entrega">
         <ion-select-option value="1">Entrada dos estandes</ion-select-option>
         <ion-select-option value="2">Cantina</ion-select-option>
       </ion-select>
@@ -32,14 +32,14 @@
 
   <ion-card>
 
-    <ion-item>
-      <ion-label style="max-width: 30px;">1x</ion-label>
-      <ion-label style="max-width: 160px;">Brigadeiro</ion-label>
-      <ion-label>R$ 15,00</ion-label>
-      <ion-button>
-        <ion-icon class="center" name="remove" slot="end"></ion-icon>
-      </ion-button>
-    </ion-item>
+    <ion-row class="center">
+      <ion-col style="max-width: 30px;">1x</ion-col>
+      <ion-col style="max-width: 160px;">Brigadeiro</ion-col>
+      <ion-col>R$ 15,00</ion-col>
+      <ion-label>
+        <ion-icon class="icone" name="remove-circle" slot="end"></ion-icon>
+      </ion-label>
+    </ion-row>
 
     <ion-item>
       <ion-button class="center" fill="outline" expand="end">Adicionar mais produtos</ion-button>
@@ -68,6 +68,10 @@
     </ion-item>
   </ion-card>
 
-  <ion-button id="btnPagamento" expand="full">Pagamento</ion-button>
+  <ion-footer>
+      <ion-toolbar color="primary">
+        <ion-button id="btnPagamento" expand="full">Pagamento</ion-button>
+      </ion-toolbar>
+    </ion-footer>
 
 </ion-content>

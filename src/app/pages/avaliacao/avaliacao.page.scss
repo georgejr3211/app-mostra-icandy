@@ -1,0 +1,45 @@
+.title {
+  margin: 0 auto;
+  text-transform: uppercase;
+  font-weight: 500;
+  line-height: 30px;
+  font-size: 16px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  line-height: 40px;
+
+  color: #ffffff;
+}
+
+.imgLogo {
+  font-size: 200px;
+  margin: 0 auto;
+}
+
+.icandy {
+    padding-top: 10px;
+    justify-content: center;
+    color: #4f4156;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 48px;
+}
+
+.avaliacao {
+  margin: 0 auto;
+  font-size: 30px;
+}
+
+.centralizado {
+  display: flex;
+  justify-content: center;
+}
