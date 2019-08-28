@@ -10,14 +10,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-row style="padding-top: 15px;">
-    <ion-img class="imgLogo" src="assets/images/logo.png"></ion-img>
-  </ion-row>
-  <ion-row class="icandy">
-    ICANDY
-  </ion-row>
-
   <ion-grid>
+    <ion-row class="imgLogo">
+      <ion-img src="assets/images/logo.png"></ion-img>
+    </ion-row>
+    <ion-row class="icandy">
+      ICANDY
+    </ion-row>
+
     <ion-col>
       <ion-row class="centralizado">
         Parabéns!
@@ -38,10 +38,10 @@
   </form>
 
 
-  <ion-footer style="padding-top: 15px;">
-    <ion-toolbar color="primary">
+  <ion-grid style="padding-top: 15px;">
+    <ion-label color="primary">
       <ion-button id="btn" expand="full">Enviar</ion-button>
-    </ion-toolbar>
-  </ion-footer>
+    </ion-label>
+  </ion-grid>
 
 </ion-content>
