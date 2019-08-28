@@ -12,19 +12,19 @@
 
 <ion-content>
   <ion-searchbar animated></ion-searchbar>
-  <ion-card>
+  <ion-card *ngFor="let card of cardItem">
     <ion-card-header>
-      <ion-img class="card-img" src="assets/images/brigadeiro.png"></ion-img>
+      <ion-img class="card-img" [src]="card.foto_url"></ion-img>
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-card-title class="card-title">Brigadeiro</ion-card-title>
+            <ion-card-title class="card-title">{{ card.title }}</ion-card-title>
             <ion-row class="margin-5px">
-              <ion-card-subtitle>1,6 KG</ion-card-subtitle>
+              <ion-card-subtitle>{{ card.peso }}</ion-card-subtitle>
               <ion-col></ion-col>
             </ion-row>
             <ion-row class="margin-5px">
-              <ion-card-subtitle>ArtesNEW</ion-card-subtitle>
+              <ion-card-subtitle>{{ card.restaurante }}</ion-card-subtitle>
             </ion-row>
           </ion-col>
         </ion-row>
@@ -34,67 +34,7 @@
             <span style="line-height: 24px;">0</span>
             <ion-icon style="color: #45a845; font-size: 22px;" name="add-circle"></ion-icon>
           </ion-col>
-          <ion-col class="price"><small>R$</small> 2,50</ion-col>
-        </ion-row>
-      </ion-grid>
-
-    </ion-card-header>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-img class="card-img"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO0aniHScExMOoE0v8O6gwUIseQKA7bpU4scoro5UqLzDBITxgew">
-      </ion-img>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-card-title class="card-title">Brigadeiro</ion-card-title>
-            <ion-row class="margin-5px">
-              <ion-card-subtitle>1,6 KG</ion-card-subtitle>
-              <ion-col></ion-col>
-            </ion-row>
-            <ion-row class="margin-5px">
-              <ion-card-subtitle>ArtesNEW</ion-card-subtitle>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="btn-add-remove">
-            <ion-icon style="color: #ff4545; font-size: 22px;" name="remove-circle"></ion-icon>
-            <span style="line-height: 24px;">0</span>
-            <ion-icon style="color: #45a845; font-size: 22px;" name="add-circle"></ion-icon>
-          </ion-col>
-          <ion-col class="price"><small>R$</small> 2,50</ion-col>
-        </ion-row>
-      </ion-grid>
-
-    </ion-card-header>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-header>
-      <ion-img class="card-img" src="assets/images/donuts.png"></ion-img>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-card-title class="card-title">Brigadeiro</ion-card-title>
-            <ion-row class="margin-5px">
-              <ion-card-subtitle>1,6 KG</ion-card-subtitle>
-              <ion-col></ion-col>
-            </ion-row>
-            <ion-row class="margin-5px">
-              <ion-card-subtitle>ArtesNEW</ion-card-subtitle>
-            </ion-row>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col class="btn-add-remove">
-            <ion-icon style="color: #ff4545; font-size: 22px;" name="remove-circle"></ion-icon>
-            <span style="line-height: 24px;">0</span>
-            <ion-icon style="color: #45a845; font-size: 22px;" name="add-circle"></ion-icon>
-          </ion-col>
-          <ion-col class="price"><small>R$</small> 2,50</ion-col>
+          <ion-col class="price"><small>R$</small> {{ card.preco_produto }}</ion-col>
         </ion-row>
       </ion-grid>
 
@@ -102,9 +42,3 @@
   </ion-card>
 
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar color="primary">
-    <ion-title>FOOTER</ion-title>
-  </ion-toolbar>
-</ion-footer>
