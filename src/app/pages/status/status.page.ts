@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatusPage implements OnInit {
 
+  estrelas = [0, 0, 0, 0, 0];
+  
   constructor() { }
 
   ngOnInit() {
