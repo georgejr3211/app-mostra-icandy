@@ -1,5 +1,5 @@
 #nomeRestaurante {
-  min-width: 200px;
+  // min-width: 160px;
   padding-top: 35px;
   padding-left: 5px;
 }
@@ -25,6 +25,8 @@
 }
 
 .icone {
+  padding: 0;
+  padding-left: 28px;
   font-size: 25px;
 }
 
@@ -33,7 +35,9 @@
 }
 
 .timeLine {
-  margin: 20px;
+  padding: 0;
+  // margin-left: 20px;
+  margin-right: 30px;
 }
 
 .status {

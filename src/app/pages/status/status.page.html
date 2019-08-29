@@ -10,43 +10,55 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-label class="imgRestaurante">
-          <ion-icon name="restaurant"></ion-icon>
-        </ion-label>
-      </ion-col>
-      <ion-col id="nomeRestaurante">
-        <ion-row>
-          Artes new confeitaria
-        </ion-row>
-        <ion-row>
-          <ion-col *ngFor="let item of estrelas">
-            <ion-icon name="star"></ion-icon>
-          </ion-col>
-        </ion-row>
-      </ion-col>
+  <ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col style="max-width: 90px;">
+          <ion-label class="imgRestaurante">
+            <ion-icon name="restaurant"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col id="nomeRestaurante">
+          <ion-row>
+            Artes new confeitaria
+          </ion-row>
+          <ion-row>
+            <ion-col style="max-width: 25px;" *ngFor="let item of estrelas">
+              <ion-icon name="star"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+
+  <ion-grid style="padding-top: 25px;">
+    <ion-row style="justify-content: center;">
+      Situação do pedido
     </ion-row>
   </ion-grid>
-
-  <ion-row style="justify-content: center;">
-    Detalhes do pedido
-  </ion-row>
 
   <ion-grid class="timeLine">
     <ion-col>
       <ion-row>
         <ion-col class="icone">
-          <ion-icon style="color: green" name="arrow-dropdown-circle"></ion-icon>
+          <ion-icon style="color: grey" name="arrow-dropdown-circle"></ion-icon>
         </ion-col>
         <ion-col class="status">
-          Pedido Confirmado
+          Aguardando restaurante
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col class="icone">
-          <ion-icon style="color: red" name="arrow-dropdown-circle"></ion-icon>
+          <ion-icon style="color: grey" name="arrow-dropdown-circle"></ion-icon>
+        </ion-col>
+        <ion-col class="status">
+          Confirmado
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="icone">
+          <ion-icon style="color: green" name="arrow-dropdown-circle"></ion-icon>
         </ion-col>
         <ion-col class="status">
           Em preparo
@@ -54,7 +66,7 @@
       </ion-row>
       <ion-row>
         <ion-col class="icone">
-          <ion-icon style="color: red" name="arrow-dropdown-circle"></ion-icon>
+          <ion-icon style="color: grey" name="arrow-dropdown-circle"></ion-icon>
         </ion-col>
         <ion-col class="status">
           Pronto
@@ -62,10 +74,18 @@
       </ion-row>
       <ion-row>
         <ion-col class="icone">
-          <ion-icon style="color: red" name="arrow-dropdown-circle"></ion-icon>
+          <ion-icon style="color: grey" name="arrow-dropdown-circle"></ion-icon>
         </ion-col>
         <ion-col class="status">
           Saiu para entrega
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="icone">
+          <ion-icon style="color: grey" name="arrow-dropdown-circle"></ion-icon>
+        </ion-col>
+        <ion-col class="status">
+          Finalizado
         </ion-col>
       </ion-row>
     </ion-col>
