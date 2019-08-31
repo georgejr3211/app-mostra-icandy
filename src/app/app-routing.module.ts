@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'cadastro', loadChildren: './pages/cadastro/cadastro.module#CadastroPageModule' },
   { path: 'carrinho', loadChildren: './pages/carrinho/carrinho.module#CarrinhoPageModule' },
   { path: 'avaliacao', loadChildren: './pages/avaliacao/avaliacao.module#AvaliacaoPageModule' },
-  { path: 'status', loadChildren: './pages/status/status.module#StatusPageModule' }
+  { path: 'status', loadChildren: './pages/status/status.module#StatusPageModule' },
+  { path: 'perfil', loadChildren: './pages/perfil/perfil.module#PerfilPageModule' }
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tabs',
@@ -7,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private menuCtrl: MenuController) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  openSideMenu() {
+    this.menuCtrl.open();
+    console.log(this.menuCtrl);
+  }
 
 }
