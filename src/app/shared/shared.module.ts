@@ -4,15 +4,16 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { IonicModule } from '@ionic/angular';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 
 @NgModule({
-  declarations: [TabsComponent],
+  declarations: [TabsComponent, ToolbarComponent],
   imports: [
     CommonModule,
     IonicModule,
     HttpClientModule,
     ReactiveFormsModule
   ],
-  exports: [TabsComponent, ReactiveFormsModule]
+  exports: [TabsComponent, ToolbarComponent, ReactiveFormsModule]
 })
 export class SharedModule { }
