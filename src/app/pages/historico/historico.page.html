@@ -1,9 +1,74 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>historico</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-row>
+      <h5 class="title">HISTÓRICO DE PEDIDOS</h5>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-item style="padding-top: 5px;">
+    <ion-grid>
+      <ion-row>
+        <ion-col style="max-width: 50px; padding: 0;">
+          <ion-label class="imgRestaurante">
+            <ion-icon style="padding-top: 10px;" name="restaurant"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col id="nomeRestaurante">
+          <ion-row>
+            Artes new confeitaria
+          </ion-row>
+          <ion-row>
+            Pedido Nº. 2
+          </ion-row>
+          <ion-row>
+            30/08/2019
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Pedido Recebido
+        </ion-col>
+        <ion-col style="text-align: right; max-width: 90px">
+          R$ 10,00
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item style="padding-top: 5px;">
+    <ion-grid>
+      <ion-row>
+        <ion-col style="max-width: 50px; padding: 0;">
+          <ion-label class="imgRestaurante">
+            <ion-icon style="padding-top: 10px;" name="restaurant"></ion-icon>
+          </ion-label>
+        </ion-col>
+        <ion-col id="nomeRestaurante">
+          <ion-row>
+            Artes new confeitaria
+          </ion-row>
+          <ion-row>
+            Pedido Nº. 1
+          </ion-row>
+          <ion-row>
+            29/08/2019
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Pedido Recebido
+        </ion-col>
+        <ion-col style="text-align: right; max-width: 90px">
+          R$ 230,00
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
 
 </ion-content>
