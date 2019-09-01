@@ -7,14 +7,14 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
+export class ProdutosService {
   private apiURL: string = environment.api;
 
   constructor(private http: HttpClient) { }
 
-  usuarioLogado() {
-    const url = `${this.apiURL}/v1/usuarios/logged-user`;
-    return this.http.get(url);
+  index() {
+    const url = `${this.apiURL}/v1/produtos`;
+    return this.http.get(url).pipe((data: any) => data.value);
   }
 }
 

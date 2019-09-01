@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuariosService } from 'src/app/providers/services/usuarios.service';
+import { Observable } from 'rxjs';
+import { ProdutosService } from 'src/app/providers/services/produtos.service';
 
 @Component({
   selector: 'app-home',
@@ -34,9 +37,18 @@ export class HomePage implements OnInit {
     }
   ]
 
-  constructor() { }
+  usuario$: Observable<any>;
+  produtos$: Observable<any>;
+
+  constructor(
+    private userService: UsuariosService,
+    private produtosService: ProdutosService
+  ) { }
 
   ngOnInit() {
+    this.usuario$ = this.userService.usuarioLogado();
+    this.produtos$ = this.produtosService.index();
+    this.produtos$.subscribe(data => console.log('data', data));
   }
 
 }
