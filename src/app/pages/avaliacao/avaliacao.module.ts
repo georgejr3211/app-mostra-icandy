@@ -7,6 +7,7 @@ import { IonicRatingModule } from 'ionic-rating';
 import { IonicModule } from '@ionic/angular';
 
 import { AvaliacaoPage } from './avaliacao.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    IonicRatingModule
+    IonicRatingModule,
+    SharedModule
   ],
   declarations: [AvaliacaoPage]
 })
