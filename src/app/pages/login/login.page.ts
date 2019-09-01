@@ -3,6 +3,7 @@ import { AuthService } from '../../providers/services/auth.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginPage implements OnInit {
 
   formCRUD: FormGroup;
 
-  constructor(private authService: AuthService, private usuariosService: UsuariosService) {
+  constructor(private authService: AuthService, private usuariosService: UsuariosService, private router: Router) {
     this.formCRUD = new FormGroup({
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required)
@@ -29,11 +30,11 @@ export class LoginPage implements OnInit {
     const email = this.formCRUD.get('email').value;
     const password = this.formCRUD.get('password').value;
     this.authService.auth(email, password).subscribe(token => {
-      console.log('token', token);
-      localStorage.setItem('auth/token', token);
+      if (token) {
+        localStorage.setItem('auth/token', token);
+        this.router.navigate(['/home']);
+      }
     });
-
-    this.usuariosService.index().subscribe(data => console.log('data', data));
   }
 
 }
