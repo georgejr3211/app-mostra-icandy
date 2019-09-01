@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
 
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'historico', pathMatch: 'full' },
 
   {
     path: 'home',
@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'carrinho', loadChildren: './pages/carrinho/carrinho.module#CarrinhoPageModule' },
   { path: 'avaliacao', loadChildren: './pages/avaliacao/avaliacao.module#AvaliacaoPageModule' },
   { path: 'status', loadChildren: './pages/status/status.module#StatusPageModule' },
+  { path: 'historico', loadChildren: './pages/historico/historico.module#HistoricoPageModule' },
   { path: 'perfil', loadChildren: './pages/perfil/perfil.module#PerfilPageModule' }
 ];
 
