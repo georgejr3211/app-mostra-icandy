@@ -14,7 +14,7 @@ export class ProdutosService {
 
   index() {
     const url = `${this.apiURL}/v1/produtos`;
-    return this.http.get(url).pipe((data: any) => data.value);
+    return this.http.get(url).pipe(map((data: any) => data.value));
   }
 }
 
