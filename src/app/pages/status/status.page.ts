@@ -12,10 +12,10 @@ import { RestaurantesService } from 'src/app/providers/services/restaurantes.ser
   styleUrls: ['./status.page.scss'],
 })
 export class StatusPage implements OnInit,AfterViewInit {
-
+  imageLogo = '/assets/images/confeitaria-logo.png';
   formCRUD: FormGroup;
   auth$: Observable<any>;
-  registros$: Observable<any>;
+  restaurantes$: Observable<any>;
   
   constructor(
     private authService : AuthService, 
@@ -33,15 +33,11 @@ export class StatusPage implements OnInit,AfterViewInit {
    }
 
    ngOnInit() {
-     this.pedidosService.index();
-    this.auth$ = this.authService.auth('georgefeitosajr12@gmail.com', 'georgejr');
-    this.registros$.subscribe((data) => {
-      console.log('registro', data);
-    })
   }
-
+  
   ngAfterViewInit(){
-    this.restaurantesService.index();
+    this.restaurantes$ = this.restaurantesService.index();
+    this.pedidosService.index();
 
   }
 

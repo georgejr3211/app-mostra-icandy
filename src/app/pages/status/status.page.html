@@ -4,20 +4,20 @@
 
 <ion-content>
     <form [formGroup]="formCRUD">
-  <ion-item>
+  <ion-item  *ngFor="let restaurante of restaurantes$ | async"  >
     <ion-grid>
       <ion-row>
         <ion-col style="max-width: 90px;">
           <ion-label class="imgRestaurante">
-            <ion-icon name="restaurant"></ion-icon>
+              <img class="card-img" [src]="imageLogo" />
           </ion-label>
         </ion-col>
         <ion-col id="nomeRestaurante">
           <ion-row>
-            Artes new confeitaria
+            {{ restaurante.nome }}
           </ion-row>
           <ion-row>
-            <ion-col style="max-width: 25px;" *ngFor="let item of estrelas">
+            <ion-col style="max-width: 25px;" *ngFor="let item of ">
               <ion-icon name="star"></ion-icon>
             </ion-col>
           </ion-row>

@@ -10,8 +10,6 @@ import { Observable } from 'rxjs';
 export class RestaurantesService {
   private apiURL: string = environment.api;
 
-  registros$: Observable<any>;
-
   constructor(private http: HttpClient) { }
 
   index() {
