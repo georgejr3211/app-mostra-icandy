@@ -38,7 +38,7 @@
             <ion-icon style="color: #45a845; font-size: 22px;" (click)="onChangeValor('add', card)"
               name="add-circle"></ion-icon>
           </ion-col>
-          <ion-col class="price"><small>R$</small> {{ card?.preco }}</ion-col>
+          <ion-col class="price"><small>R$</small> {{ totalProduto(card?.preco, card?.id) }} </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-content>

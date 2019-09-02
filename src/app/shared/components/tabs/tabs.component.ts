@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { CarrinhoCompraService } from 'src/app/providers/services/carrinho-compra.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,14 +9,15 @@ import { MenuController } from '@ionic/angular';
   styleUrls: ['./tabs.component.scss'],
 })
 export class TabsComponent implements OnInit {
+  totalItensCarrinho$: Observable<any>;
+  constructor(private menuCtrl: MenuController, private carrinhoCompra: CarrinhoCompraService) { }
 
-  constructor(private menuCtrl: MenuController) { }
-
-  ngOnInit() { }
+  ngOnInit() {
+    this.totalItensCarrinho$ = this.carrinhoCompra.carrinho$;
+  }
 
   openSideMenu() {
     this.menuCtrl.open();
-    console.log(this.menuCtrl);
   }
 
 }
