@@ -5,33 +5,43 @@
 <ion-content>
   <ion-searchbar animated></ion-searchbar>
 
-  <ion-card *ngFor="let card of cardItem">
+  <ion-card *ngFor="let card of (produtos$ | async)">
     <ion-card-header>
-      <ion-img class="card-img" [src]="card.foto_url"></ion-img>
+      <img class="card-img" [src]="images + card?.foto" />
+    </ion-card-header>
+    <ion-card-content>
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-card-title class="card-title">{{ card.title }}</ion-card-title>
-            <ion-row class="margin-5px">
-              <ion-card-subtitle>{{ card.peso }}</ion-card-subtitle>
-              <ion-col></ion-col>
+            <ion-row>
+              <ion-card-title class="card-title">{{ card?.nome }}</ion-card-title>
             </ion-row>
             <ion-row class="margin-5px">
-              <ion-card-subtitle>{{ card.restaurante }}</ion-card-subtitle>
+
+              <ion-card-subtitle>
+                <ion-note>Categoria: </ion-note>
+                {{ card?.categoria?.nome }}
+              </ion-card-subtitle>
+            </ion-row>
+            <ion-row class="margin-5px">
+              <ion-card-subtitle>
+                <ion-note>Restaurante: </ion-note>
+                {{ card?.restaurante?.nome }}
+              </ion-card-subtitle>
             </ion-row>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="btn-add-remove">
-            <ion-icon style="color: #ff4545; font-size: 22px;" name="remove-circle"></ion-icon>
-            <span style="line-height: 24px;">0</span>
-            <ion-icon style="color: #45a845; font-size: 22px;" name="add-circle"></ion-icon>
+            <ion-icon style="color: #ff4545; font-size: 22px;" (click)="onChangeValor('remove', card)" name="remove-circle"></ion-icon>
+            <span style="line-height: 24px;">{{ countQtdItemCarrinho(card.id) }}</span>
+            <ion-icon style="color: #45a845; font-size: 22px;" (click)="onChangeValor('add', card)"
+              name="add-circle"></ion-icon>
           </ion-col>
-          <ion-col class="price"><small>R$</small> {{ card.preco_produto }}</ion-col>
+          <ion-col class="price"><small>R$</small> {{ card?.preco }}</ion-col>
         </ion-row>
       </ion-grid>
-
-    </ion-card-header>
+    </ion-card-content>
   </ion-card>
 
 </ion-content>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 import { Observable } from 'rxjs';
 import { ProdutosService } from 'src/app/providers/services/produtos.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -10,35 +11,11 @@ import { ProdutosService } from 'src/app/providers/services/produtos.service';
 })
 export class HomePage implements OnInit {
 
-  cardItem = [
-    {
-      id: 1,
-      title: 'Brigadeiro',
-      peso: '500g',
-      foto_url: 'assets/images/brigadeiro.png',
-      restaurante: 'ArtesNeW',
-      preco_produto: 2.75
-    },
-    {
-      id: 2,
-      title: 'Cupcacke',
-      peso: '200g',
-      foto_url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO0aniHScExMOoE0v8O6gwUIseQKA7bpU4scoro5UqLzDBITxgew',
-      restaurante: 'ArtesNeW',
-      preco_produto: 4.25
-    },
-    {
-      id: 3,
-      title: 'Donuts',
-      peso: '500g',
-      foto_url: 'assets/images/donuts.png',
-      restaurante: 'ArtesNeW',
-      preco_produto: 3.52
-    }
-  ]
-
+  images = environment.api + '/assets/images/';
   usuario$: Observable<any>;
   produtos$: Observable<any>;
+  
+  produtoCarrinho = [];
 
   constructor(
     private userService: UsuariosService,
@@ -48,7 +25,21 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.usuario$ = this.userService.usuarioLogado();
     this.produtos$ = this.produtosService.index();
-    this.produtos$.subscribe(data => console.log('data', data));
+  }
+
+  onChangeValor(type, product) {
+    switch (type) {
+      case 'add':
+        this.produtoCarrinho.push(product);
+        break;
+      case 'remove':
+        this.produtoCarrinho = this.produtoCarrinho.filter(item => item.id !== product.id);
+        break;
+    }
+  }
+
+  countQtdItemCarrinho(idProduto) {
+    console.log(idProduto);
   }
 
 }
