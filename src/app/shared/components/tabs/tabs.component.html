@@ -10,7 +10,7 @@
 
     <ion-tab-button tab="carrinho">
       <ion-icon name="cart"></ion-icon>
-      <ion-badge>{{(totalItensCarrinho$ | async)}}</ion-badge>
+      <ion-badge>{{(totalItensCarrinho$ | async)?.length}}</ion-badge>
     </ion-tab-button>
 
     <ion-tab-button tab="perfil">

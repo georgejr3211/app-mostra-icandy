@@ -2,6 +2,7 @@ import { AuthService } from './../../providers/services/auth.service';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from 'rxjs/internal/Observable';
+import { CarrinhoCompraService } from '../../providers/services/carrinho-compra.service';
 
 @Component({
   selector: "app-carrinho",
@@ -10,10 +11,11 @@ import { Observable } from 'rxjs/internal/Observable';
 })
 export class CarrinhoPage implements OnInit {
 
-  auth$: Observable<string>;;
+  auth$: Observable<string>;
   formCRUD: FormGroup;
+  produtoCarrinho$: Observable<any[]>;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private carrinhoCompraService: CarrinhoCompraService) {
     this.formCRUD = new FormGroup(
       {
         id: new FormControl(null, {}),
@@ -29,6 +31,6 @@ export class CarrinhoPage implements OnInit {
   }
 
   ngOnInit() {
-    this.auth$ = this.authService.auth('georgefeitosajr12@gmail.com', 'georgejr');
+    this.produtoCarrinho$ = this.carrinhoCompraService.getProdutosCarrinho();
   }
 }

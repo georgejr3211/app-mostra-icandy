@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarrinhoCompraService {
 
-  carrinho$: Observable<any[]>;
+  private subject = new Subject<any>();
 
   constructor() { }
 
-  setCarrinho(carrinho) {
-    this.carrinho$ = of(carrinho);
+  addProdutoCarrinho(produtoCarrinho) {
+    this.subject.next(produtoCarrinho);
   }
+
+  getProdutosCarrinho() {
+    return this.subject.asObservable();
+  }
+
+
 }

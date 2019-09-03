@@ -13,7 +13,7 @@ export class TabsComponent implements OnInit {
   constructor(private menuCtrl: MenuController, private carrinhoCompra: CarrinhoCompraService) { }
 
   ngOnInit() {
-    this.totalItensCarrinho$ = this.carrinhoCompra.carrinho$;
+    this.totalItensCarrinho$ = this.carrinhoCompra.getProdutosCarrinho();
   }
 
   openSideMenu() {

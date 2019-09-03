@@ -41,7 +41,8 @@ export class HomePage implements OnInit {
         break;
     }
 
-    this.carrinhoCompra.setCarrinho(this.produtoCarrinho.length);
+    // this.carrinhoCompra.setCarrinho(this.produtoCarrinho.length);
+    this.carrinhoCompra.addProdutoCarrinho(this.produtoCarrinho);
   }
 
   countQtdItemCarrinho(idProduto) {
