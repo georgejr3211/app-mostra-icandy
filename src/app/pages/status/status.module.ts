@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-
+import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
+import { IonicRatingModule } from 'ionic4-rating';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 import { StatusPage } from './status.page';
-import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
@@ -21,7 +21,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    IonicRatingModule
   ],
   declarations: [StatusPage]
 })
