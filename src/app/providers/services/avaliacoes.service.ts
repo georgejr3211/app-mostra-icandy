@@ -7,13 +7,13 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class StatusService {
+export class AvaliacoesService {
   private apiURL: string = environment.api;
 
   constructor(private http: HttpClient) { }
 
   index() {
-    const url = `${this.apiURL}/v1/status-pedidos`;
+    const url = `${this.apiURL}/v1/avaliacoes`;
     return this.http.get(url).pipe(map((data: any) => data.value));
   }
 }

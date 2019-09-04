@@ -1,10 +1,12 @@
-import { PedidosService } from './../../providers/services/pedidos.service';
-import { AuthService } from './../../providers/services/auth.service';
-import { FormControl, Validators } from '@angular/forms';
-import { FormGroup } from '@angular/forms';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { RestaurantesService } from 'src/app/providers/services/restaurantes.service';
+
+import { AuthService } from './../../providers/services/auth.service';
+import { AvaliacoesService } from './../../providers/services/avaliacoes.service';
+import { PedidosService } from './../../providers/services/pedidos.service';
+import { StatusService } from './../../providers/services/status.service';
 
 @Component({
   selector: 'app-status',
@@ -16,11 +18,15 @@ export class StatusPage implements OnInit,AfterViewInit {
   formCRUD: FormGroup;
   auth$: Observable<any>;
   restaurantes$: Observable<any>;
+  avaliacoes$: Observable<any>;
+  status$: Observable<any>;
   
   constructor(
     private authService : AuthService, 
     private pedidosService: PedidosService,
-    private restaurantesService: RestaurantesService) {
+    private restaurantesService: RestaurantesService,
+    private avaliacoesService: AvaliacoesService,
+    private statusService: StatusService) {
     this.formCRUD = new FormGroup({
       id: new FormControl(null, Validators.required),
       formas_pagamento_id: new FormControl(null, Validators.required),
@@ -36,9 +42,11 @@ export class StatusPage implements OnInit,AfterViewInit {
   }
   
   ngAfterViewInit(){
-    this.restaurantes$ = this.restaurantesService.index();
     this.pedidosService.index();
-
+    this.avaliacoes$ = this.avaliacoesService.index();
+    this.restaurantes$ = this.restaurantesService.index();
+    this.status$ = this.statusService.index();
+    this.status$.subscribe(data => console.log(data));
   }
 
 }
