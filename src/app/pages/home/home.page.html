@@ -4,7 +4,6 @@
 
 <ion-content>
   <ion-searchbar animated></ion-searchbar>
-
   <ion-card *ngFor="let card of (produtos$ | async)">
     <ion-card-header>
       <img class="card-img" [src]="images + card?.foto" />
@@ -12,6 +11,7 @@
     <ion-card-content>
       <ion-grid>
         <ion-row>
+
           <ion-col>
             <ion-row>
               <ion-card-title class="card-title">{{ card?.nome }}</ion-card-title>
@@ -33,10 +33,11 @@
         </ion-row>
         <ion-row>
           <ion-col class="btn-add-remove">
-            <ion-icon style="color: #ff4545; font-size: 22px;" (click)="onChangeValor('remove', card)" name="remove-circle"></ion-icon>
-            <span style="line-height: 24px;">{{ countQtdItemCarrinho(card.id) }}</span>
-            <ion-icon style="color: #45a845; font-size: 22px;" (click)="onChangeValor('add', card)"
-              name="add-circle"></ion-icon>
+            <ion-icon style="color: #ff4545; font-size: 22px;" (click)="onChangeValor('remove', card)"
+              name="remove-circle"></ion-icon>
+            <span style="line-height: 24px;">{{ countQtdItemCarrinho(card.id)?.qtd || 0 }}</span>
+            <ion-icon style="color: #45a845; font-size: 22px;" (click)="onChangeValor('add', card)" name="add-circle">
+            </ion-icon>
           </ion-col>
           <ion-col class="price"><small>R$</small> {{ totalProduto(card?.preco, card?.id) }} </ion-col>
         </ion-row>

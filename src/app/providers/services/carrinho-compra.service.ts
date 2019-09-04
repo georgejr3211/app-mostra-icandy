@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarrinhoCompraService {
 
-  private subject = new Subject<any>();
+  private subject = new BehaviorSubject<any[]>(null);
 
-  constructor() { }
+  constructor() {
+  }
 
   addProdutoCarrinho(produtoCarrinho) {
     this.subject.next(produtoCarrinho);
   }
 
   getProdutosCarrinho() {
-    return this.subject.asObservable();
+    return this.subject;
   }
 
 

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit } from "@angular/core";
 import { Observable } from 'rxjs/internal/Observable';
 import { CarrinhoCompraService } from '../../providers/services/carrinho-compra.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: "app-carrinho",
@@ -28,9 +29,24 @@ export class CarrinhoPage implements OnInit {
       },
       { updateOn: "change" }
     );
+
+    this.onRefresh();
   }
 
   ngOnInit() {
-    this.produtoCarrinho$ = this.carrinhoCompraService.getProdutosCarrinho();
+
+  }
+
+  onRefresh() {
+    this.produtoCarrinho$ = this.carrinhoCompraService.getProdutosCarrinho()
+      .pipe(
+        map((data: any) => {
+          if (!data) {
+            return;
+          }
+          return data.carrinho;
+        })
+      );
+
   }
 }

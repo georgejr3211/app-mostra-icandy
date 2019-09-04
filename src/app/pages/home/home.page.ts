@@ -16,13 +16,13 @@ export class HomePage implements OnInit {
   images = environment.api + '/assets/images/';
   usuario$: Observable<any>;
   produtos$: Observable<any>;
-
+  teste$: Observable<any>;
   produtoCarrinho = [];
 
   constructor(
     private userService: UsuariosService,
     private produtosService: ProdutosService,
-    private carrinhoCompra: CarrinhoCompraService
+    private carrinhoCompraService: CarrinhoCompraService
   ) { }
 
   ngOnInit() {
@@ -30,35 +30,44 @@ export class HomePage implements OnInit {
     this.produtos$ = this.produtosService.index();
   }
 
-  onChangeValor(type, product) {
-    switch (type) {
+  onChangeValor(tipo, produto) {
+    const index = this.produtoCarrinho.findIndex(item => item.id === produto.id);
+    let qtd = 0;
+    switch (tipo) {
       case 'add':
-        this.produtoCarrinho.push(product);
+        if (index > -1) {
+          qtd = this.produtoCarrinho[index].qtd + 1;
+          this.produtoCarrinho[index] = { ...produto, qtd }
+        } else {
+          this.produtoCarrinho.push({ ...produto, qtd: 1 });
+        }
         break;
       case 'remove':
-        const index = this.produtoCarrinho.findIndex(item => item.id === product.id);
-        this.produtoCarrinho = this.produtoCarrinho.filter((item, indexItem) => index !== indexItem);
+        qtd = this.produtoCarrinho[index].qtd - 1;
+        if (qtd < 0) {
+          qtd = 0;
+          this.produtoCarrinho = [];
+        } else {
+          this.produtoCarrinho[index] = { ...produto, qtd };
+        }
         break;
     }
-
-    // this.carrinhoCompra.setCarrinho(this.produtoCarrinho.length);
-    this.carrinhoCompra.addProdutoCarrinho(this.produtoCarrinho);
+    this.carrinhoCompraService.addProdutoCarrinho({ carrinho: this.produtoCarrinho, qtd });
   }
 
   countQtdItemCarrinho(idProduto) {
-    return this.produtoCarrinho.filter(item => item.id === idProduto).length;
+    return this.produtoCarrinho.find(item => item.id === idProduto);
   }
 
   totalProduto(preco, idProduto) {
-    const total = this.produtoCarrinho
-      .filter(item => item.id === idProduto)
-      .map(item => Number(item.preco))
-      .reduce((a, b) => a + b, 0).toFixed(2);
+    let data = this.produtoCarrinho
+      .find(item => item.id === idProduto);
 
-    if (Number(total) <= 0) {
+    if (!data || data.qtd === 0) {
       return preco;
     }
-    return total;
+
+    return (data.preco * data.qtd).toFixed(2);
   }
 
 }

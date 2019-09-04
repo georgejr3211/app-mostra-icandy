@@ -23,11 +23,10 @@
   </ion-card>
 
   <ion-card>
-
     <ion-row class="center" padding *ngFor="let produto of produtoCarrinho$ | async">
-      <ion-col style="max-width: 30px;">1x</ion-col>
+      <ion-col style="max-width: 30px;">{{ produto?.qtd }}x</ion-col>
       <ion-col style="max-width: 160px;">{{ produto?.nome }}</ion-col>
-      <ion-col>R$ 15,00</ion-col>
+      <ion-col>R$ {{ produto?.preco }}</ion-col>
       <ion-label>
         <ion-icon class="icone" name="remove-circle" slot="end"></ion-icon>
       </ion-label>
