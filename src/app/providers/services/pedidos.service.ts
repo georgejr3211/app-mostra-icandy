@@ -12,8 +12,9 @@ export class PedidosService {
 
   constructor(private http: HttpClient) { }
 
-  index() {
-    const url = `${this.apiURL}/v1/pedidos`;
+  index(payload?) {
+
+    const url = `${this.apiURL}/v1/pedidos/${payload}`;
     return this.http.get(url).pipe(map((data: any) => data.value));
   }
 }
