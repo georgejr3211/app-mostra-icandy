@@ -15,6 +15,7 @@ export class CarrinhoPage implements OnInit {
   auth$: Observable<string>;
   formCRUD: FormGroup;
   produtoCarrinho$: Observable<any[]>;
+  totalCompra: number;
 
   constructor(private authService: AuthService, private carrinhoCompraService: CarrinhoCompraService) {
     this.formCRUD = new FormGroup(
@@ -44,9 +45,15 @@ export class CarrinhoPage implements OnInit {
           if (!data) {
             return;
           }
+
+          this.totalCompra = data.carrinho
+            .map(produto => Number(produto.preco) * produto.qtd)
+            .reduce((a, b) => a + b, 0)
+            .toFixed(2);
+
           return data.carrinho;
         })
       );
-
   }
+
 }
