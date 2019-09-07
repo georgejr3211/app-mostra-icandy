@@ -33,7 +33,7 @@ export class StatusPage implements OnInit,AfterViewInit {
   }
   
   ngAfterViewInit(){
-    this.pedido$ = this.pedidosService.index(1);
+    this.pedido$ = this.pedidosService.find(1);
     this.avaliacoes$ = this.avaliacoesService.index();
     this.restaurantes$ = this.restaurantesService.index();
     this.status$ = this.statusService.index();
