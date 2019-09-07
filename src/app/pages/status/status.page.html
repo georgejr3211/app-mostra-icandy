@@ -4,17 +4,17 @@
 
 <ion-content>
   <ion-item style="padding-right: 16px;" *ngFor="let restaurante of restaurantes$ | async">
-      <ion-col style="height: 150px;">
-        <ion-row style="justify-content: center;">
-          <ion-label class="imgRestaurante">
-            <img class="card-img" [src]="imageLogo" />
-          </ion-label>
-        </ion-row>
-        <ion-row style="padding-left: 15px; padding-bottom: 5px;">
-          <rating [rate]="(avaliacoes$ | async)?.avgAvaliacao" [readonly]="true" size="5">
-          </rating>
-        </ion-row>
-      </ion-col>
+    <ion-col style="height: 150px;">
+      <ion-row style="justify-content: center;">
+        <ion-label class="imgRestaurante">
+          <img class="card-img" [src]="imageLogo" />
+        </ion-label>
+      </ion-row>
+      <ion-row style="padding-left: 15px; padding-bottom: 5px; justify-content: center;">
+        <rating [rate]="(avaliacoes$ | async)?.avgAvaliacao" [readonly]="true" size="5">
+        </rating>
+      </ion-row>
+    </ion-col>
   </ion-item>
 
   <ion-grid style="padding-top: 20px;">
@@ -25,14 +25,14 @@
 
   <ion-grid class="timeLine">
     <ion-col>
-      <ion-row *ngFor="let s of status$ | async">
+      <ion-row style="justify-content: center;" *ngFor="let s of status$ | async">
         <ion-col class="icone">
           <ion-icon *ngIf="s.id === (pedido$ | async)?.status_pedido_id; else statusDefault" style="color: green"
             name="arrow-dropdown-circle"></ion-icon>
+          <ng-template #statusDefault>
+            <ion-icon style="color: grey" name="arrow-dropdown-circle"></ion-icon>
+          </ng-template>
         </ion-col>
-        <ng-template #statusDefault>
-          <ion-icon style="color: grey" name="arrow-dropdown-circle"></ion-icon>
-        </ng-template>
         <ion-col class="status">
           {{s?.descricao}}
         </ion-col>
