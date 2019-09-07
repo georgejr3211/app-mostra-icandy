@@ -1,4 +1,7 @@
+import { PedidosService } from './../../providers/services/pedidos.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/internal/Observable';
+import { RestaurantesService } from 'src/app/providers/services/restaurantes.service';
 
 @Component({
   selector: 'app-historico',
@@ -7,7 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoricoPage implements OnInit {
 
-  constructor() { }
+  pedido$: Observable<any>;
+  restaurante$: Observable<any>;
+
+  constructor(private facade: PedidosService, private facadeRestaurante: RestaurantesService) { 
+    this.pedido$ = this.facade.find(1);
+    this.restaurante$ = this.facadeRestaurante.index();
+  }
 
   ngOnInit() {
   }
