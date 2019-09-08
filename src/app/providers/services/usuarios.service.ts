@@ -12,6 +12,11 @@ export class UsuariosService {
 
   constructor(private http: HttpClient) { }
 
+  index() {
+    const url = `${this.apiURL}/v1/usuarios`;
+    return this.http.get(url).pipe(map((data: any) => data.value));
+  }
+
   usuarioLogado() {
     const url = `${this.apiURL}/v1/usuarios/logged-user`;
     return this.http.get(url);

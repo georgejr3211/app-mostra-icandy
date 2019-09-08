@@ -1,72 +1,84 @@
 <ion-header>
-  <app-toolbar title="PERFIL"></app-toolbar>  
+  <app-toolbar title="PERFIL"></app-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-grid>
-    <ion-row class="ion-justify-content-center">
-      <ion-avatar class="avatar">
-        <ion-img src="assets/images/profile.jpeg"></ion-img>
-      </ion-avatar>
-    </ion-row>
-    <ion-row>
-      <ion-card padding>
-        <ion-card-header class="card-header">
-          <ion-card-title>Lucas Silva</ion-card-title>
-        </ion-card-header>
-        <ion-list>
-          <ion-item lines="none">
-            <ion-label class="label">E-MAIL</ion-label>
-            <ion-input type="email"></ion-input>
-          </ion-item>
+  <form [formGroup]='formCRUD'>
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-avatar class="avatar">
+          <ion-img src="assets/images/profile.jpeg"></ion-img>
+        </ion-avatar>
+      </ion-row>
+      <ion-row>
+        <!-- <pre>{{usuario$ | async | json}}</pre> -->
+        <ion-card padding>
+          <ion-card-header class="card-header">
+            <ion-card-title>{{(usuario$ | async)?.nome}} {{(usuario$ | async)?.sobrenome}}</ion-card-title>
+          </ion-card-header>
+          <ion-list>
 
-          <ion-item lines="none">
-            <ion-label class="label">SENHA</ion-label>
-            <ion-input type="password"></ion-input>
-          </ion-item>
+            <ion-item lines="none">
+              <!-- <ion-label class="label">{{(usuario$ | async)?.email}}</ion-label> -->
+              <ion-input formControlName="nome" type="text" placeholder="NOME"></ion-input>
+            </ion-item>
 
-          <ion-item lines="none">
-            <ion-label class="label">CELULAR</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
+            <ion-item lines="none">
+              <!-- <ion-label class="label">{{(usuario$ | async)?.email}}</ion-label> -->
+              <ion-input formControlName="email" type="email" placeholder="EMAIL"></ion-input>
+            </ion-item>
 
-          <span class="btn-width">
-            <ion-button size="small" color="primary">Salvar</ion-button>
-          </span>
-        </ion-list>
-      </ion-card>
-    </ion-row>
+            <ion-item lines="none">
+              <!-- <ion-label class="label">{{(usuario$ | async)?.senha}}</ion-label> -->
+              <ion-input formControlName="password" type="password" placeholder="SENHA"></ion-input>
+            </ion-item>
 
-    <ion-row>
-      <ion-card padding>
-        <ion-note>Endereço</ion-note>
-        <ion-list>
-          <ion-item lines="none">
-            <ion-label class="label">Bairro</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
+            <ion-item lines="none">
+              <!-- <ion-label class="label">{{(usuario$ | async)?.telefone}}</ion-label> -->
+              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE"></ion-input>
+            </ion-item>
 
-          <ion-item lines="none">
-            <ion-label class="label">Rua</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
+            <span *ngIf="canEdit; else view">
+                <ion-button class="btn-width" (click)="onEdit(false);" size="small" color="primary">Salvar</ion-button>
+            </span>
+            <ng-template #view >
+                <ion-button class="btn-width" (click)="onEdit(true);" size="small" color="primary">Editar</ion-button>
+            </ng-template>
+          </ion-list>
+        </ion-card>
+      </ion-row>
 
-          <ion-item lines="none">
-            <ion-label class="label">Número</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
+      <ion-row>
+        <ion-card padding>
+          <ion-note>Endereço</ion-note>
+          <ion-list>
+            <ion-item lines="none">
+              <ion-label class="label">Bairro</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
 
-          <ion-item lines="none">
-            <ion-label class="label">Complemento</ion-label>
-            <ion-input type="text"></ion-input>
-          </ion-item>
+            <ion-item lines="none">
+              <ion-label class="label">Rua</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
 
-          <div class="btn-width">
-            <ion-button size="small" color="primary">Salvar</ion-button>
-          </div>
-        </ion-list>
-      </ion-card>
-    </ion-row>
+            <ion-item lines="none">
+              <ion-label class="label">Número</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
 
-  </ion-grid>
+            <ion-item lines="none">
+              <ion-label class="label">Complemento</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+
+            <div class="btn-width">
+              <ion-button size="small" color="primary">Salvar</ion-button>
+            </div>
+          </ion-list>
+        </ion-card>
+      </ion-row>
+
+    </ion-grid>
+  </form>
 </ion-content>
