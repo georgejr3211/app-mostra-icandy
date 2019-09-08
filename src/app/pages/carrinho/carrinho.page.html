@@ -8,9 +8,10 @@
 
       <ion-item lines="none">
         <ion-icon name="pin" slot="start"></ion-icon>
-        <ion-select id="endEntrega" placeholder="Local de entrega">
-          <ion-select-option value="1">Entrada dos estandes</ion-select-option>
-          <ion-select-option value="2">Cantina</ion-select-option>
+        <ion-label>Local de entrega</ion-label>
+        <ion-select id="endEntrega" formControlName="localEntrega">
+          <ion-select-option [value]=1>Entrada dos estandes</ion-select-option>
+          <ion-select-option [value]=2>Cantina</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -26,12 +27,6 @@
         </ion-label>
       </ion-row>
 
-      <ion-item lines="none">
-        <ion-button class="center" fill="outline" expand="end">Adicionar mais produtos</ion-button>
-      </ion-item>
-
-
-
     </ion-card>
 
     <ion-card>
@@ -39,11 +34,9 @@
       <ion-item lines="none">
         <ion-label>Troco ?</ion-label>
         <ion-checkbox color="primary" (ionChange)="hasTroco($event)"></ion-checkbox>
-        <ion-input type="text" formControlName="troco" [disabled]="disabled" placeholder="(R$)" class="ion-text-end"
+        <ion-input type="text" formControlName="troco" placeholder="(R$)" class="ion-text-end"
           [brmasker]="{money: true}">
         </ion-input>
-
-        <!-- <ion-input type="number" min="0" class="ion-text-end" [disabled]="disabled" placeholder="R$50,00"></ion-input> -->
       </ion-item>
 
       <ion-item lines="none">
@@ -53,9 +46,10 @@
 
       <ion-item lines="none">
         <ion-label style="font-size: 12px">Forma de Pagamento</ion-label>
-        <ion-select value="0" interface="action-sheet" okText="Confirmar" cancelText="Cancelar">
-          <ion-select-option value="0">Dinheiro</ion-select-option>
-          <ion-select-option value="1">Cartão</ion-select-option>
+        <ion-select formControlName="formas_pagamento_id" interface="action-sheet" okText="Confirmar"
+          cancelText="Cancelar">
+          <ion-select-option [value]=1>Dinheiro</ion-select-option>
+          <ion-select-option [value]=2>Cartão</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card>
@@ -63,12 +57,12 @@
     <ion-card>
       <ion-item lines="none">
         <ion-label position="floating">Alguma observação?</ion-label>
-        <ion-textarea rows="4" cols="20"></ion-textarea>
+        <ion-textarea formControlName="observacao" rows="4" cols="20"></ion-textarea>
       </ion-item>
     </ion-card>
 
     <ion-label color="primary">
-      <ion-button id="btnPagamento" expand="full">Comprar</ion-button>
+      <ion-button id="btnPagamento" expand="full" [disabled]="!this.formCRUD.valid" (click)="createPedido()">Comprar</ion-button>
     </ion-label>
   </form>
 </ion-content>

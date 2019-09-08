@@ -3,65 +3,41 @@
 </ion-header>
 
 <ion-content>
-  <ion-item style="padding-top: 5px;">
-    <ion-grid>
+  <!-- {{pedido$ | async | json}} -->
+  <ion-item *ngFor="let item of (pedido$ | async) " style="padding-top: 5px;">
+    <ion-row>
+      <ion-col style="max-width: 50px; padding: 0;">
+        <ion-label class="imgRestaurante">
+          <ion-icon style="padding-top: 10px;" name="restaurant"></ion-icon>
+        </ion-label>
+      </ion-col>
+      <ion-col>
+        <ion-row>
+          <ion-col>
+            Artes NeW
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Pedido Nº {{ item?.id }}
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col style="text-align: end;">
+        <ion-button>
+          <ion-icon style="font-size: 30px;" name="add"></ion-icon>
+        </ion-button>
+      </ion-col>
       <ion-row>
-        <ion-col style="max-width: 50px; padding: 0;">
-          <ion-label class="imgRestaurante">
-            <ion-icon style="padding-top: 10px;" name="restaurant"></ion-icon>
-          </ion-label>
-        </ion-col>
-        <ion-col id="nomeRestaurante">
-          <ion-row>
-            Artes new confeitaria
-          </ion-row>
-          <ion-row>
-            Pedido Nº. 2
-          </ion-row>
-          <ion-row>
-            30/08/2019
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          Pedido Recebido
-        </ion-col>
-        <ion-col style="text-align: right; max-width: 90px">
-          R$ 10,00
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+        <ion-col style="min-width: 175px;">
+          {{item?.statusPedido?.descricao}}
+          </ion-col>
+          <ion-col>
+            <small>
+                {{item?.updatedAt | date: 'dd/MM/yyyy hh:mm:ss'}}
+            </small>
+          </ion-col>
+        </ion-row>
+    </ion-row>
   </ion-item>
-  <ion-item style="padding-top: 5px;">
-    <ion-grid>
-      <ion-row>
-        <ion-col style="max-width: 50px; padding: 0;">
-          <ion-label class="imgRestaurante">
-            <ion-icon style="padding-top: 10px;" name="restaurant"></ion-icon>
-          </ion-label>
-        </ion-col>
-        <ion-col id="nomeRestaurante">
-          <ion-row>
-            Artes new confeitaria
-          </ion-row>
-          <ion-row>
-            Pedido Nº. 1
-          </ion-row>
-          <ion-row>
-            29/08/2019
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          Pedido Recebido
-        </ion-col>
-        <ion-col style="text-align: right; max-width: 90px">
-          R$ 230,00
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-item>
-
 </ion-content>

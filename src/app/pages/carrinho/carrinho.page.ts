@@ -4,6 +4,8 @@ import { Component, OnInit } from "@angular/core";
 import { Observable } from 'rxjs/internal/Observable';
 import { CarrinhoCompraService } from '../../providers/services/carrinho-compra.service';
 import { map } from 'rxjs/operators';
+import { PedidosService } from 'src/app/providers/services/pedidos.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: "app-carrinho",
@@ -16,19 +18,18 @@ export class CarrinhoPage implements OnInit {
   formCRUD: FormGroup;
   produtoCarrinho$: Observable<any[]>;
   totalCompra: number;
-
   disabled: boolean;
 
-  constructor(private authService: AuthService, private carrinhoCompraService: CarrinhoCompraService) {
+  constructor(private carrinhoCompraService: CarrinhoCompraService, private pedidoService: PedidosService, public alertController: AlertController) {
     this.formCRUD = new FormGroup(
       {
         id: new FormControl(null, {}),
-        formas_pagamento_id: new FormControl(null, Validators.required),
-        usuarios_id: new FormControl(null, {}),
-        status_pedido_id: new FormControl(null, {}),
+        formas_pagamento_id: new FormControl(1, Validators.required),
         observacao: new FormControl(null, {}),
-        troco: new FormControl(null, {}),
-        ativo: new FormControl(null, {}),
+        troco: new FormControl({ value: null, disabled: true }),
+        itens: new FormControl(null, Validators.required),
+        localEntrega: new FormControl(1, Validators.required),
+        valorTotal: new FormControl(null),
       },
       { updateOn: "change" }
     );
@@ -37,7 +38,6 @@ export class CarrinhoPage implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
   onRefresh() {
@@ -53,13 +53,27 @@ export class CarrinhoPage implements OnInit {
             .reduce((a, b) => a + b, 0)
             .toFixed(2);
 
+          this.formCRUD.get('itens').setValue(data.carrinho);
+          this.formCRUD.get('valorTotal').setValue(this.totalCompra);
+
           return data.carrinho;
         })
       );
   }
 
   hasTroco(value) {
-    this.disabled = !value.detail.checked;
+    const disabled = !value.detail.checked;
+    if (disabled) {
+      this.formCRUD.get('troco').setValue(null)
+      this.formCRUD.get('troco').disable();
+    } else {
+      this.formCRUD.get('troco').enable();
+    }
+  }
+
+  async createPedido() {
+    const data = this.formCRUD.value;
+    this.pedidoService.insert(data).subscribe(data => console.log(data));
   }
 
 }

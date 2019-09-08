@@ -12,10 +12,21 @@ export class PedidosService {
 
   constructor(private http: HttpClient) { }
 
-  index(payload?) {
+  index() {
 
+    const url = `${this.apiURL}/v1/pedidos/`;
+    return this.http.get(url).pipe(map((data: any) => data.value));
+  }
+
+  find(payload?) {
     const url = `${this.apiURL}/v1/pedidos/${payload}`;
     return this.http.get(url).pipe(map((data: any) => data.value));
+  }
+
+  insert(payload?) {
+    const url = `${this.apiURL}/v1/pedidos`;
+
+    return this.http.post(url, payload).pipe(map((data: any) => data.value));
   }
 }
 
