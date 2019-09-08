@@ -4,13 +4,13 @@
 
 <ion-content>
   <ion-item style="padding-right: 16px;" *ngFor="let restaurante of restaurantes$ | async">
-    <ion-col style="height: 150px;">
+    <ion-col style="height: 100%;">
       <ion-row style="justify-content: center;">
         <ion-label class="imgRestaurante">
           <img class="card-img" [src]="imageLogo" />
         </ion-label>
       </ion-row>
-      <ion-row style="padding-left: 15px; padding-bottom: 5px; justify-content: center;">
+      <ion-row style="margin-top: -5%;padding-left: 15px; padding-bottom: 5px; justify-content: center;">
         <rating [rate]="(avaliacoes$ | async)?.avgAvaliacao" [readonly]="true" size="5">
         </rating>
       </ion-row>

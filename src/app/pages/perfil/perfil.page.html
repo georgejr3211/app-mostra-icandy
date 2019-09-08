@@ -19,23 +19,23 @@
           <ion-list>
 
             <ion-item lines="none">
-              <!-- <ion-label class="label">{{(usuario$ | async)?.email}}</ion-label> -->
-              <ion-input formControlName="nome" type="text" placeholder="NOME"></ion-input>
+              <ion-label class="label">NOME DE USUARIO</ion-label>
+              <ion-input formControlName="username" type="text" placeholder="NOME"></ion-input>
             </ion-item>
 
             <ion-item lines="none">
-              <!-- <ion-label class="label">{{(usuario$ | async)?.email}}</ion-label> -->
+              <ion-label class="label">E-MAIL</ion-label>
               <ion-input formControlName="email" type="email" placeholder="EMAIL"></ion-input>
             </ion-item>
 
             <ion-item lines="none">
-              <!-- <ion-label class="label">{{(usuario$ | async)?.senha}}</ion-label> -->
+              <ion-label class="label">SENHA</ion-label>
               <ion-input formControlName="password" type="password" placeholder="SENHA"></ion-input>
             </ion-item>
 
             <ion-item lines="none">
-              <!-- <ion-label class="label">{{(usuario$ | async)?.telefone}}</ion-label> -->
-              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE" [brmasker]="{phone: true}"></ion-input>
+              <ion-label class="label">TELEFONE</ion-label>
+              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE"></ion-input>
             </ion-item>
 
             <span *ngIf="canEdit; else view">

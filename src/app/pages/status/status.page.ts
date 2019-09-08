@@ -14,7 +14,7 @@ import { StatusService } from './../../providers/services/status.service';
 })
 export class StatusPage implements OnInit,AfterViewInit {
   
-  imageLogo = '/assets/images/confeitaria-logo.png';
+  imageLogo = '/assets/images/ArtesNeW.jpeg';
   pedido$: Observable<any>;
   auth$: Observable<any>;
   restaurantes$: Observable<any>;

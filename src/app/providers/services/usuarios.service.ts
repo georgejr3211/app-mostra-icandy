@@ -24,7 +24,8 @@ export class UsuariosService {
 
   update(payload?) {
     const url = `${this.apiURL}/v1/usuarios/${payload.id}`;
-    return this.http.post(url, payload).pipe(map((data: any) => data.value));
+    console.log('url', url);
+    return this.http.put(url, payload).pipe(map((data: any) => data.value));
   }
 }
 

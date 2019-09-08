@@ -54,7 +54,8 @@ export class PerfilPage implements OnInit, AfterViewInit {
       return this.canEdit = true;
     } else {
       console.log('FORM CRUD', this.formCRUD.value);
-      // this.facade.insert(this.formCRUD.value);
+      this.facade.update(this.formCRUD.value);
+      console.log('atualizou');
       this.formCRUD.disable();
       return this.canEdit = false;
     }
