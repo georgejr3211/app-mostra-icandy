@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PerfilPage } from './perfil.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { BrMaskerModule } from 'br-mask';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    BrMaskerModule
   ],
   declarations: [PerfilPage]
 })
