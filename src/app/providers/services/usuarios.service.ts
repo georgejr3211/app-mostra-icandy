@@ -21,6 +21,11 @@ export class UsuariosService {
     const url = `${this.apiURL}/v1/usuarios/logged-user`;
     return this.http.get(url);
   }
+
+  update(payload?) {
+    const url = `${this.apiURL}/v1/usuarios/${payload.id}`;
+    return this.http.post(url, payload).pipe(map((data: any) => data.value));
+  }
 }
 
 
