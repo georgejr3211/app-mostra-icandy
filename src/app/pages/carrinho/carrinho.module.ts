@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
+import { BrMaskerModule } from 'br-mask';
+
 import { IonicModule } from '@ionic/angular';
 
 import { CarrinhoPage } from './carrinho.page';
@@ -21,7 +23,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    BrMaskerModule
   ],
   declarations: [CarrinhoPage]
 })

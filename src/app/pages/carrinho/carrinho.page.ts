@@ -17,6 +17,8 @@ export class CarrinhoPage implements OnInit {
   produtoCarrinho$: Observable<any[]>;
   totalCompra: number;
 
+  disabled: boolean;
+
   constructor(private authService: AuthService, private carrinhoCompraService: CarrinhoCompraService) {
     this.formCRUD = new FormGroup(
       {
@@ -26,7 +28,7 @@ export class CarrinhoPage implements OnInit {
         status_pedido_id: new FormControl(null, {}),
         observacao: new FormControl(null, {}),
         troco: new FormControl(null, {}),
-        ativo: new FormControl(null, {})
+        ativo: new FormControl(null, {}),
       },
       { updateOn: "change" }
     );
@@ -54,6 +56,10 @@ export class CarrinhoPage implements OnInit {
           return data.carrinho;
         })
       );
+  }
+
+  hasTroco(value) {
+    this.disabled = !value.detail.checked;
   }
 
 }
