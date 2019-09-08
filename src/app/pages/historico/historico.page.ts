@@ -14,7 +14,7 @@ export class HistoricoPage implements OnInit {
   restaurante$: Observable<any>;
 
   constructor(private facade: PedidosService, private facadeRestaurante: RestaurantesService) { 
-    this.pedido$ = this.facade.find(1);
+    this.pedido$ = this.facade.findByUser(1);
     this.restaurante$ = this.facadeRestaurante.index();
   }
 
