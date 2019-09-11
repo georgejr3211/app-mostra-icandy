@@ -6,6 +6,7 @@ import { CarrinhoCompraService } from '../../providers/services/carrinho-compra.
 import { map } from 'rxjs/operators';
 import { PedidosService } from 'src/app/providers/services/pedidos.service';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-carrinho",
@@ -20,7 +21,13 @@ export class CarrinhoPage implements OnInit {
   totalCompra: number;
   disabled: boolean;
 
-  constructor(private carrinhoCompraService: CarrinhoCompraService, private pedidoService: PedidosService, public alertController: AlertController) {
+  constructor(
+    private carrinhoCompraService: CarrinhoCompraService,
+    private pedidoService: PedidosService,
+    public alertController: AlertController,
+    private router: Router
+  ) {
+
     this.formCRUD = new FormGroup(
       {
         id: new FormControl(null, {}),
@@ -71,9 +78,18 @@ export class CarrinhoPage implements OnInit {
     }
   }
 
-  async createPedido() {
+  createPedido() {
     const data = this.formCRUD.value;
-    this.pedidoService.insert(data).subscribe(data => console.log(data));
+    this.pedidoService.insert(data).subscribe(data => {
+      this.router.navigate([`/status/${data.id}`]);
+    });
+  }
+
+  updateStatus() {
+    this.pedidoService.update({
+      id: 14,
+      status_pedido_id: 1 + Math.floor(Math.random() * Math.floor(4))
+    });
   }
 
 }

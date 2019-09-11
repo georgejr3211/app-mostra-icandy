@@ -10,7 +10,7 @@ import { StatusPage } from './status.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: StatusPage
   }
 ];
@@ -22,7 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     SharedModule,
-    IonicRatingModule
+    IonicRatingModule,
   ],
   declarations: [StatusPage]
 })

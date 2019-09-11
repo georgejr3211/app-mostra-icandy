@@ -6,37 +6,47 @@ import { AuthService } from './../../providers/services/auth.service';
 import { AvaliacoesService } from './../../providers/services/avaliacoes.service';
 import { PedidosService } from './../../providers/services/pedidos.service';
 import { StatusService } from './../../providers/services/status.service';
+import { ActivatedRoute } from '@angular/router';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-status',
   templateUrl: './status.page.html',
   styleUrls: ['./status.page.scss'],
 })
-export class StatusPage implements OnInit,AfterViewInit {
-  
+export class StatusPage implements OnInit, AfterViewInit {
+
   imageLogo = '/assets/images/ArtesNeW.jpeg';
   pedido$: Observable<any>;
   auth$: Observable<any>;
   restaurantes$: Observable<any>;
   avaliacoes$: Observable<any>;
   status$: Observable<any>;
-  
+  socket;
+  apiUrl = 'http://localhost:4000';
   constructor(
-    private authService : AuthService, 
+    private authService: AuthService,
     private pedidosService: PedidosService,
     private restaurantesService: RestaurantesService,
     private avaliacoesService: AvaliacoesService,
-    private statusService: StatusService) {
-    }
-
-   ngOnInit() {
-     this.pedido$ = this.pedidosService.find(1);
-     this.avaliacoes$ = this.avaliacoesService.index();
-     this.restaurantes$ = this.restaurantesService.index();
-     this.status$ = this.statusService.index();
+    private statusService: StatusService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.socket = io(this.apiUrl);
   }
-  
-  ngAfterViewInit(){
+
+  ngOnInit() {
+    const { id } = this.activatedRoute.snapshot.params;
+    this.pedido$ = this.pedidosService.find(id);
+    this.status$ = this.statusService.index();
+    this.avaliacoes$ = this.avaliacoesService.index();
+    this.restaurantes$ = this.restaurantesService.index();
+    this.socket.on(id, () => {
+      this.status$ = this.statusService.index();
+    });
+  }
+
+  ngAfterViewInit() {
   }
 
 }
