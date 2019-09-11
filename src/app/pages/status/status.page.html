@@ -1,9 +1,9 @@
 <ion-header>
   <app-toolbar title="STATUS DO PEDIDO"></app-toolbar>
+
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="btnUpdate()">Teste</ion-button>
   <ion-item style="padding-right: 16px;" *ngFor="let restaurante of restaurantes$ | async">
     <ion-col style="height: 100%;">
       <ion-row style="justify-content: center;">
@@ -23,7 +23,7 @@
       Situação do pedido
     </ion-row>
   </ion-grid>
-<!-- {{pedido$ | async | json}} -->
+  <!-- {{pedido$ | async | json}} -->
   <ion-grid class="timeLine">
     <ion-col>
       <ion-row style="justify-content: center;" *ngFor="let s of status$ | async">

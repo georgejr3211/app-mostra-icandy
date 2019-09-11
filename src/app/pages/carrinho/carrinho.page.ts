@@ -89,7 +89,7 @@ export class CarrinhoPage implements OnInit {
     this.pedidoService.update({
       id: 14,
       status_pedido_id: 1 + Math.floor(Math.random() * Math.floor(4))
-    });
+    }).subscribe();
   }
 
 }
