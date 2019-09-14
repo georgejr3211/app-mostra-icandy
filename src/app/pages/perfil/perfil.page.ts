@@ -39,6 +39,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
       if (data) {
         this.hasData = true;
         this.formCRUD.patchValue(data);
+        this.formCRUD.get('password').setValue(null);
       }
     });
   }
@@ -54,7 +55,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
       return this.canEdit = true;
     } else {
       console.log('FORM CRUD', this.formCRUD.value);
-      this.facade.update(this.formCRUD.value);
+      this.facade.update(this.formCRUD.value).subscribe();
       console.log('atualizou');
       this.formCRUD.disable();
       return this.canEdit = false;

@@ -7,6 +7,8 @@ import { map } from 'rxjs/operators';
 import { PedidosService } from 'src/app/providers/services/pedidos.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { LocalizacoesService } from '../../providers/services/localizacoes.service';
+import { FormasPagamentoService } from 'src/app/providers/services/formas-pagamento.service';
 
 @Component({
   selector: "app-carrinho",
@@ -18,12 +20,16 @@ export class CarrinhoPage implements OnInit {
   auth$: Observable<string>;
   formCRUD: FormGroup;
   produtoCarrinho$: Observable<any[]>;
+  localizacoes$: Observable<any[]>;
+  formasPagamento$: Observable<any[]>;
   totalCompra: number;
   disabled: boolean;
 
   constructor(
     private carrinhoCompraService: CarrinhoCompraService,
     private pedidoService: PedidosService,
+    private localizacoesService: LocalizacoesService,
+    private formasPagamentoService: FormasPagamentoService,
     public alertController: AlertController,
     private router: Router
   ) {
@@ -35,7 +41,7 @@ export class CarrinhoPage implements OnInit {
         observacao: new FormControl(null, {}),
         troco: new FormControl({ value: null, disabled: true }),
         itens: new FormControl(null, Validators.required),
-        localEntrega: new FormControl(1, Validators.required),
+        localEntrega: new FormControl(3, Validators.required),
         valorTotal: new FormControl(null),
       },
       { updateOn: "change" }
@@ -48,6 +54,8 @@ export class CarrinhoPage implements OnInit {
   }
 
   onRefresh() {
+    this.localizacoes$ = this.localizacoesService.index();
+    this.formasPagamento$ = this.formasPagamentoService.index();
     this.produtoCarrinho$ = this.carrinhoCompraService.getProdutosCarrinho()
       .pipe(
         map((data: any) => {

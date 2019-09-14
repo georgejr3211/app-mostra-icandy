@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="updateStatus()">update realtime teste</ion-button>
+  <!-- <ion-button (click)="updateStatus()">update realtime teste</ion-button> -->
   <form [formGroup]="formCRUD">
     <ion-card>
 
@@ -11,8 +11,8 @@
         <ion-icon name="pin" slot="start"></ion-icon>
         <ion-label>Local de entrega</ion-label>
         <ion-select id="endEntrega" formControlName="localEntrega">
-          <ion-select-option [value]=1>Entrada dos estandes</ion-select-option>
-          <ion-select-option [value]=2>Cantina</ion-select-option>
+          <ion-select-option *ngFor="let localizacao of (localizacoes$ | async)?.rows" [value]="localizacao?.id">
+            {{ localizacao?.local }}</ion-select-option>
         </ion-select>
       </ion-item>
 
@@ -49,8 +49,8 @@
         <ion-label style="font-size: 12px">Forma de Pagamento</ion-label>
         <ion-select formControlName="formas_pagamento_id" interface="action-sheet" okText="Confirmar"
           cancelText="Cancelar">
-          <ion-select-option [value]=1>Dinheiro</ion-select-option>
-          <ion-select-option [value]=2>Cartão</ion-select-option>
+          <ion-select-option *ngFor="let formaPagamento of (formasPagamento$ | async)" [value]="formaPagamento?.id">
+            {{ formaPagamento?.descricao }}</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-card>
@@ -63,7 +63,8 @@
     </ion-card>
 
     <ion-label color="primary">
-      <ion-button id="btnPagamento" expand="full" [disabled]="!this.formCRUD.valid" (click)="createPedido()">Comprar</ion-button>
+      <ion-button id="btnPagamento" expand="full" [disabled]="!this.formCRUD.valid" (click)="createPedido()">Comprar
+      </ion-button>
     </ion-label>
   </form>
 </ion-content>
