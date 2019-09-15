@@ -3,7 +3,8 @@ import { UsuariosService } from "./../../providers/services/usuarios.service";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ImagePicker } from '@ionic-native/image-picker';
+import { File } from '@ionic-native/file/ngx';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: "app-perfil",
@@ -16,9 +17,20 @@ export class PerfilPage implements OnInit, AfterViewInit {
   hasData = false;
   canEdit = false;
   currentImage = 'assets/images/profile.jpeg';
+
+  croppedImagepath = "";
+  isLoading = false;
+
+  imagePickerOptions = {
+    maximumImagesCount: 1,
+    quality: 50
+  };
+
   constructor(
     private facade: UsuariosService,
-    private camera: Camera
+    private camera: Camera,
+    public actionSheetController: ActionSheetController,
+    private file: File
   ) {
     this.usuario$ = this.facade.usuarioLogado();
 
@@ -39,13 +51,22 @@ export class PerfilPage implements OnInit, AfterViewInit {
     );
   }
 
-  takePicture() {
+
+  pickImage(sourceType) {
     const options: CameraOptions = {
       quality: 100,
+      sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
-    };
+    }
+    
+    // const options: CameraOptions = {
+    //   quality: 100,
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE
+    // };
 
     this.camera.getPicture(options).then((imageData) => {
       this.currentImage = 'data:image/jpeg;base64,' + imageData;
@@ -54,6 +75,47 @@ export class PerfilPage implements OnInit, AfterViewInit {
       console.log("Camera issue:" + err);
     });
   }
+
+  async selectImage() {
+    const actionSheet = await this.actionSheetController.create({
+      header: "Select Image source",
+      buttons: [{
+        text: 'Carregar da galeria',
+        handler: () => {
+          this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+        }
+      },
+      {
+        text: 'Usar a camera',
+        handler: () => {
+          this.pickImage(this.camera.PictureSourceType.CAMERA);
+        }
+      },
+      {
+        text: 'Cancelar',
+        role: 'cancel'
+      }
+      ]
+    });
+    await actionSheet.present();
+  }
+
+
+  // takePicture() {
+  //   const options: CameraOptions = {
+  //     quality: 100,
+  //     destinationType: this.camera.DestinationType.DATA_URL,
+  //     encodingType: this.camera.EncodingType.JPEG,
+  //     mediaType: this.camera.MediaType.PICTURE
+  //   };
+
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     this.currentImage = 'data:image/jpeg;base64,' + imageData;
+  //   }, (err) => {
+  //     // Handle error
+  //     console.log("Camera issue:" + err);
+  //   });
+  // }
 
   ngOnInit() {
     this.usuario$.subscribe(data => {
