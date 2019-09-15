@@ -49,29 +49,4 @@ export class PerfilPage implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.formCRUD.disable();
   }
-
-
-  onEdit(data?) {
-    this.imagePicker.getPictures({
-      height: 200,
-      width: 200,
-      maximumImagesCount: 1,
-      quality: 100
-    }).then((results) => {
-      for (var i = 0; i < results.length; i++) {
-          console.log('Image URI: ' + results[i]);
-      }
-    }, (err) => { });
-
-    if (data) {
-      this.formCRUD.enable();
-      return this.canEdit = true;
-    } else {
-      console.log('FORM CRUD', this.formCRUD.value);
-      this.facade.update(this.formCRUD.value).subscribe();
-      console.log('atualizou');
-      this.formCRUD.disable();
-      return this.canEdit = false;
-    }
-  }
 }
