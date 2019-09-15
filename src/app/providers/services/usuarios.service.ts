@@ -26,6 +26,11 @@ export class UsuariosService {
     return this.http.get(url);
   }
 
+  insert(payload?) {
+    const url = `${this.apiURL}/v1/usuarios`;
+    return this.http.post(url, payload).pipe(map((data: any) => data.value));
+  }
+
   update(payload?) {
     const url = `${this.apiURL}/v1/usuarios/${payload.id}`;
     console.log('url', url);
