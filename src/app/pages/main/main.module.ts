@@ -18,7 +18,6 @@ const routes: Routes = [
         path: 'home',
         loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
       },
-      { path: 'cadastro', loadChildren: '../cadastro/cadastro.module#CadastroPageModule' },
       { path: 'carrinho', loadChildren: '../carrinho/carrinho.module#CarrinhoPageModule' },
       { path: 'avaliacao', loadChildren: '../avaliacao/avaliacao.module#AvaliacaoPageModule' },
       { path: 'status', loadChildren: '../status/status.module#StatusPageModule' },

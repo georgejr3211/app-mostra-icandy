@@ -17,9 +17,18 @@ export class UsuariosService {
     return this.http.get(url).pipe(map((data: any) => data.value));
   }
 
+  findEmail(email: string) {
+    return this.http.post(`${this.apiURL}/auth/email`, { email });
+  }
+
   usuarioLogado() {
     const url = `${this.apiURL}/v1/usuarios/logged-user`;
     return this.http.get(url);
+  }
+
+  insert(payload?) {
+    const url = `${this.apiURL}/v1/usuarios`;
+    return this.http.post(url, payload).pipe(map((data: any) => data.value));
   }
 
   update(payload?) {

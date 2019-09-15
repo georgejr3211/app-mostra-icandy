@@ -1,24 +1,19 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-row>
-        <h5 class="title">Cadastrar</h5>
-        <ion-icon></ion-icon>
-      </ion-row>
-    </ion-toolbar>
-  </ion-header>
+  <app-toolbar title="Cadastrar"></app-toolbar>
+</ion-header>
 
 <ion-content>
   <ion-content padding>
     <form fxLayoutAlign="column">
-      <ion-input padding id="nome" class="input" type="text" placeholder="Nome"></ion-input>
-      <ion-input padding id="telefone" class="input" type="number" placeholder="Telefone"></ion-input>
-      <ion-input padding id="email" class="input" type="email" placeholder="E-mail"></ion-input>
-      <ion-input padding id="password" class="input" type="password" placeholder="Senha"></ion-input>
-      <ion-input padding id="confirmPassword" class="input" type="password" placeholder="Confirmar senha"></ion-input>
+      <ion-input padding formControlName="nome" id="nome" class="input" type="text" placeholder="Nome"></ion-input>
+      <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone" [brmasker]="{phone: true}">
+      </ion-input>
+      <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
+        [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+      <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail"></ion-input>
+      <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"></ion-input>
+      <ion-input padding formControlName="password2" id="confirmPassword" class="input" type="password" placeholder="Confirmar senha"></ion-input>
     </form>
 
-    <ion-button id="btnCriarConta" expand="full">Criar conta</ion-button>
-</ion-content>
+    <ion-button id="btnCriarConta" expand="full" (click)="criarConta()">Criar conta</ion-button>
+  </ion-content>
