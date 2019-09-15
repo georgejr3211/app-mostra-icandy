@@ -3,11 +3,19 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="openGallery()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
   <form [formGroup]='formCRUD'>
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-avatar class="avatar">
-          <ion-img src="assets/images/profile.jpeg"></ion-img>
+        <ion-avatar (click)="takePicture()" class="avatar">
+          <ion-img [src]="currentImage" *ngIf="currentImage"></ion-img>
+          <!-- <ion-img src="assets/images/profile.jpeg"></ion-img> -->
         </ion-avatar>
       </ion-row>
       <ion-row>
@@ -39,10 +47,10 @@
             </ion-item>
 
             <span *ngIf="canEdit; else view">
-                <ion-button class="btn-width" (click)="onEdit(false);" size="small" color="primary">Salvar</ion-button>
+              <ion-button class="btn-width" (click)="onEdit(false);" size="small" color="primary">Salvar</ion-button>
             </span>
-            <ng-template #view >
-                <ion-button class="btn-width" (click)="onEdit(true);" size="small" color="primary">Editar</ion-button>
+            <ng-template #view>
+              <ion-button class="btn-width" (click)="onEdit(true);" size="small" color="primary">Editar</ion-button>
             </ng-template>
           </ion-list>
         </ion-card>
