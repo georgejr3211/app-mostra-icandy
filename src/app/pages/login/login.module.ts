@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 
 import { LoginPage } from './login.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { EsqueciMinhaSenhaPage } from '../esqueci-minha-senha/esqueci-minha-senha.page';
 
 const routes: Routes = [
   {
     path: '',
     component: LoginPage
-  }
+  },
+  { path: 'main', loadChildren: '../main/main.module#MainPageModule' }
 ];
 
 @NgModule({
@@ -24,6 +26,8 @@ const routes: Routes = [
     SharedModule
     // ReactiveFormsModule
   ],
-  declarations: [LoginPage]
+  declarations: [LoginPage, EsqueciMinhaSenhaPage],
+  entryComponents: [EsqueciMinhaSenhaPage],
+  exports: [LoginPage]
 })
 export class LoginPageModule { }

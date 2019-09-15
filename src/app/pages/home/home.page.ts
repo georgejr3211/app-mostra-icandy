@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 import { Observable } from 'rxjs';
 import { ProdutosService } from 'src/app/providers/services/produtos.service';
@@ -6,12 +6,13 @@ import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { CarrinhoCompraService } from 'src/app/providers/services/carrinho-compra.service';
 
+@Injectable({ providedIn: 'root' })
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage implements OnInit, OnDestroy {
 
   images = environment.api + '/assets/images/';
   usuario$: Observable<any>;
@@ -43,13 +44,16 @@ export class HomePage implements OnInit {
         }
         break;
       case 'remove':
-        qtd = this.produtoCarrinho[index].qtd - 1;
-        if (qtd < 0) {
-          qtd = 0;
-          this.produtoCarrinho = [];
-        } else {
-          this.produtoCarrinho[index] = { ...produto, qtd };
+        if (this.produtoCarrinho[index]) {
+          qtd = this.produtoCarrinho[index].qtd - 1;
+          if (qtd < 0) {
+            qtd = 0;
+            this.produtoCarrinho = [];
+          } else {
+            this.produtoCarrinho[index] = { ...produto, qtd };
+          }
         }
+
         break;
     }
     this.carrinhoCompraService.addProdutoCarrinho({ carrinho: this.produtoCarrinho, qtd });
@@ -68,6 +72,13 @@ export class HomePage implements OnInit {
     }
 
     return (data.preco * data.qtd).toFixed(2);
+  }
+
+  onSearch(value) {
+    this.produtos$ = this.produtosService.index({ s: value });
+  }
+
+  ngOnDestroy() {
   }
 
 }

@@ -24,6 +24,7 @@ export class StatusPage implements OnInit, AfterViewInit {
   status$: Observable<any>;
   socket;
   apiUrl = 'http://localhost:4000';
+  numeroTelefone = '(34) 99977-1973';
   constructor(
     private authService: AuthService,
     private pedidosService: PedidosService,

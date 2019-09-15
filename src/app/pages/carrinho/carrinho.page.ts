@@ -1,6 +1,5 @@
-import { AuthService } from './../../providers/services/auth.service';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, Injectable } from "@angular/core";
 import { Observable } from 'rxjs/internal/Observable';
 import { CarrinhoCompraService } from '../../providers/services/carrinho-compra.service';
 import { map } from 'rxjs/operators';
@@ -9,6 +8,7 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { LocalizacoesService } from '../../providers/services/localizacoes.service';
 import { FormasPagamentoService } from 'src/app/providers/services/formas-pagamento.service';
+import { HomePage } from '../home/home.page';
 
 @Component({
   selector: "app-carrinho",
@@ -25,13 +25,15 @@ export class CarrinhoPage implements OnInit {
   totalCompra: number;
   disabled: boolean;
 
+
   constructor(
     private carrinhoCompraService: CarrinhoCompraService,
     private pedidoService: PedidosService,
     private localizacoesService: LocalizacoesService,
     private formasPagamentoService: FormasPagamentoService,
     public alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private homePage: HomePage
   ) {
 
     this.formCRUD = new FormGroup(
@@ -89,8 +91,10 @@ export class CarrinhoPage implements OnInit {
   createPedido() {
     const data = this.formCRUD.value;
     this.pedidoService.insert(data).subscribe(data => {
-      this.router.navigate([`/status/${data.id}`]);
+      localStorage.setItem('id-ultimo-pedido', data.id);
+      this.router.navigate([`./main/status/${data.id}`]);
     });
+    this.carrinhoCompraService.addProdutoCarrinho({ carrinho: [], qtd: 0 });
   }
 
   updateStatus() {

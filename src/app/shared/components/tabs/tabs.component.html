@@ -9,7 +9,7 @@
       <ion-badge>{{(totalItensCarrinho$ | async)}}</ion-badge>
     </ion-tab-button>
     
-    <ion-tab-button tab="status">
+    <ion-tab-button [tab]="'status/' + lastId">
       <ion-icon name="list-box"></ion-icon>
     </ion-tab-button>
     

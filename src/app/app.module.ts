@@ -11,11 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './providers/interceptors/token-interceptor.service';
+import { LoginPageModule } from './pages/login/login.module';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, SharedModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, SharedModule, LoginPageModule],
   providers: [
     StatusBar,
     SplashScreen,

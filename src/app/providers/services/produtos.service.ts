@@ -12,9 +12,9 @@ export class ProdutosService {
 
   constructor(private http: HttpClient) { }
 
-  index() {
+  index(payload?) {
     const url = `${this.apiURL}/v1/produtos`;
-    return this.http.get(url).pipe(map((data: any) => data.value));
+    return this.http.get(url, { params: payload }).pipe(map((data: any) => data.value));
   }
 }
 

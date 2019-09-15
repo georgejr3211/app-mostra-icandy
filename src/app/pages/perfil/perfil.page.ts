@@ -14,7 +14,9 @@ export class PerfilPage implements OnInit, AfterViewInit {
   hasData = false;
   canEdit = false;
 
-  constructor(private facade: UsuariosService) {
+  constructor(
+    private facade: UsuariosService,
+  ) {
     this.usuario$ = this.facade.usuarioLogado();
 
     this.formCRUD = new FormGroup(
@@ -50,7 +52,18 @@ export class PerfilPage implements OnInit, AfterViewInit {
 
 
   onEdit(data?) {
-    if (data){
+    this.imagePicker.getPictures({
+      height: 200,
+      width: 200,
+      maximumImagesCount: 1,
+      quality: 100
+    }).then((results) => {
+      for (var i = 0; i < results.length; i++) {
+          console.log('Image URI: ' + results[i]);
+      }
+    }, (err) => { });
+
+    if (data) {
       this.formCRUD.enable();
       return this.canEdit = true;
     } else {

@@ -1,0 +1,15 @@
+<ion-header translucent>
+  <ion-toolbar color="primary">
+    <ion-title>Recuperar senha</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cancelar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content padding>
+  <form style="width: 100%;" [formGroup]="formCRUD">
+    <ion-input padding formControlName="email" class="input" type="email" clearInput placeholder="E-mail"></ion-input>
+      <ion-button class="btn-login" expand="full" (click)="recuperarSenha()">Recuperar senha</ion-button>
+
+  </form>
+</ion-content>

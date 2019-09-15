@@ -23,9 +23,6 @@
         <ion-col style="max-width: 30px;"><small>{{ produto?.qtd }}</small>x</ion-col>
         <ion-col style="max-width: 130px;">{{ produto?.nome }}</ion-col>
         <ion-col>{{ produto?.preco * produto?.qtd | currency: 'BRL' }}</ion-col>
-        <ion-label>
-          <ion-icon class="icone" name="remove-circle" slot="end"></ion-icon>
-        </ion-label>
       </ion-row>
 
     </ion-card>

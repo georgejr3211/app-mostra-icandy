@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-searchbar animated></ion-searchbar>
+  <ion-searchbar animated (ionChange)="onSearch($event.target.value)"></ion-searchbar>
   <ion-card *ngFor="let card of (produtos$ | async)">
     <ion-card-header>
       <img class="card-img" [src]="images + card?.foto" />

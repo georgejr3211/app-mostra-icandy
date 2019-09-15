@@ -1,6 +1,17 @@
 <ion-content padding>
+
+  <!-- <ion-card>
+    <img *ngIf="!fileUrl" src="assets/no-image.jpeg" />
+    <img *ngIf="fileUrl" src="{{fileUrl}}" />
+    <ion-card-content>
+      <ion-button color="medium" size="large" (click)="cropUpload()">
+        <ion-icon slot="icon-only" name="camera"></ion-icon>
+      </ion-button>
+    </ion-card-content>
+  </ion-card> -->
+
   <form style="width: 90%;" [formGroup]="formCRUD">
-    <ion-input padding formControlName="email" class="input" clearInput placeholder="E-mail"></ion-input>
+    <ion-input padding formControlName="email" class="input" type="email" clearInput placeholder="E-mail"></ion-input>
     <ion-input padding formControlName="password" class="input" type="password" clearInput placeholder="Senha">
     </ion-input>
     <ion-row class="buttons">
@@ -8,7 +19,7 @@
       <ion-button class="btn-cadastro" expand="full">Cadastrar</ion-button>
     </ion-row>
     <ion-row class="forgot-password">
-      <span routerLink="/main/home" routerDirection="root">
+      <span (click)="presentModal()" routerDirection="root">
         Esqueci minha senha
       </span>
     </ion-row>

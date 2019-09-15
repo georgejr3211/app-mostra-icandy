@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class TabsComponent implements OnInit {
   totalItensCarrinho$: Observable<any>;
+  lastId = localStorage.getItem('id-ultimo-pedido');
   constructor(private menuCtrl: MenuController, private carrinhoCompra: CarrinhoCompraService) { }
 
   ngOnInit() {
