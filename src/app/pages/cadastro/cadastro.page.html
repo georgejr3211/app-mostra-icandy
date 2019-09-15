@@ -5,7 +5,10 @@
 <ion-content>
   <ion-content padding>
     <form [formGroup]="formCRUD" fxLayoutAlign="column">
-      <ion-input padding formControlName="nome" id="nome" class="input" type="text" placeholder="Nome"></ion-input>
+      <ion-row>
+        <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text" placeholder="Nome"></ion-input>
+        <ion-input padding formControlName="sobrenome" id="sobrenome" class="input" type="text" placeholder="Sobrenome"></ion-input>
+      </ion-row>
       <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone" [brmasker]="{phone: true}">
       </ion-input>
       <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"

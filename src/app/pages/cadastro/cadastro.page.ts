@@ -2,6 +2,7 @@ import { FormControl } from "@angular/forms";
 import { FormGroup } from "@angular/forms";
 import { UsuariosService } from "src/app/providers/services/usuarios.service";
 import { Component, OnInit } from "@angular/core";
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-cadastro",
@@ -9,9 +10,12 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./cadastro.page.scss"]
 })
 export class CadastroPage implements OnInit {
+  
+  telefone;
+  cpf;
   formCRUD: FormGroup;
 
-  constructor(private facade: UsuariosService) {
+  constructor(private facade: UsuariosService, public alertController: AlertController) {
     this.formCRUD = new FormGroup(
       {
         nome: new FormControl(null, {}),
@@ -31,10 +35,46 @@ export class CadastroPage implements OnInit {
   ngOnInit() {}
 
   criarConta() {
-    if ((this.formCRUD.get('password').value).equals(this.formCRUD.get('password2').value)) {
-      console.log('ok');
+    if ((this.formCRUD.get('password').value) === (this.formCRUD.get('password2').value)) {
+      this.formatTelefone();
+      this.formatCpf();
+
+      this.formCRUD.get('password2').disable();
+      
+      console.log('this.form', this.formCRUD.value);
+      this.facade.insert(this.formCRUD.value)
+      this.formCRUD.disable();
+    } else {
+      console.log('nao');
+      this.presentAlert();
+      this.formCRUD.get('password').setValue(null);
+      this.formCRUD.get('password2').setValue(null);
     }
-    console.log('this.form', this.formCRUD.value);
-    // this.facade.insert(this.formCRUD.value)
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: "Erro",
+      // subHeader: "Verifique seu e-mail",
+      message: "As senhas devem ser iguais!!",
+      buttons: ["OK"]
+    });
+
+    await alert.present();
+  }
+  
+  formatTelefone() {
+    this.telefone = this.formCRUD.get('telefone').value;
+    this.telefone = this.telefone.replace(/-/g, "");
+    this.telefone = this.telefone.replace(/[{()}]/g, "");
+    this.telefone = this.telefone.replace(/ /g, "");
+    this.formCRUD.get('telefone').setValue(this.telefone);
+  }
+  
+  formatCpf() {
+    this.cpf = this.formCRUD.get('cpf').value;
+    this.cpf = this.cpf.replace(/-/g, "");
+    this.cpf = this.cpf.replace(/[{(.)}]/g, "");
+    this.formCRUD.get('cpf').setValue(this.cpf);
   }
 }
