@@ -4,7 +4,7 @@
 
 <ion-content>
   <ion-content padding>
-    <form fxLayoutAlign="column">
+    <form [formGroup]="formCRUD" fxLayoutAlign="column">
       <ion-input padding formControlName="nome" id="nome" class="input" type="text" placeholder="Nome"></ion-input>
       <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone" [brmasker]="{phone: true}">
       </ion-input>

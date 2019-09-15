@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
   }
 
   onCadastro() {
-    this.router.navigate(['/main/cadastro']);
+    this.router.navigate(['/cadastro']);
   }
 
 }
