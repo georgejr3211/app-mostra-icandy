@@ -35,6 +35,6 @@ export class CadastroPage implements OnInit {
       console.log('ok');
     }
     console.log('this.form', this.formCRUD.value);
-    // this.facade.insert(this.formCRUD.value)
+    this.facade.insert(this.formCRUD.value).subscribe();
   }
 }
