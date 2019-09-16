@@ -44,6 +44,8 @@ export class CadastroPage implements OnInit {
       console.log('this.form', this.formCRUD.value);
       this.facade.insert(this.formCRUD.value)
       this.formCRUD.disable();
+      // verificar subscribe no insert (nao ta chamando)
+      // redirecionar
     } else {
       console.log('nao');
       this.presentAlert();
