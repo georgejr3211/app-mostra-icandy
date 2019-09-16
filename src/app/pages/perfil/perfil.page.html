@@ -3,9 +3,8 @@
 </ion-header>
 
 <ion-content>
-
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="openGallery()">
+    <ion-fab-button (click)="selectImage()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>
@@ -13,7 +12,7 @@
   <form [formGroup]='formCRUD'>
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-avatar (click)="takePicture()" class="avatar">
+        <ion-avatar (click)="selectImage()" class="avatar">
           <ion-img [src]="currentImage" *ngIf="currentImage"></ion-img>
           <!-- <ion-img src="assets/images/profile.jpeg"></ion-img> -->
         </ion-avatar>
