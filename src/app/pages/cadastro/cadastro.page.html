@@ -38,14 +38,37 @@
       </div>
       <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail" required>
       </ion-input>
+      <div class="input-group error">
+        <ng-container *ngFor="let validation of validation_messages.email">
+          <div class="validation-errors"
+            *ngIf="formCRUD.get('email').hasError(validation.type) && (formCRUD.get('email').dirty || formCRUD.get('email').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
       <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"
         required>
       </ion-input>
+      <div class="input-group error">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="validation-errors"
+            *ngIf="formCRUD.get('password').hasError(validation.type) && (formCRUD.get('password').dirty || formCRUD.get('password').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
       <ion-input padding formControlName="password2" id="confirmPassword" class="input" type="password"
         placeholder="Confirmar senha" required></ion-input>
+      <div class="input-group error">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="validation-errors"
+            *ngIf="formCRUD.get('password').hasError(validation.type) && (formCRUD.get('password').dirty || formCRUD.get('password').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
     </form>
 
-    <ion-button id="btnCriarConta" expand="full" (click)="criarConta()">Criar conta</ion-button>
+    <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta"
+      expand="full" (click)="criarConta()">Criar conta</ion-button>
   </ion-content>
-
-  <!-- [attr.disabled]="formCRUD.controls.dirty && formCRUD.controls.isValid ? false : true" -->

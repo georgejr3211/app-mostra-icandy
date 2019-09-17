@@ -19,22 +19,37 @@ export class CadastroPage implements OnInit {
         type: "minlength",
         message: "O nome deve ter pelo menos 3 caracteres."
       },
-      { type: "maxlength", message: "O nome deve ter no máximo 120 caracteres" }
+      { type: "maxlength", message: "O nome deve ter no máximo 120 caracteres." }
     ],
     telefone: [
       { type: "required", message: "Campo Obrigatório." },
       {
         type: "minlength",
-        message: "O nome deve ter pelo menos 10 números."
+        message: "O telefone deve ter pelo menos 10 números."
       }
     ],
     cpf: [
       { type: "required", message: "Campo Obrigatório." },
+      { type: "pattern", message: "O CPF deve conter apenas números." },
       {
         type: "minlength",
-        message: "O nome deve ter pelo menos 11 caracteres."
-      },
-      { type: "pattern", message: "O CPF deve conter apenas números." }
+        message: "O CPF deve ter pelo menos 11 números."
+      }
+    ],
+    password: [
+      { type: "required", message: "Campo Obrigatório." },
+      {
+        type: "minlength",
+        message: "A senha deve ter pelo menos 6 caracteres."
+      }
+    ],
+    email: [
+      { type: "required", message: "Campo Obrigatório." },
+      { type: "pattern", message: "Verifique se o e-mail está correto." },
+      {
+        type: "maxlength",
+        message: "O e-mail deve conter no máximo 70 caracteres."
+      }
     ]
   };
 
@@ -53,30 +68,44 @@ export class CadastroPage implements OnInit {
         nome: new FormControl(
           null,
           Validators.compose([
-            Validators.minLength(5),
+            Validators.minLength(3),
             Validators.maxLength(120),
             Validators.required
           ])
         ),
         sobrenome: new FormControl(null),
         username: new FormControl(null),
-        password: new FormControl(null, Validators.required),
-        password2: new FormControl(null, Validators.required),
+        password: new FormControl(null, Validators.compose([
+          Validators.minLength(6),
+          Validators.required
+        ])
+        ),
+        password2: new FormControl(null, Validators.compose([
+          Validators.minLength(6),
+          Validators.required
+        ])
+        ),
         cpf: new FormControl(
           null,
           Validators.compose([
             Validators.minLength(14),
             Validators.required,
-            Validators.pattern(/(0|[1-9]\d*)?$/)
+            Validators.pattern(/(0|[1-9]\d)/)
           ])
         ),
-        email: new FormControl(null, Validators.required),
-        telefone: new FormControl(
+        email: new FormControl(
           null,
           Validators.compose([
-            Validators.minLength(14),
+            Validators.maxLength(70),
+            Validators.pattern(
+              "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+            ),
             Validators.required
           ])
+        ),
+        telefone: new FormControl(
+          null,
+          Validators.compose([Validators.minLength(14), Validators.required])
         ),
         perfis_id: new FormControl(1)
       },
