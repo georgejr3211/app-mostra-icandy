@@ -25,6 +25,8 @@ const routes: Routes = [
     SharedModule,
     BrMaskerModule
   ],
-  declarations: [CadastroPage]
+  declarations: [CadastroPage],
+  exports: [CadastroPage],
+  entryComponents: [CadastroPage]
 })
 export class CadastroPageModule {}

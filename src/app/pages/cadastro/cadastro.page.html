@@ -1,6 +1,11 @@
-<ion-header>
-  <app-toolbar title="Cadastrar"></app-toolbar>
-</ion-header>
+<ion-header translucent>
+    <ion-toolbar color="primary">
+      <ion-title>Cadastrar</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismiss()">Cancelar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
   <ion-content padding>
@@ -69,6 +74,6 @@
       </div>
     </form>
 
-    <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta"
-      expand="full" (click)="criarConta()">Criar conta</ion-button>
+    <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="criarConta()">Criar conta
+    </ion-button>
   </ion-content>
