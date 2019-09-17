@@ -50,9 +50,10 @@ export class LoginPage implements OnInit {
     const password = this.formCRUD.get('password').value;
     this.authService.auth(email, password).subscribe(token => {
       if (token) {
-        console.log('bateu aqui');
         localStorage.setItem('auth/token', token);
         this.router.navigate(['/main/home']);
+      } else {
+        console.log('sem Token');
       }
     });
   }
