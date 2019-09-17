@@ -5,18 +5,47 @@
 <ion-content>
   <ion-content padding>
     <form [formGroup]="formCRUD" fxLayoutAlign="column">
-      <ion-row>
-        <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text" placeholder="Nome"></ion-input>
-        <ion-input padding formControlName="sobrenome" id="sobrenome" class="input" type="text" placeholder="Sobrenome"></ion-input>
-      </ion-row>
-      <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone" [brmasker]="{phone: true}">
+      <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text"
+        placeholder="Nome" required></ion-input>
+      <div class="input-group error">
+        <ng-container *ngFor="let validation of validation_messages.nome">
+          <div class="validation-errors"
+            *ngIf="formCRUD.get('nome').hasError(validation.type) && (formCRUD.get('nome').dirty || formCRUD.get('nome').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone"
+        [brmasker]="{phone: true}" required>
       </ion-input>
+      <div class="input-group error">
+        <ng-container *ngFor="let validation of validation_messages.telefone">
+          <div class="validation-errors"
+            *ngIf="formCRUD.get('telefone').hasError(validation.type) && (formCRUD.get('telefone').dirty || formCRUD.get('telefone').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
       <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
-        [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
-      <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail"></ion-input>
-      <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"></ion-input>
-      <ion-input padding formControlName="password2" id="confirmPassword" class="input" type="password" placeholder="Confirmar senha"></ion-input>
+        [brmasker]="{mask:'000.000.000-00', len:14}" required></ion-input>
+      <div class="input-group error">
+        <ng-container *ngFor="let validation of validation_messages.cpf">
+          <div class="validation-errors"
+            *ngIf="formCRUD.get('cpf').hasError(validation.type) && (formCRUD.get('cpf').dirty || formCRUD.get('cpf').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+      <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail" required>
+      </ion-input>
+      <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"
+        required>
+      </ion-input>
+      <ion-input padding formControlName="password2" id="confirmPassword" class="input" type="password"
+        placeholder="Confirmar senha" required></ion-input>
     </form>
 
     <ion-button id="btnCriarConta" expand="full" (click)="criarConta()">Criar conta</ion-button>
   </ion-content>
+
+  <!-- [attr.disabled]="formCRUD.controls.dirty && formCRUD.controls.isValid ? false : true" -->

@@ -37,7 +37,7 @@ export class EsqueciMinhaSenhaPage {
     this.retorno$ = this.facadeUsuarios.findEmail(this.formCRUD.value.email);
     this.retorno$.subscribe(data => {
       if (data.value) {
-        this.authService.forgotPassword(this.formCRUD.value.email);
+        this.authService.forgotPassword(this.formCRUD.value.email).subscribe();
         this.presentAlertSuccess();
       }
       else {
