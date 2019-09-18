@@ -3,11 +3,11 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="selectImage()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
 
   <form [formGroup]='formCRUD'>
     <ion-grid>
@@ -42,11 +42,35 @@
 
             <ion-item lines="none">
               <ion-label class="label">TELEFONE</ion-label>
-              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE"></ion-input>
+              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE"
+                [brmasker]="{phone: true}">
+              </ion-input>
             </ion-item>
+            <div class="input-group error">
+              <ng-container *ngFor="let validation of validation_messages.password">
+                <div class="validation-errors"
+                  *ngIf="formCRUD.get('password').hasError(validation.type) && (formCRUD.get('password').dirty || formCRUD.get('password').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+
+            <div class="input-group error">
+              <ng-container *ngFor="let validation of validation_messages.telefone">
+                <div class="validation-errors"
+                  *ngIf="formCRUD.get('telefone').hasError(validation.type) && (formCRUD.get('telefone').dirty || formCRUD.get('telefone').touched)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
 
             <span *ngIf="canEdit; else view">
-              <ion-button class="btn-width" (click)="onEdit(false);" size="small" color="primary">Salvar</ion-button>
+              <ion-row>
+                <ion-button class="btn-width" (click)="cancelar()" size="small" color="primary">Cancelar</ion-button>
+                <ion-col></ion-col>
+                <ion-button [disabled]="!formCRUD.valid" class="btn-width" (click)="onEdit(false);" size="small"
+                  color="primary">Salvar</ion-button>
+              </ion-row>
             </span>
             <ng-template #view>
               <ion-button class="btn-width" (click)="onEdit(true);" size="small" color="primary">Editar</ion-button>
