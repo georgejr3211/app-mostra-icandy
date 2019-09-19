@@ -1,0 +1,20 @@
+<ion-header>
+  <app-toolbar title="Pedido Nº {{passedId}}"></app-toolbar>
+</ion-header>
+
+<ion-content class="content">
+  <ion-list *ngFor="let item of pedido$ | async">
+    <ion-row>
+      <ion-col>
+        {{(item.produto)?.nome}}
+      </ion-col>
+      <ion-col style="text-align: end;">
+        R$ {{(item.produto)?.preco}}
+      </ion-col>
+    </ion-row>
+  </ion-list>
+  <ion-label color="primary">
+    <ion-button id="btnvoltar" expand="full" (click)="dismiss()">Voltar
+    </ion-button>
+  </ion-label>
+</ion-content>
