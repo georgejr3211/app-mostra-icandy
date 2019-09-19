@@ -1,10 +1,10 @@
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsuariosService } from "./../../providers/services/usuarios.service";
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { Observable } from "rxjs/internal/Observable";
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { File } from '@ionic-native/file/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
+import { File } from "@ionic-native/file/ngx";
+import { ActionSheetController } from "@ionic/angular";
 
 @Component({
   selector: "app-perfil",
@@ -12,11 +12,30 @@ import { ActionSheetController } from '@ionic/angular';
   styleUrls: ["./perfil.page.scss"]
 })
 export class PerfilPage implements OnInit, AfterViewInit {
+  validation_messages = {
+    telefone: [
+      { type: "required", message: "Campo telefone obrigatório." },
+      {
+        type: "minlength",
+        message: "O telefone deve ter pelo menos 10 números."
+      }
+    ],
+    password: [
+      { type: "required", message: "Campo senha obrigatório." },
+      {
+        type: "minlength",
+        message: "A senha deve ter pelo menos 6 caracteres."
+      }
+    ]
+  };
+
   usuario$: Observable<any>;
   formCRUD: FormGroup;
   hasData = false;
   canEdit = false;
-  currentImage = 'assets/images/profile.jpeg';
+  currentImage = "assets/images/profile.jpeg";
+  telefone;
+  valorTelefone;
 
   croppedImagepath = "";
   isLoading = false;
@@ -40,17 +59,22 @@ export class PerfilPage implements OnInit, AfterViewInit {
         nome: new FormControl(null, {}),
         sobrenome: new FormControl(null, {}),
         username: new FormControl(null, {}),
-        password: new FormControl(null, {}),
+        password: new FormControl(
+          null,
+          Validators.compose([Validators.minLength(6), Validators.required])
+        ),
         cpf: new FormControl(null, {}),
         email: new FormControl(null, {}),
-        telefone: new FormControl(null, {}),
+        telefone: new FormControl(
+          null,
+          Validators.compose([Validators.minLength(14), Validators.required])
+        ),
         perfis_id: new FormControl(null, {}),
         ativo: new FormControl(null, {})
       },
       { updateOn: "change" }
     );
   }
-
 
   pickImage(sourceType) {
     const options: CameraOptions = {
@@ -59,8 +83,8 @@ export class PerfilPage implements OnInit, AfterViewInit {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
-    }
-    
+    };
+
     // const options: CameraOptions = {
     //   quality: 100,
     //   destinationType: this.camera.DestinationType.DATA_URL,
@@ -68,38 +92,41 @@ export class PerfilPage implements OnInit, AfterViewInit {
     //   mediaType: this.camera.MediaType.PICTURE
     // };
 
-    this.camera.getPicture(options).then((imageData) => {
-      this.currentImage = 'data:image/jpeg;base64,' + imageData;
-    }, (err) => {
-      // Handle error
-      console.log("Camera issue:" + err);
-    });
+    this.camera.getPicture(options).then(
+      imageData => {
+        this.currentImage = "data:image/jpeg;base64," + imageData;
+      },
+      err => {
+        // Handle error
+        console.log("Camera issue:" + err);
+      }
+    );
   }
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
       header: "Select Image source",
-      buttons: [{
-        text: 'Carregar da galeria',
-        handler: () => {
-          this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+      buttons: [
+        {
+          text: "Carregar da galeria",
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.PHOTOLIBRARY);
+          }
+        },
+        {
+          text: "Usar a camera",
+          handler: () => {
+            this.pickImage(this.camera.PictureSourceType.CAMERA);
+          }
+        },
+        {
+          text: "Cancelar",
+          role: "cancel"
         }
-      },
-      {
-        text: 'Usar a camera',
-        handler: () => {
-          this.pickImage(this.camera.PictureSourceType.CAMERA);
-        }
-      },
-      {
-        text: 'Cancelar',
-        role: 'cancel'
-      }
       ]
     });
     await actionSheet.present();
   }
-
 
   // takePicture() {
   //   const options: CameraOptions = {
@@ -122,7 +149,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
       if (data) {
         this.hasData = true;
         this.formCRUD.patchValue(data);
-        this.formCRUD.get('password').setValue(null);
+        this.formCRUD.get("password").setValue(null);
       }
     });
   }
@@ -132,7 +159,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
   }
 
   openGallery() {
-    console.log('openGallery');
+    console.log("openGallery");
     // this.imagePicker.getPictures({}).then((results) => {
     //   for (var i = 0; i < results.length; i++) {
     //     console.log('Image URI: ' + results[i]);
@@ -142,14 +169,32 @@ export class PerfilPage implements OnInit, AfterViewInit {
 
   onEdit(data?) {
     if (data) {
-      this.formCRUD.enable();
-      return this.canEdit = true;
+      this.valorTelefone = this.formCRUD.get('telefone').value;
+      this.formCRUD.get('telefone').setValue('');
+      this.formCRUD.get("password").enable();
+      this.formCRUD.get("telefone").enable();
+      return (this.canEdit = true);
     } else {
-      console.log('FORM CRUD', this.formCRUD.value);
+      this.formatTelefone();
+      console.log("FORM CRUD", this.formCRUD.value);
       this.facade.update(this.formCRUD.value).subscribe();
-      console.log('atualizou');
+      console.log("atualizou");
       this.formCRUD.disable();
-      return this.canEdit = false;
+      return (this.canEdit = false);
     }
+  }
+
+  formatTelefone() {
+    this.telefone = this.formCRUD.get("telefone").value;
+    this.telefone = this.telefone.replace(/-/g, "");
+    this.telefone = this.telefone.replace(/[{()}]/g, "");
+    this.telefone = this.telefone.replace(/ /g, "");
+    this.formCRUD.get("telefone").setValue(this.telefone);
+  }
+
+  cancelar() {
+    this.formCRUD.get('telefone').setValue(this.valorTelefone);
+    this.canEdit = false;
+    this.formCRUD.disable();
   }
 }

@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { PerfilPage } from './perfil.page';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
+import { BrMaskerModule } from 'br-mask';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     SharedModule,
+    BrMaskerModule
   ],
   declarations: [PerfilPage],
   providers: [

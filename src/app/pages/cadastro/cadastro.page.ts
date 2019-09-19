@@ -158,6 +158,10 @@ export class CadastroPage implements OnInit {
     await alert.present();
   }
 
+  dismiss() {
+    this.router.navigate(["/login"]);
+  }
+
   formatTelefone() {
     this.telefone = this.formCRUD.get("telefone").value;
     this.telefone = this.telefone.replace(/-/g, "");
