@@ -16,6 +16,7 @@ import { EsqueciMinhaSenhaPage } from '../esqueci-minha-senha/esqueci-minha-senh
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  imageLogo = '/assets/images/confeitaria-logo.png';
   auth$: Observable<string>;
 
   formCRUD: FormGroup;

@@ -19,7 +19,7 @@ export class CadastroPage implements OnInit {
         type: "minlength",
         message: "O nome deve ter pelo menos 3 caracteres."
       },
-      { type: "maxlength", message: "O nome deve ter no máximo 120 caracteres." }
+      { type: "maxlength", message: "O nome deve ter no máximo 70 caracteres." }
     ],
     telefone: [
       { type: "required", message: "Campo Obrigatório." },
@@ -57,6 +57,8 @@ export class CadastroPage implements OnInit {
   cpf;
   formCRUD: FormGroup;
 
+  retorno$;
+
   constructor(
     private facade: UsuariosService,
     public alertController: AlertController,
@@ -69,21 +71,19 @@ export class CadastroPage implements OnInit {
           null,
           Validators.compose([
             Validators.minLength(3),
-            Validators.maxLength(120),
+            Validators.maxLength(70),
             Validators.required
           ])
         ),
         sobrenome: new FormControl(null),
         username: new FormControl(null),
-        password: new FormControl(null, Validators.compose([
-          Validators.minLength(6),
-          Validators.required
-        ])
+        password: new FormControl(
+          null,
+          Validators.compose([Validators.minLength(6), Validators.required])
         ),
-        password2: new FormControl(null, Validators.compose([
-          Validators.minLength(6),
-          Validators.required
-        ])
+        password2: new FormControl(
+          null,
+          Validators.compose([Validators.minLength(6), Validators.required])
         ),
         cpf: new FormControl(
           null,
@@ -123,22 +123,32 @@ export class CadastroPage implements OnInit {
       this.formatTelefone();
       this.formatCpf();
 
-      this.formCRUD.get("password2").disable();
+      this.formCRUD.disable();
 
       console.log("this.form", this.formCRUD.value);
-      this.facade.insert(this.formCRUD.value).subscribe();
-      this.authService
-        .auth(this.formCRUD.value.email, this.formCRUD.value.password)
-        .subscribe(token => {
-          this.formCRUD.disable();
-          if (token) {
-            localStorage.setItem("auth/token", token);
-            this.router.navigate(["/main/home"]);
-          } else {
-            console.log("sem Token");
-            return;
-          }
-        });
+      this.retorno$ = this.facade.insert(this.formCRUD.value);
+      this.retorno$.subscribe(data => {
+        if (data) {
+          this.authService
+            .auth(this.formCRUD.value.email, this.formCRUD.value.password)
+            .subscribe(token => {
+              this.formCRUD.disable();
+              if (token) {
+                localStorage.setItem("auth/token", token);
+                this.router.navigate(["/main/home"]);
+              } else {
+                console.log("sem Token");
+                return;
+              }
+            });
+        } else {
+          this.presentAlertErro();
+          this.formCRUD.get("email").enable();
+          this.formCRUD.get("cpf").enable();
+          this.formCRUD.get("email").setValue("");
+          this.formCRUD.get("cpf").setValue("");
+        }
+      });
     } else {
       console.log("nao");
       this.presentAlert();
@@ -152,6 +162,17 @@ export class CadastroPage implements OnInit {
       header: "Erro",
       // subHeader: "Verifique seu e-mail",
       message: "As senhas devem ser iguais!!",
+      buttons: ["OK"]
+    });
+
+    await alert.present();
+  }
+
+  async presentAlertErro() {
+    const alert = await this.alertController.create({
+      header: "Erro",
+      // subHeader: "Verifique seu e-mail",
+      message: "Email ou CPF inválido ou já existentes!!",
       buttons: ["OK"]
     });
 

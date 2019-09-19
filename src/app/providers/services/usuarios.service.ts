@@ -27,7 +27,7 @@ export class UsuariosService {
   }
 
   insert(payload?) {
-    const url = `${this.apiURL}/v1/usuarios`;
+    const url = `${this.apiURL}/auth/register`;
     return this.http.post(url, payload).pipe(map((data: any) => data.value));
   }
 
