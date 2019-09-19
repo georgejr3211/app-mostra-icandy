@@ -1,8 +1,11 @@
 <ion-header translucent>
     <ion-toolbar color="primary">
       <ion-title>Cadastrar</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="dismiss()">Cancelar</ion-button>
+      <ion-buttons slot="start">
+        <ion-button (click)="dismiss()">
+            <ion-icon name="arrow-round-back"></ion-icon>
+            <small>Voltar</small>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -74,6 +77,6 @@
       </div>
     </form>
 
-    <ion-button id="btnCriarConta" expand="full" (click)="criarConta()">Criar conta
+    <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="criarConta()">Criar conta
     </ion-button>
   </ion-content>
