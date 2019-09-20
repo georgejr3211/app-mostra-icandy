@@ -3,18 +3,32 @@
 </ion-header>
 
 <ion-content class="content">
-  <ion-list *ngFor="let item of pedido$ | async">
+  <ion-card-content>
+    <ion-list *ngFor="let item of pedido$ | async">
+      <ion-row>
+        <ion-col>
+          {{item.quantidade}}x
+        </ion-col>
+        <ion-col>
+          {{(item.produto)?.nome}}
+        </ion-col>
+        <ion-col style="text-align: end;">
+          R$ {{(item.produto)?.preco}}
+        </ion-col>
+      </ion-row>
+    </ion-list>
+    <ion-item-divider></ion-item-divider>
     <ion-row>
       <ion-col>
-        {{(item.produto)?.nome}}
+          Total
       </ion-col>
-      <ion-col style="text-align: end;">
-        R$ {{(item.produto)?.preco}}
+      <ion-col>
+        R${{quantidade}}
       </ion-col>
     </ion-row>
-  </ion-list>
-  <ion-label color="primary">
-    <ion-button id="btnvoltar" expand="full" (click)="dismiss()">Voltar
-    </ion-button>
-  </ion-label>
+    <ion-label color="primary">
+      <ion-button id="btnvoltar" expand="full" (click)="dismiss()">Voltar
+      </ion-button>
+    </ion-label>
+  </ion-card-content>
 </ion-content>
