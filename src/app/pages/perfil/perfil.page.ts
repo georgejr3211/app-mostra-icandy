@@ -5,6 +5,7 @@ import { Observable } from "rxjs/internal/Observable";
 import { Camera, CameraOptions } from "@ionic-native/camera/ngx";
 import { File } from "@ionic-native/file/ngx";
 import { ActionSheetController } from "@ionic/angular";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-perfil",
@@ -49,7 +50,8 @@ export class PerfilPage implements OnInit, AfterViewInit {
     private facade: UsuariosService,
     private camera: Camera,
     public actionSheetController: ActionSheetController,
-    private file: File
+    private file: File,
+    private router: Router
   ) {
     this.usuario$ = this.facade.usuarioLogado();
 
@@ -128,26 +130,11 @@ export class PerfilPage implements OnInit, AfterViewInit {
     await actionSheet.present();
   }
 
-  // takePicture() {
-  //   const options: CameraOptions = {
-  //     quality: 100,
-  //     destinationType: this.camera.DestinationType.DATA_URL,
-  //     encodingType: this.camera.EncodingType.JPEG,
-  //     mediaType: this.camera.MediaType.PICTURE
-  //   };
-
-  //   this.camera.getPicture(options).then((imageData) => {
-  //     this.currentImage = 'data:image/jpeg;base64,' + imageData;
-  //   }, (err) => {
-  //     // Handle error
-  //     console.log("Camera issue:" + err);
-  //   });
-  // }
-
   ngOnInit() {
     this.usuario$.subscribe(data => {
       if (data) {
         this.hasData = true;
+        console.log('Data', data);
         this.formCRUD.patchValue(data);
         this.formCRUD.get("password").setValue(null);
       }
@@ -158,16 +145,10 @@ export class PerfilPage implements OnInit, AfterViewInit {
     this.formCRUD.disable();
   }
 
-  openGallery() {
-    console.log("openGallery");
-    // this.imagePicker.getPictures({}).then((results) => {
-    //   for (var i = 0; i < results.length; i++) {
-    //     console.log('Image URI: ' + results[i]);
-    //   }
-    // }, (err) => { });
-  }
-
   onEdit(data?) {
+    console.log(data);
+    this.formCRUD.get('id').enable();
+
     if (data) {
       this.valorTelefone = this.formCRUD.get('telefone').value;
       this.formCRUD.get('telefone').setValue('');
@@ -196,5 +177,10 @@ export class PerfilPage implements OnInit, AfterViewInit {
     this.formCRUD.get('telefone').setValue(this.valorTelefone);
     this.canEdit = false;
     this.formCRUD.disable();
+  }
+
+  doLogout() {
+    localStorage.removeItem('auth/token');
+    this.router.navigate(['/login']);
   }
 }
