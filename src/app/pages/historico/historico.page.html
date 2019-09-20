@@ -6,38 +6,36 @@
   <!-- {{pedido$ | async | json}} -->
   <ion-item *ngFor="let item of (pedido$ | async) " style="padding-top: 5px;">
     <ion-row>
-      <ion-col style="max-width: 50px; padding: 0;">
+      <ion-col style="max-width: 50px; padding: 0; padding-right: 10px;">
         <ion-label class="imgRestaurante">
           <ion-icon style="padding-top: 10px;" name="restaurant"></ion-icon>
         </ion-label>
       </ion-col>
       <ion-col>
         <ion-row>
-          <ion-col>
-            Artes NeW
-          </ion-col>
+          Pedido Nº {{ item?.id }}
         </ion-row>
         <ion-row>
-          <ion-col>
-            Pedido Nº {{ item?.id }}
-          </ion-col>
+          <small>
+            Artes NeW
+          </small>
+        </ion-row>
+        <ion-row style="min-width: 120px;">
+          <small>
+            {{item?.updatedAt | date: 'dd/MM/yyyy hh:mm:ss'}}
+          </small>
         </ion-row>
       </ion-col>
-      <ion-col style="text-align: end;">
-        <ion-button (click)="presentPopover(item.id)" routerDirection="root">
-          <ion-icon style="font-size: 30px;" name="add"></ion-icon>
-        </ion-button>
+      <ion-col style="text-align: end; size: 5px; height: 10px;">
+        <ion-icon style="font-size: 30px;" name="information-circle" color="primary" (click)="presentPopover(item.id)"
+          routerDirection="root">
+        </ion-icon>
       </ion-col>
       <ion-row>
-        <ion-col style="min-width: 175px;">
+        <ion-col style="padding-top: 0; margin-top: -10px;">
           {{item?.statusPedido?.descricao}}
-          </ion-col>
-          <ion-col>
-            <small>
-                {{item?.updatedAt | date: 'dd/MM/yyyy hh:mm:ss'}}
-            </small>
-          </ion-col>
-        </ion-row>
+        </ion-col>
+      </ion-row>
     </ion-row>
   </ion-item>
 </ion-content>
