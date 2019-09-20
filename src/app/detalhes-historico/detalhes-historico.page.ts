@@ -11,7 +11,7 @@ import { PedidosProdutosService } from "../providers/services/pedidos-produtos.s
 export class DetalhesHistoricoPage implements OnInit {
   passedId = null;
   pedido$: Observable<any>;
-  quantidade = 0;
+  quantidade = 0.0;
   preco: number;
 
   constructor(
@@ -20,16 +20,14 @@ export class DetalhesHistoricoPage implements OnInit {
     private navParams: NavParams
   ) {
     this.passedId = this.navParams.get("custom_id");
-    console.log("AOBA", this.passedId);
   }
 
   ngOnInit() {
     this.pedido$ = this.facade.findPedido(this.passedId);
     this.pedido$.subscribe(data => {
       data.map(element => {
-        this.preco = parseInt(element.produto.preco);
+        this.preco = parseFloat(element.produto.preco);
         this.quantidade = this.quantidade + this.preco;
-        console.log(this.quantidade);
       })
     });
   }

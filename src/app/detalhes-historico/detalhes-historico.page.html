@@ -6,7 +6,7 @@
   <ion-card-content>
     <ion-list *ngFor="let item of pedido$ | async">
       <ion-row>
-        <ion-col>
+        <ion-col style="max-width: 35px;">
           {{item.quantidade}}x
         </ion-col>
         <ion-col>
@@ -20,10 +20,10 @@
     <ion-item-divider></ion-item-divider>
     <ion-row>
       <ion-col>
-          Total
+        Total
       </ion-col>
-      <ion-col>
-        R${{quantidade}}
+      <ion-col style="text-align: end;">
+        R$ {{quantidade}}
       </ion-col>
     </ion-row>
     <ion-label color="primary">
