@@ -12,6 +12,8 @@ import { SharedModule } from "./shared/shared.module";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TokenInterceptor } from "./providers/interceptors/token-interceptor.service";
 import { LoginPageModule } from "./pages/login/login.module";
+import { OnesignalService } from './providers/services/onesignal.service';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +33,9 @@ import { LoginPageModule } from "./pages/login/login.module";
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    }
+    },
+    OnesignalService,
+    OneSignal
   ],
   bootstrap: [AppComponent]
 })
