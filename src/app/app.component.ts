@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { ActivatedRoute } from '@angular/router';
-import { OnesignalService } from './providers/services/onesignal.service';
+import { PushNotificationService } from './providers/services/push-notification.service';
 
 @Component({
   selector: 'app-root',
@@ -16,8 +15,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private activatedRoute: ActivatedRoute,
-    private oneSignalService: OnesignalService
+    private push: PushNotificationService
   ) {
     this.initializeApp();
   }
@@ -26,7 +24,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.oneSignalService.init();
+      this.push.init();
     });
   }
 }

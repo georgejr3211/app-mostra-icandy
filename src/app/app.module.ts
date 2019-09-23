@@ -12,7 +12,7 @@ import { SharedModule } from "./shared/shared.module";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TokenInterceptor } from "./providers/interceptors/token-interceptor.service";
 import { LoginPageModule } from "./pages/login/login.module";
-import { OnesignalService } from './providers/services/onesignal.service';
+import { PushNotificationService } from './providers/services/push-notification.service';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
@@ -26,6 +26,8 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
     LoginPageModule
   ],
   providers: [
+    PushNotificationService,
+    OneSignal,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -34,8 +36,6 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
       useClass: TokenInterceptor,
       multi: true
     },
-    OnesignalService,
-    OneSignal
   ],
   bootstrap: [AppComponent]
 })

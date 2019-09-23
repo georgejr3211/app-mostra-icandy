@@ -54,6 +54,7 @@ export class LoginPage implements OnInit {
         localStorage.setItem('auth/token', token);
         this.router.navigate(['/main/home']);
       } else {
+        alert('Dados inválidos');
         console.log('sem Token');
       }
     });
