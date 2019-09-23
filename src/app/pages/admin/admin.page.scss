@@ -1,0 +1,32 @@
+:host {
+    ion-content {
+      --background: url("../../../assets/images/bg.png");
+    }
+  }
+  
+  .input {
+    background: #ffffff;
+    border: 1px solid #766f74;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 5px;
+    margin-top: 10px;
+    height: 40px;
+  }
+  
+  #titulo {
+    text-align: center;
+  }
+  
+  #btnCriarConta {
+    margin-top: 20px;
+    --background: #b41661;
+  }
+  
+  .validation-errors {
+    color: #cc0033;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 5px 0 0;
+  }
+  
