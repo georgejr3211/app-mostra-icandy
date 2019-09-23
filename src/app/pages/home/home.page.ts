@@ -5,6 +5,7 @@ import { ProdutosService } from 'src/app/providers/services/produtos.service';
 import { environment } from '../../../environments/environment';
 import { map } from 'rxjs/operators';
 import { CarrinhoCompraService } from 'src/app/providers/services/carrinho-compra.service';
+import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
 
 @Injectable({ providedIn: 'root' })
 @Component({
@@ -19,11 +20,13 @@ export class HomePage implements OnInit, OnDestroy {
   produtos$: Observable<any>;
   teste$: Observable<any>;
   produtoCarrinho = [];
-
+  userId = `01d17a8c-2988-43a9-b549-c163cfe9fc27`;
+  mensagem = ``;
   constructor(
     private userService: UsuariosService,
     private produtosService: ProdutosService,
-    private carrinhoCompraService: CarrinhoCompraService
+    private carrinhoCompraService: CarrinhoCompraService,
+    private push: PushNotificationService
   ) { }
 
   ngOnInit() {
@@ -76,6 +79,11 @@ export class HomePage implements OnInit, OnDestroy {
 
   onSearch(value) {
     this.produtos$ = this.produtosService.index({ s: value });
+  }
+
+
+  sendMessage() {
+    this.push.sendMessage(this.userId, this.mensagem);
   }
 
   ngOnDestroy() {
