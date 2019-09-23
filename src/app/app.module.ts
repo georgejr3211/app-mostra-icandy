@@ -12,6 +12,8 @@ import { SharedModule } from "./shared/shared.module";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TokenInterceptor } from "./providers/interceptors/token-interceptor.service";
 import { LoginPageModule } from "./pages/login/login.module";
+import { PushNotificationService } from './providers/services/push-notification.service';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +26,8 @@ import { LoginPageModule } from "./pages/login/login.module";
     LoginPageModule
   ],
   providers: [
+    PushNotificationService,
+    OneSignal,
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
