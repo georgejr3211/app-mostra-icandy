@@ -10,7 +10,7 @@ export class PushNotificationService {
   constructor(private oneSignal: OneSignal) { }
 
   init() {
-    this.oneSignal.startInit('71f90043-e77c-4037-a62a-bcce5f50e60d', '26412989148');
+    this.oneSignal.startInit('61f5011f-5ec8-4a73-9cc1-1aef1b298b0c', '26412989148');
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
     this.oneSignal.handleNotificationReceived().subscribe(() => {
