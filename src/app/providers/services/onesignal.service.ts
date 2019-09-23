@@ -9,19 +9,24 @@ declare const window: any;
 export class OnesignalService {
 
   constructor(private oneSignal: OneSignal) {
-    
+
   }
 
   init() {
-    this.oneSignal.startInit('2f4bca6b-b91e-4f14-b653-384c34774481', '26412989148');
+    console.log('bateu aqui');
+    this.oneSignal.startInit('1dc75a2b-ca7e-4491-88c5-31f80d73f522', '26412989148');
 
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
     this.oneSignal.handleNotificationReceived().subscribe(() => {
+      console.log('sub 1');
+
       // do something when notification is received
     });
 
     this.oneSignal.handleNotificationOpened().subscribe(() => {
+      console.log('sub 2');
+
       // do something when a notification is opened
     });
 

@@ -47,6 +47,8 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
+    console.log(`logando`);
+    alert(`logando`);
     const email = this.formCRUD.get('email').value;
     const password = this.formCRUD.get('password').value;
     this.authService.auth(email, password).subscribe(token => {
