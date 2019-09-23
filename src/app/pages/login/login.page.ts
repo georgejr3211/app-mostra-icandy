@@ -47,8 +47,6 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
-    console.log(`logando`);
-    alert(`logando`);
     const email = this.formCRUD.get('email').value;
     const password = this.formCRUD.get('password').value;
     this.authService.auth(email, password).subscribe(token => {
@@ -56,6 +54,7 @@ export class LoginPage implements OnInit {
         localStorage.setItem('auth/token', token);
         this.router.navigate(['/main/home']);
       } else {
+        alert('Dados inválidos');
         console.log('sem Token');
       }
     });
