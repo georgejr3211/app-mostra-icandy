@@ -1,9 +1,7 @@
-# COMANDOS
-❯ ionic serve --lab (Inicia a aplicação)
-❯ ionic g page nome-do-tela (Cria um tela)
+❯ sudo ionic cordova run android -l
+❯ sudo ionic cordova emulate android --consolelogs -l
 
-# FALTA FAZER
-[] ADICIONAR REDUX?
-[] CRIAR AS TELAS PRINCIPAIS DO USUÁRIO
-[] CRIAR AS TELAS PRINCIPAIS DO ADMINISTRADOR
-[] CRIAR A TELA DE LOGIN => O USUÁRIO PODERÁ LOGAR PELO GOOGLE/FACEBOOK?
+qualquer problema, abrir o android studio e executar o comando
+❯ sudo ionic cordova run android --target=android-device-2 --livereload --debug           
+❯ sudo ionic cordova emulate ios --consolelogs --livereload                                    
+SE DER ERRO COM HTTP REQUEST - CRIAR DEVICE NOVAMENTE

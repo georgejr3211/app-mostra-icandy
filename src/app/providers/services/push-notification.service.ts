@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
 
-declare const window: any;
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 @Injectable({
   providedIn: 'root'
 })
-export class OnesignalService {
+export class PushNotificationService {
 
-  constructor(private oneSignal: OneSignal) {
-    
-  }
+  constructor(private oneSignal: OneSignal) { }
 
   init() {
-    this.oneSignal.startInit('2f4bca6b-b91e-4f14-b653-384c34774481', '26412989148');
-
+    this.oneSignal.startInit('61f5011f-5ec8-4a73-9cc1-1aef1b298b0c', '26412989148');
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
 
     this.oneSignal.handleNotificationReceived().subscribe(() => {
@@ -23,8 +19,11 @@ export class OnesignalService {
 
     this.oneSignal.handleNotificationOpened().subscribe(() => {
       // do something when a notification is opened
+
     });
 
     this.oneSignal.endInit();
   }
 }
+
+
