@@ -1,22 +1,16 @@
-<ion-header>
-  <app-toolbar title="Administrador"></app-toolbar>
-</ion-header>
+<ion-header translucent>
+    <ion-toolbar color="primary">
+      <ion-title style="font-size: 12px;">Administrador</ion-title>
+      <ion-buttons slot="start">
+          <ion-button (click)="dismiss()">
+              <ion-icon name="arrow-round-back"></ion-icon>
+              <small>Voltar</small>
+          </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
-  <ion-card>
-    <ion-card-header style="text-align: center;">Usuários</ion-card-header>
-
-    <form [formGroup]="formCRUD" fxLayoutAlign="column">
-      <ion-card-content>
-        <ion-item lines="none">
-          <ion-select (ionChange)="setUsuario()" style="padding: 0;" formControlName="valor">
-            <ion-select-option *ngFor="let user of (usuarios$ | async)" [value]="user?.id">
-              {{ user?.email }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-card-content>
-    </form>
-  </ion-card>
 
   <ion-card *ngIf="usuarioId">
     <ion-card-header style="text-align: center;">Pedidos</ion-card-header>
@@ -56,8 +50,8 @@
         <ion-label>Ativo</ion-label>
         <ion-toggle formControlName="ativo"></ion-toggle>
       </ion-item>
-      <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" 
-      (click)="onAtualizar()">Atualizar</ion-button>
+      <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="onAtualizar()">Atualizar
+      </ion-button>
 
 
     </form>

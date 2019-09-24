@@ -1,9 +1,21 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>list</ion-title>
-  </ion-toolbar>
+  <app-toolbar title="Administrador"></app-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-header style="text-align: center;">Pedidos dos Usuários</ion-card-header>
 
+    <ion-card-content>
+      <ion-item (click)="buscarId(pedidos?.id)" *ngFor="let pedidos of (pedidos$ | async)?.rows">
+        <ion-item-option>
+          teste
+        </ion-item-option>
+        {{pedidos.id}} - {{pedidos.usuario.nome}}
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <pre>
+      {{pedidos$ | async | json}}
+    </pre>
 </ion-content>

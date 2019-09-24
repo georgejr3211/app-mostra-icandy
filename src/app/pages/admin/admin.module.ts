@@ -11,7 +11,7 @@ import { BrMaskerModule } from 'br-mask';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: AdminPage
   }
 ];

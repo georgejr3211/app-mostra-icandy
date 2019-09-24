@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PedidosService } from 'src/app/providers/services/pedidos.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list',
@@ -7,9 +10,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListPage implements OnInit {
 
-  constructor() { }
+  pedidos$: Observable<any>;
+
+  constructor(
+    private facade: PedidosService,
+    private router: Router
+    ) { 
+    this.pedidos$ = this.facade.index();
+  }
 
   ngOnInit() {
+  }
+
+  buscarId(id) {
+    this.router.navigate([`./admin/${id}`]);
   }
 
 }

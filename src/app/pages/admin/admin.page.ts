@@ -1,13 +1,13 @@
-import { StatusService } from './../../providers/services/status.service';
+import { StatusService } from "./../../providers/services/status.service";
 import { Observable } from "rxjs/internal/Observable";
 import { UsuariosService } from "../../providers/services/usuarios.service";
 import { ProdutosService } from "./../../providers/services/produtos.service";
-import { AlertController } from "@ionic/angular";
-import { Router } from "@angular/router";
+import { AlertController, ModalController } from "@ionic/angular";
+import { Router, ActivatedRoute } from "@angular/router";
 import { AuthService } from "../../providers/services/auth.service";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { PedidosService } from 'src/app/providers/services/pedidos.service';
+import { PedidosService } from "src/app/providers/services/pedidos.service";
 
 @Component({
   selector: "app-admin",
@@ -42,10 +42,11 @@ export class AdminPage implements OnInit {
     private facadeProdutos: ProdutosService,
     public alertController: AlertController,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private activatedRoute: ActivatedRoute,
+    private modalCtrl: ModalController,
   ) {
-
-    localStorage.getItem('auth/token');
+    localStorage.getItem("auth/token");
     this.usuarios$ = this.facade.index();
     this.status$ = this.facadeStatus.index();
 
@@ -80,38 +81,31 @@ export class AdminPage implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  dismiss() {
+    this.modalCtrl.dismiss();
+  }
 
-  setUsuario() {
-    this.usuario$ = this.facade.find(this.formCRUD.get('valor').value);
-    this.usuario$.subscribe(data => {
-      if (data) {
-        console.log('data', data);
-        this.pedidos$ = this.facadePedidos.findByUser(data.id);
-        this.pedidos$.subscribe(data => console.log('dataa', data));
-        this.hasData = data;
-        this.formCRUD.patchValue(data);
-      }
-    });
+  ngOnInit() {
+    const id = this.activatedRoute.snapshot.params;
+    this.pedidos$ = this.facadePedidos.findByUser(id);
+    this.pedidos$.subscribe(data => console.log("dataa", data));
     this.usuarioId = true;
   }
 
   setPedido() {
-    this.pedido$ = this.facadePedidos.find(this.formCRUD.get('pedido').value);
+    this.pedido$ = this.facadePedidos.find(this.formCRUD.get("pedido").value);
     this.pedido$.subscribe(data => {
       if (data) {
         this.pedidoId = true;
         this.formCRUDPedido.patchValue(data);
       }
-    })
+    });
   }
 
   onAtualizar() {
-    console.log('vai atualizar status ou ativo');
+    console.log("vai atualizar status ou ativo");
   }
-
 }
-
 
 // onSaveUsuario() {
 //   if (
