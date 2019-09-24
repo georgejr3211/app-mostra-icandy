@@ -1,33 +1,26 @@
-<ion-content padding>
+<ion-content>
 
-  <ion-row style="justify-content: center;margin-top: 5%;">
+  <ion-row>
     <ion-label class="imgRestaurante">
       <img class="card-img" [src]="imageLogo" />
     </ion-label>
   </ion-row>
 
-  <!-- <ion-card>
-    <img *ngIf="!fileUrl" src="assets/no-image.jpeg" />
-    <img *ngIf="fileUrl" src="{{fileUrl}}" />
-    <ion-card-content>
-      <ion-button color="medium" size="large" (click)="cropUpload()">
-        <ion-icon slot="icon-only" name="camera"></ion-icon>
-      </ion-button>
-    </ion-card-content>
-  </ion-card> -->
-
-  <form style="width: 90%;" [formGroup]="formCRUD">
+  <form padding [formGroup]="formCRUD">
     <ion-input padding formControlName="email" class="input" type="email" clearInput placeholder="E-mail"></ion-input>
     <ion-input padding formControlName="password" class="input" type="password" clearInput placeholder="Senha">
     </ion-input>
     <ion-row class="buttons">
       <ion-button class="btn-cadastro" expand="full" (click)="onCadastro()">Cadastrar</ion-button>
       <ion-button class="btn-login" expand="full" (click)="onLogin()">Login</ion-button>
-    </ion-row>
-    <ion-row class="forgot-password">
-      <span (click)="presentModal()" routerDirection="root">
-        Esqueci minha senha
+      <span class="esqueci" (click)="presentModal()" expand="full" routerDirection="root">
+        <strong>Esqueci minha senha</strong>
       </span>
     </ion-row>
+    <!-- <ion-row class="forgot-password">
+      <ion-button (click)="presentModal()" expand="full" routerDirection="root">
+        Esqueci minha senha
+      </ion-button> -->
+    <!-- </ion-row> -->
   </form>
 </ion-content>

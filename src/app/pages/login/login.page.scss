@@ -37,15 +37,24 @@ form {
   letter-spacing: 2px;
   font-weight: 450;
 
-  --background: #B41661;
+  --background: #b41661;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .forgot-password {
   margin-top: 20px;
   text-transform: uppercase;
-  color: #FFF;
+  color: #fff;
   font-weight: 500;
   letter-spacing: 2px;
   cursor: pointer;
+}
+
+.esqueci {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  margin-top: 25px;
+  background: #706bb7;
+  padding: 10px;
 }
