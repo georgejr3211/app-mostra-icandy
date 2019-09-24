@@ -3,7 +3,6 @@ import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 import { Observable } from 'rxjs';
 import { ProdutosService } from 'src/app/providers/services/produtos.service';
 import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
 import { CarrinhoCompraService } from 'src/app/providers/services/carrinho-compra.service';
 import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
 
