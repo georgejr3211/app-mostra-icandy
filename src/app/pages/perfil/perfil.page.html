@@ -3,6 +3,8 @@
 </ion-header>
 
 <ion-content>
+  <ion-progress-bar *ngIf="!(usuario$ | async)" type="indeterminate"></ion-progress-bar>
+
   <!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="selectImage()">
       <ion-icon name="camera"></ion-icon>
@@ -43,8 +45,7 @@
 
             <ion-item lines="none">
               <ion-label class="label">TELEFONE</ion-label>
-              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE"
-                [brmasker]="{phone: true}">
+              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE" [brmasker]="{phone: true}">
               </ion-input>
             </ion-item>
             <div class="input-group error">

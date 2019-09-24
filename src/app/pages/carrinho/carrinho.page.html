@@ -3,6 +3,8 @@
 </ion-header>
 
 <ion-content>
+  <ion-progress-bar *ngIf="!(localizacoes$ | async)?.rows?.length || !(formasPagamento$ | async)?.length" type="indeterminate"></ion-progress-bar>
+
   <!-- <ion-button (click)="updateStatus()">update realtime teste</ion-button> -->
   <form [formGroup]="formCRUD">
     <ion-card>

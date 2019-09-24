@@ -3,6 +3,8 @@
 </ion-header>
 
 <ion-content>
+  <ion-progress-bar *ngIf="!(produtos$ | async)?.length" type="indeterminate"></ion-progress-bar>
+
   <ion-searchbar animated (ionChange)="onSearch($event.target.value)"></ion-searchbar>
   <ion-card *ngFor="let card of (produtos$ | async)">
     <ion-card-header>
@@ -45,7 +47,7 @@
 
 
       <ion-input type="text" placeholder="id" [(ngModel)]="userId"></ion-input>
-      <ion-input type="text"  placeholder="mensagem" [(ngModel)]="mensagem"></ion-input>
+      <ion-input type="text" placeholder="mensagem" [(ngModel)]="mensagem"></ion-input>
       <ion-button color="primary" (click)="sendMessage()">Enviar mensagem</ion-button>
     </ion-card-content>
   </ion-card>

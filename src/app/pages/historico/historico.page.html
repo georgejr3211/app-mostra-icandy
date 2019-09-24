@@ -4,6 +4,8 @@
 
 <ion-content>
   <!-- {{pedido$ | async | json}} -->
+  <ion-progress-bar *ngIf="!(pedido$ | async)?.length" type="indeterminate"></ion-progress-bar>
+
   <ion-item *ngFor="let item of (pedido$ | async) " style="padding-top: 5px;">
     <ion-row>
       <ion-col style="max-width: 50px; padding: 0; padding-right: 10px;">
