@@ -17,6 +17,11 @@ export class UsuariosService {
     return this.http.get(url).pipe(map((data: any) => data.value));
   }
 
+  find(id?) {
+    const url = `${this.apiURL}/v1/usuarios/${id}`;
+    return this.http.get(url).pipe(map((data: any) => data.value));
+  }
+
   findEmail(email: string) {
     return this.http.post(`${this.apiURL}/auth/email`, { email });
   }

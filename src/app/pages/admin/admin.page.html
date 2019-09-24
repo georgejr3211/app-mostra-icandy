@@ -1,0 +1,82 @@
+<ion-header translucent>
+    <ion-toolbar color="primary">
+      <ion-title style="font-size: 12px;">Administrador</ion-title>
+      <ion-buttons slot="start">
+          <ion-button (click)="dismiss()">
+              <ion-icon name="arrow-round-back"></ion-icon>
+              <small>Voltar</small>
+          </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+
+  <ion-card *ngIf="usuarioId">
+    <ion-card-header style="text-align: center;">Pedidos</ion-card-header>
+
+    <form [formGroup]="formCRUD" fxLayoutAlign="column">
+      <ion-card-content style="padding-top: 0;">
+        <ion-item lines="none">
+          <ion-select (ionChange)="setPedido()" style="padding: 0;" formControlName="pedido">
+            <ion-select-option *ngFor="let pedido of (pedidos$ | async)" [value]="pedido?.id">
+              {{ pedido?.id }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card-content>
+    </form>
+
+    <form [formGroup]="formCRUDPedido" fxLayoutAlign="column" *ngIf="pedidoId">
+      <ion-item>
+        <ion-col lines="none">
+          <ion-row class="row">Forma Pagamento -> {{(pedido$ | async)?.formas_pagamento_id}}
+          </ion-row>
+          <ion-row class="row">Usuário -> {{(pedido$ | async)?.usuarios_id}}
+          </ion-row>
+          <ion-row class="row">Observação -> {{(pedido$ | async)?.observacao}}
+          </ion-row>
+          <ion-row class="row">Troco -> {{(pedido$ | async)?.troco}}
+          </ion-row>
+        </ion-col>
+      </ion-item>
+
+      <ion-item>
+        <ion-select formControlName="status_pedido_id" style="padding: 0; min-width: 100%;">
+          <ion-select-option *ngFor="let status of (status$ | async)" [value]="status?.id">
+            {{ status?.descricao }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Ativo</ion-label>
+        <ion-toggle formControlName="ativo"></ion-toggle>
+      </ion-item>
+      <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="onAtualizar()">Atualizar
+      </ion-button>
+
+
+    </form>
+  </ion-card>
+
+  <pre>{{pedidos$ | async | json}}</pre>
+
+</ion-content>
+
+<!-- <ion-card-content *ngIf="usuarioId">
+          <form [formGroup]="formCRUD" fxLayoutAlign="column">
+            <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text"
+              placeholder="Nome" required></ion-input>
+            <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone"
+              [brmasker]="{phone: true}" required>
+            </ion-input>
+            <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
+              [brmasker]="{mask:'000.000.000-00', len:14}" required></ion-input>     
+            <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail" required>
+            </ion-input>
+            <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"
+              required>
+            </ion-input>
+          </form>
+      
+          <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="onSaveUsuario()">Criar
+          </ion-button>
+        </ion-card-content> -->
