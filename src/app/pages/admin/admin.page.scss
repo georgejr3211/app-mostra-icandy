@@ -29,4 +29,39 @@
     line-height: 15px;
     margin: 5px 0 0;
   }
+
+  ion-input {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 10px;
+    text-align: left;
+    letter-spacing: 0.1em;
+    color: #626262;
+  }
+  
+  ion-item {
+    background: #ffffff;
+    border: 1px solid #dbd5d5;
+    box-sizing: border-box;
+    margin-top: 15px;
+  }
+  
+  ion-list {
+    width: 100%;
+  }
+
+  .row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6f2367;
+  }
   

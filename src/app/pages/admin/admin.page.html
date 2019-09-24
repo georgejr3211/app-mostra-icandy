@@ -6,101 +6,83 @@
   <ion-card>
     <ion-card-header style="text-align: center;">Usuários</ion-card-header>
 
-    <ion-label>
-      <ion-button id="btnCriarConta" expand="full" (click)="editarUsuario(editUsuario)">Buscar Usuário
-      </ion-button>
-    </ion-label>
     <form [formGroup]="formCRUD" fxLayoutAlign="column">
-      <ion-card-content *ngIf="editUsuario">
-        <ion-input formControlName="valor" padding id="id" class="input" type="number" placeholder="ID do Usuário"
-          required></ion-input>
-        <ion-label>
-          <ion-button id="btnCriarConta" expand="full" (click)="buscarUsuario($event)">Buscar
-          </ion-button>
-        </ion-label>
+      <ion-card-content>
+        <ion-item lines="none">
+          <ion-select (ionChange)="setUsuario()" style="padding: 0;" formControlName="valor">
+            <ion-select-option *ngFor="let user of (usuarios$ | async)" [value]="user?.id">
+              {{ user?.email }}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-card-content>
+    </form>
+  </ion-card>
+
+  <ion-card *ngIf="usuarioId">
+    <ion-card-header style="text-align: center;">Pedidos</ion-card-header>
+
+    <form [formGroup]="formCRUD" fxLayoutAlign="column">
+      <ion-card-content style="padding-top: 0;">
+        <ion-item lines="none">
+          <ion-select (ionChange)="setPedido()" style="padding: 0;" formControlName="pedido">
+            <ion-select-option *ngFor="let pedido of (pedidos$ | async)" [value]="pedido?.id">
+              {{ pedido?.id }}</ion-select-option>
+          </ion-select>
+        </ion-item>
       </ion-card-content>
     </form>
 
-    <ion-label>
-      <ion-button id="btnCriarConta" expand="full" (click)="criarUsuario(addUsuario)">Criar Usuário
-      </ion-button>
-    </ion-label>
-    <ion-card-content *ngIf="addUsuario">
-      <form [formGroup]="formCRUD" fxLayoutAlign="column">
-        <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text"
-          placeholder="Nome" required></ion-input>
-        <div class="input-group error">
-          <ng-container *ngFor="let validation of validation_messages.nome">
-            <div class="validation-errors"
-              *ngIf="formCRUD.get('nome').hasError(validation.type) && (formCRUD.get('nome').dirty || formCRUD.get('nome').touched)">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-        <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone"
-          [brmasker]="{phone: true}" required>
-        </ion-input>
-        <div class="input-group error">
-          <ng-container *ngFor="let validation of validation_messages.telefone">
-            <div class="validation-errors"
-              *ngIf="formCRUD.get('telefone').hasError(validation.type) && (formCRUD.get('telefone').dirty || formCRUD.get('telefone').touched)">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-        <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
-          [brmasker]="{mask:'000.000.000-00', len:14}" required></ion-input>
-        <div class="input-group error">
-          <ng-container *ngFor="let validation of validation_messages.cpf">
-            <div class="validation-errors"
-              *ngIf="formCRUD.get('cpf').hasError(validation.type) && (formCRUD.get('cpf').dirty || formCRUD.get('cpf').touched)">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-        <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail" required>
-        </ion-input>
-        <div class="input-group error">
-          <ng-container *ngFor="let validation of validation_messages.email">
-            <div class="validation-errors"
-              *ngIf="formCRUD.get('email').hasError(validation.type) && (formCRUD.get('email').dirty || formCRUD.get('email').touched)">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-        <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"
-          required>
-        </ion-input>
-        <div class="input-group error">
-          <ng-container *ngFor="let validation of validation_messages.password">
-            <div class="validation-errors"
-              *ngIf="formCRUD.get('password').hasError(validation.type) && (formCRUD.get('password').dirty || formCRUD.get('password').touched)">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-        <ion-input padding formControlName="password2" id="confirmPassword" class="input" type="password"
-          placeholder="Confirmar senha" required></ion-input>
-        <div class="input-group error">
-          <ng-container *ngFor="let validation of validation_messages.password">
-            <div class="validation-errors"
-              *ngIf="formCRUD.get('password').hasError(validation.type) && (formCRUD.get('password').dirty || formCRUD.get('password').touched)">
-              {{ validation.message }}
-            </div>
-          </ng-container>
-        </div>
-      </form>
+    <form [formGroup]="formCRUDPedido" fxLayoutAlign="column" *ngIf="pedidoId">
+      <ion-item>
+        <ion-col lines="none">
+          <ion-row class="row">Forma Pagamento -> {{(pedido$ | async)?.formas_pagamento_id}}
+          </ion-row>
+          <ion-row class="row">Usuário -> {{(pedido$ | async)?.usuarios_id}}
+          </ion-row>
+          <ion-row class="row">Observação -> {{(pedido$ | async)?.observacao}}
+          </ion-row>
+          <ion-row class="row">Troco -> {{(pedido$ | async)?.troco}}
+          </ion-row>
+        </ion-col>
+      </ion-item>
 
-      <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="onSaveUsuario()">Criar
-      </ion-button>
-    </ion-card-content>
-  </ion-card>
+      <ion-item>
+        <ion-select formControlName="status_pedido_id" style="padding: 0; min-width: 100%;">
+          <ion-select-option *ngFor="let status of (status$ | async)" [value]="status?.id">
+            {{ status?.descricao }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Ativo</ion-label>
+        <ion-toggle formControlName="ativo"></ion-toggle>
+      </ion-item>
+      <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" 
+      (click)="onAtualizar()">Atualizar</ion-button>
 
-  <ion-card style="padding-top: 10px;">
-    <ion-card-header style="text-align: center;">Produtos</ion-card-header>
-    <form [formGroup]="formCRUDProdutos" fxLayoutAlign="column">
-      <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text"
-        placeholder="Nome" required></ion-input>
+
     </form>
   </ion-card>
+
+  <pre>{{pedidos$ | async | json}}</pre>
+
 </ion-content>
+
+<!-- <ion-card-content *ngIf="usuarioId">
+          <form [formGroup]="formCRUD" fxLayoutAlign="column">
+            <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text"
+              placeholder="Nome" required></ion-input>
+            <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone"
+              [brmasker]="{phone: true}" required>
+            </ion-input>
+            <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
+              [brmasker]="{mask:'000.000.000-00', len:14}" required></ion-input>     
+            <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail" required>
+            </ion-input>
+            <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"
+              required>
+            </ion-input>
+          </form>
+      
+          <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="onSaveUsuario()">Criar
+          </ion-button>
+        </ion-card-content> -->
