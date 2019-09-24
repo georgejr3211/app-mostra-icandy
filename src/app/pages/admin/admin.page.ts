@@ -81,12 +81,13 @@ export class AdminPage implements OnInit {
     );
   }
 
-  dismiss() {
+  async dismiss() {
     this.modalCtrl.dismiss();
   }
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params;
+    console.log('id',id);
     this.pedidos$ = this.facadePedidos.findByUser(id);
     this.pedidos$.subscribe(data => console.log("dataa", data));
     this.usuarioId = true;

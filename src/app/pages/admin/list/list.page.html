@@ -4,18 +4,26 @@
 
 <ion-content>
   <ion-card>
-    <ion-card-header style="text-align: center;">Pedidos dos Usuários</ion-card-header>
+    <ion-card-header style="text-align: center;"><strong>Pedidos dos Usuários</strong></ion-card-header>
 
     <ion-card-content>
-      <ion-item (click)="buscarId(pedidos?.id)" *ngFor="let pedidos of (pedidos$ | async)?.rows">
-        <ion-item-option>
-          teste
-        </ion-item-option>
-        {{pedidos.id}} - {{pedidos.usuario.nome}}
-      </ion-item>
+      <ion-card (click)="buscarId(pedidos?.id)" *ngFor="let pedidos of (pedidos$ | async)?.rows">
+        <ion-item>
+          <ion-label>
+            <ion-text color="primary">id </ion-text>{{pedidos?.id}}
+            <ion-text color="primary" style="padding-left: 25px;">
+              Hora</ion-text>
+            {{pedidos?.createdAt | date: 'hh:mm:ss'}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <ion-text style="padding-right: 11px;" color="primary">Cliente</ion-text>
+            {{pedidos?.usuario.nome}}
+          </ion-label>
+        </ion-item>
+      </ion-card>
     </ion-card-content>
   </ion-card>
-  <pre>
-      {{pedidos$ | async | json}}
-    </pre>
+
 </ion-content>
