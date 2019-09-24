@@ -1,0 +1,67 @@
+:host {
+    ion-content {
+      --background: url("../../../assets/images/bg.png");
+    }
+  }
+  
+  .input {
+    background: #ffffff;
+    border: 1px solid #766f74;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 5px;
+    margin-top: 10px;
+    height: 40px;
+  }
+  
+  #titulo {
+    text-align: center;
+  }
+  
+  #btnCriarConta {
+    margin-top: 20px;
+    --background: #b41661;
+  }
+  
+  .validation-errors {
+    color: #cc0033;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 5px 0 0;
+  }
+
+  ion-input {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 10px;
+    text-align: left;
+    letter-spacing: 0.1em;
+    color: #626262;
+  }
+  
+  ion-item {
+    background: #ffffff;
+    border: 1px solid #dbd5d5;
+    box-sizing: border-box;
+    margin-top: 15px;
+  }
+  
+  ion-list {
+    width: 100%;
+  }
+
+  .row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 10px;
+    line-height: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6f2367;
+  }
+  

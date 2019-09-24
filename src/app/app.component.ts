@@ -11,6 +11,7 @@ import { PushNotificationService } from './providers/services/push-notification.
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -27,4 +28,6 @@ export class AppComponent {
       this.push.init();
     });
   }
+
+
 }

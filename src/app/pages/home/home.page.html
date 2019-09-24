@@ -42,6 +42,11 @@
           <ion-col class="price"><small>R$</small> {{ totalProduto(card?.preco, card?.id) }} </ion-col>
         </ion-row>
       </ion-grid>
+
+
+      <ion-input type="text" placeholder="id" [(ngModel)]="userId"></ion-input>
+      <ion-input type="text"  placeholder="mensagem" [(ngModel)]="mensagem"></ion-input>
+      <ion-button color="primary" (click)="sendMessage()">Enviar mensagem</ion-button>
     </ion-card-content>
   </ion-card>
 
