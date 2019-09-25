@@ -11,7 +11,7 @@ import { PedidosProdutosService } from "../providers/services/pedidos-produtos.s
 export class DetalhesHistoricoPage implements OnInit {
   passedId = null;
   pedido$: Observable<any>;
-  quantidade = 0.0;
+  total = 0.0;
   preco: number;
 
   constructor(
@@ -26,8 +26,9 @@ export class DetalhesHistoricoPage implements OnInit {
     this.pedido$ = this.facade.findPedido(this.passedId);
     this.pedido$.subscribe(data => {
       data.map(element => {
-        this.preco = parseFloat(element.produto.preco);
-        this.quantidade = this.quantidade + this.preco;
+        this.preco = parseFloat(element.produto.preco) * parseInt(element.quantidade);
+        this.total = this.total + this.preco;
+        this.total = parseFloat(this.total.toFixed(2));
       })
     });
   }

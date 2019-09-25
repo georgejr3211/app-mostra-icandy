@@ -1,31 +1,20 @@
 <ion-header translucent>
-    <ion-toolbar color="primary">
-      <ion-title>Administrador</ion-title>
-      <ion-buttons slot="start">
-          <ion-button (click)="dismiss()">
-              <ion-icon name="arrow-round-back"></ion-icon>
-              <small>Voltar</small>
-          </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Pedido Nº{{dataParams.id}}</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+        <small>Voltar</small>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
+  <ion-card>
 
-  <ion-card *ngIf="usuarioId">
-    <ion-card-header style="text-align: center;">Pedidos</ion-card-header>
-
-    <form [formGroup]="formCRUD" fxLayoutAlign="column">
-      <ion-card-content style="padding-top: 0;">
-        <ion-item lines="none">
-          <ion-select (ionChange)="setPedido()" style="padding: 0;" formControlName="pedido">
-            <ion-select-option *ngFor="let pedido of (pedidos$ | async)" [value]="pedido?.id">
-              {{ pedido?.id }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-card-content>
-    </form>
-
+  </ion-card>
+  <ion-card>
     <form [formGroup]="formCRUDPedido" fxLayoutAlign="column" *ngIf="pedidoId">
       <ion-item>
         <ion-col lines="none">
@@ -35,8 +24,41 @@
           </ion-row>
           <ion-row class="row">Observação -> {{(pedido$ | async)?.observacao}}
           </ion-row>
-          <ion-row class="row">Troco -> {{(pedido$ | async)?.troco}}
+          <ion-row class="row">Troco -> R$ {{(pedido$ | async)?.troco}}
           </ion-row>
+          <ion-item-divider></ion-item-divider>
+          <ion-list *ngFor="let item of produtos$ | async">
+            <ion-row>
+              <ion-col class="row" style="max-width: 35px;">
+                {{item.quantidade}}x
+              </ion-col>
+              <ion-col class="row">
+                {{(item.produto)?.nome}}
+              </ion-col>
+              <ion-col class="row" style="text-align: end;">
+                R$ {{(item.produto)?.preco}}
+              </ion-col>
+            </ion-row>
+          </ion-list>
+          <ion-list>
+            <ion-item-divider></ion-item-divider>
+            <ion-row>
+              <ion-col class="row">
+                Total
+              </ion-col>
+              <ion-col class="row" style="text-align: end;">
+                R$ {{total}}
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="troco">
+                <ion-col class="row">
+                  Troco
+                </ion-col>
+                <ion-col class="row" style="text-align: end;">
+                  R$ {{troco}}
+                </ion-col>
+              </ion-row>
+          </ion-list>
         </ion-col>
       </ion-item>
 
@@ -50,14 +72,14 @@
         <ion-label>Ativo</ion-label>
         <ion-toggle formControlName="ativo"></ion-toggle>
       </ion-item>
-      <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="onAtualizar()">Atualizar
+      <ion-button [disabled]="!formCRUDPedido.valid" id="btnCriarConta" expand="full" (click)="onAtualizar()">Atualizar
       </ion-button>
 
 
     </form>
   </ion-card>
 
-  <pre>{{pedidos$ | async | json}}</pre>
+  <pre>{{pedido$ | async | json}}</pre>
 
 </ion-content>
 
