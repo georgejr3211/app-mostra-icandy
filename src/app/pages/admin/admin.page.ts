@@ -1,3 +1,4 @@
+import { PedidosProdutosService } from "./../../providers/services/pedidos-produtos.service";
 import { StatusService } from "./../../providers/services/status.service";
 import { Observable } from "rxjs/internal/Observable";
 import { UsuariosService } from "../../providers/services/usuarios.service";
@@ -15,57 +16,37 @@ import { PedidosService } from "src/app/providers/services/pedidos.service";
   styleUrls: ["./admin.page.scss"]
 })
 export class AdminPage implements OnInit {
+  dataParams;
   hasData;
-
-  usuarioId = false;
-  usuario$: Observable<any>;
-  usuarios$: Observable<any>;
 
   pedidoId = false;
   pedido$: Observable<any>;
-  pedidos$: Observable<any>;
-
+  produtos$: Observable<any>;
+  usuario$: Observable<any>;
   status$: Observable<any>;
 
+  troco = null;
+  preco;
+  total = 0;
   telefone;
   cpf;
 
-  formCRUD: FormGroup;
   formCRUDPedido: FormGroup;
-
-  retorno$;
 
   constructor(
     private facade: UsuariosService,
     private facadePedidos: PedidosService,
     private facadeStatus: StatusService,
-    private facadeProdutos: ProdutosService,
+    private facadePedidosProdutos: PedidosProdutosService,
     public alertController: AlertController,
     private router: Router,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private modalCtrl: ModalController,
+    private modalCtrl: ModalController
   ) {
     localStorage.getItem("auth/token");
-    this.usuarios$ = this.facade.index();
-    this.status$ = this.facadeStatus.index();
 
-    this.formCRUD = new FormGroup(
-      {
-        nome: new FormControl(null),
-        sobrenome: new FormControl(null),
-        username: new FormControl(null),
-        password: new FormControl(null),
-        password2: new FormControl(null),
-        cpf: new FormControl(null),
-        email: new FormControl(null),
-        telefone: new FormControl(null),
-        perfis_id: new FormControl(1),
-        valor: new FormControl(null),
-        pedido: new FormControl(null)
-      },
-      { updateOn: "change" }
-    );
+    this.status$ = this.facadeStatus.index();
 
     this.formCRUDPedido = new FormGroup(
       {
@@ -79,28 +60,40 @@ export class AdminPage implements OnInit {
       },
       { updateOn: "change" }
     );
-  }
-
-  async dismiss() {
-    this.modalCtrl.dismiss();
-  }
-
-  ngOnInit() {
-    const id = this.activatedRoute.snapshot.params;
-    console.log('id',id);
-    this.pedidos$ = this.facadePedidos.findByUser(id);
-    this.pedidos$.subscribe(data => console.log("dataa", data));
-    this.usuarioId = true;
-  }
-
-  setPedido() {
-    this.pedido$ = this.facadePedidos.find(this.formCRUD.get("pedido").value);
+    this.dataParams = this.activatedRoute.snapshot.params;
+    this.pedido$ = this.facadePedidos.find(this.dataParams.id);
     this.pedido$.subscribe(data => {
       if (data) {
         this.pedidoId = true;
         this.formCRUDPedido.patchValue(data);
       }
     });
+    this.produtos$ = this.facadePedidosProdutos.findPedido(this.dataParams.id);
+    this.produtos$.subscribe(data => {
+      data.map(element => {
+        this.preco =
+          parseFloat(element.produto.preco) * parseInt(element.quantidade);
+        this.total = this.total + this.preco;
+        this.total = parseFloat(this.total.toFixed(2));
+        if (
+          this.formCRUDPedido.get("troco").value > 0 &&
+          this.formCRUDPedido.get("troco").value < 101
+        ) {
+          this.troco = this.formCRUDPedido.get("troco").value - this.total;
+        }
+      });
+    });
+  }
+
+  async dismiss() {
+    this.router.navigate(["/list"]);
+    // this.modalCtrl.dismiss();
+  }
+
+  ngOnInit() {
+    // console.log('usuariooo', this.formCRUDPedido.get('usuarios_id').value);
+    // this.usuario$ = this.facade.find(this.formCRUDPedido.get('usuarios_id').value);
+    // this.usuario$.subscribe(data => console.log('data usuario', data));
   }
 
   onAtualizar() {
@@ -180,3 +173,20 @@ export class AdminPage implements OnInit {
 //   });
 //   await alert.present();
 // }
+
+// this.formCRUD = new FormGroup(
+//   {
+//     nome: new FormControl(null),
+//     sobrenome: new FormControl(null),
+//     username: new FormControl(null),
+//     password: new FormControl(null),
+//     password2: new FormControl(null),
+//     cpf: new FormControl(null),
+//     email: new FormControl(null),
+//     telefone: new FormControl(null),
+//     perfis_id: new FormControl(1),
+//     valor: new FormControl(null),
+//     pedido: new FormControl(null)
+//   },
+//   { updateOn: "change" }
+// );
