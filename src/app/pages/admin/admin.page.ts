@@ -20,6 +20,7 @@ export class AdminPage implements OnInit {
   hasData;
 
   pedidoId = false;
+  retorno$: Observable<any>;
   pedido$: Observable<any>;
   produtos$: Observable<any>;
   usuario$: Observable<any>;
@@ -85,7 +86,7 @@ export class AdminPage implements OnInit {
     });
   }
 
-  async dismiss() {
+  dismiss() {
     this.router.navigate(["/list"]);
     // this.modalCtrl.dismiss();
   }
@@ -97,7 +98,38 @@ export class AdminPage implements OnInit {
   }
 
   onAtualizar() {
-    console.log("vai atualizar status ou ativo");
+    let payload = {
+      id: this.dataParams.id,
+      status_pedido_id: this.formCRUDPedido.get("status_pedido_id").value,
+      ativo: this.formCRUDPedido.get("ativo").value
+    };
+    this.retorno$ = this.facadePedidos.update(payload);
+    this.retorno$.subscribe(data => {
+      if (data) {
+        this.dismiss();
+      } else {
+        this.presentAlert();
+      }
+    })
+  }
+
+  async presentAlert() {
+  const alert = await this.alertController.create({
+    header: "Erro ao atualizar",
+    message: "Contate os desenvolvedores!!",
+    buttons: ["OK"]
+  });
+  await alert.present();
+}
+
+  updateAtivo(data?) {
+    let checked;
+    if (data) {
+      checked = 1;
+    } else {
+      checked = 0;
+    }
+    this.formCRUDPedido.get("ativo").setValue(checked);
   }
 }
 

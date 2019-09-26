@@ -42,7 +42,6 @@ export class PedidosService {
     this.socket.emit('update-status', payload.id);
    
     const url = `${this.apiURL}/v1/pedidos/${payload.id}`;
-
     return this.http.put(url, payload).pipe(map((data: any) => data.value));
   }
 }

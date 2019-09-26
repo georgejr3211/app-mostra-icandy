@@ -18,9 +18,9 @@
     <form [formGroup]="formCRUDPedido" fxLayoutAlign="column" *ngIf="pedidoId">
       <ion-item>
         <ion-col lines="none">
-          <ion-row class="row">Forma Pagamento -> {{(pedido$ | async)?.formas_pagamento_id}}
+          <ion-row class="row">Forma Pagamento -> {{(pedido$ | async)?.formaPagamento?.descricao}}
           </ion-row>
-          <ion-row class="row">Usuário -> {{(pedido$ | async)?.usuarios_id}}
+          <ion-row class="row">Usuário -> {{(pedido$ | async)?.usuario?.nome}}
           </ion-row>
           <ion-row class="row">Observação -> {{(pedido$ | async)?.observacao}}
           </ion-row>
@@ -51,13 +51,13 @@
               </ion-col>
             </ion-row>
             <ion-row *ngIf="troco">
-                <ion-col class="row">
-                  Troco
-                </ion-col>
-                <ion-col class="row" style="text-align: end;">
-                  R$ {{troco}}
-                </ion-col>
-              </ion-row>
+              <ion-col class="row">
+                Troco
+              </ion-col>
+              <ion-col class="row" style="text-align: end;">
+                R$ {{troco}}
+              </ion-col>
+            </ion-row>
           </ion-list>
         </ion-col>
       </ion-item>
@@ -70,7 +70,8 @@
       </ion-item>
       <ion-item>
         <ion-label>Ativo</ion-label>
-        <ion-toggle formControlName="ativo"></ion-toggle>
+        <ion-toggle formControlName="ativo" (ionChange)="updateAtivo(formCRUDPedido.get('ativo').value)">
+        </ion-toggle>
       </ion-item>
       <ion-button [disabled]="!formCRUDPedido.valid" id="btnCriarConta" expand="full" (click)="onAtualizar()">Atualizar
       </ion-button>
