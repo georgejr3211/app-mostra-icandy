@@ -1,3 +1,4 @@
+import { CameraService } from './../../providers/services/camera.service';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +9,7 @@ import { PerfilPage } from './perfil.page';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { BrMaskerModule } from 'br-mask';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 
 const routes: Routes = [
   {
@@ -29,7 +31,8 @@ const routes: Routes = [
   providers: [
     Camera,
     File,
-    // ImagePicker
+    CameraService,
+    FileTransfer
   ]
 })
 export class PerfilPageModule { }

@@ -52,8 +52,8 @@ export class LoginPage implements OnInit {
     this.authService.auth(email, password).subscribe(token => {
       if (token.length) {
         localStorage.setItem('auth/token', token);
-        this.router.navigate(['/list']);
-        // this.router.navigate(['/main/home']);
+        // this.router.navigate(['/list']);
+        this.router.navigate(['/main/home']);
       } else {
         alert('Dados inválidos');
         console.log('sem Token');

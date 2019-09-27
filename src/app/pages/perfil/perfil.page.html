@@ -10,28 +10,21 @@
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab> -->
-
+  {{ currentImage$ | async | json }}
   <form [formGroup]='formCRUD'>
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-avatar (click)="selectImage()" class="avatar">
-          <ion-img [src]="currentImage" *ngIf="currentImage"></ion-img>
-          <!-- <ion-img src="assets/images/profile.jpeg"></ion-img> -->
+        <ion-avatar class="avatar">
+          <ion-img (click)="selectImage()" [src]="pathImg + (currentImage$ | async)" *ngIf="currentImage$ | async"></ion-img>
         </ion-avatar>
       </ion-row>
       <ion-row>
-        <!-- <pre>{{usuario$ | async | json}}</pre> -->
         <ion-card padding>
           <ion-card-header class="card-header">
             <ion-card-title>{{(usuario$ | async)?.nome}} {{(usuario$ | async)?.sobrenome}}</ion-card-title>
             <ion-card-subtitle class="ion-text-center" color="primary" (click)="doLogout()">Sair</ion-card-subtitle>
           </ion-card-header>
           <ion-list>
-
-            <!-- <ion-item lines="none">
-              <ion-label class="label">NOME</ion-label>
-              <ion-input formControlName="username" type="text" placeholder="NOME"></ion-input>
-            </ion-item> -->
 
             <ion-item lines="none">
               <ion-label class="label">E-MAIL</ion-label>
@@ -80,37 +73,6 @@
           </ion-list>
         </ion-card>
       </ion-row>
-
-      <!-- <ion-row>
-        <ion-card padding>
-          <ion-note>Endereço</ion-note>
-          <ion-list>
-            <ion-item lines="none">
-              <ion-label class="label">Bairro</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-
-            <ion-item lines="none">
-              <ion-label class="label">Rua</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-
-            <ion-item lines="none">
-              <ion-label class="label">Número</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-
-            <ion-item lines="none">
-              <ion-label class="label">Complemento</ion-label>
-              <ion-input type="text"></ion-input>
-            </ion-item>
-
-            <div class="btn-width">
-              <ion-button size="small" color="primary">Salvar</ion-button>
-            </div>
-          </ion-list>
-        </ion-card>
-      </ion-row> -->
 
     </ion-grid>
   </form>
