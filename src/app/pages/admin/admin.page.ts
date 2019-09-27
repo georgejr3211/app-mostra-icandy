@@ -20,6 +20,7 @@ export class AdminPage implements OnInit {
   hasData;
 
   pedidoId = false;
+  retorno$: Observable<any>;
   pedido$: Observable<any>;
   produtos$: Observable<any>;
   usuario$: Observable<any>;
@@ -31,10 +32,13 @@ export class AdminPage implements OnInit {
   telefone;
   cpf;
 
+  moreInfo = false;
+
+  formCRUDUsuario: FormGroup;
   formCRUDPedido: FormGroup;
 
   constructor(
-    private facade: UsuariosService,
+    private facadeUsuarios: UsuariosService,
     private facadePedidos: PedidosService,
     private facadeStatus: StatusService,
     private facadePedidosProdutos: PedidosProdutosService,
@@ -47,6 +51,13 @@ export class AdminPage implements OnInit {
     localStorage.getItem("auth/token");
 
     this.status$ = this.facadeStatus.index();
+
+    this.formCRUDUsuario = new FormGroup(
+      {
+        ativo: new FormControl(null)
+      },
+      { updateOn: "change" }
+    );
 
     this.formCRUDPedido = new FormGroup(
       {
@@ -85,19 +96,81 @@ export class AdminPage implements OnInit {
     });
   }
 
-  async dismiss() {
+  dismiss() {
     this.router.navigate(["/list"]);
     // this.modalCtrl.dismiss();
   }
 
-  ngOnInit() {
-    // console.log('usuariooo', this.formCRUDPedido.get('usuarios_id').value);
-    // this.usuario$ = this.facade.find(this.formCRUDPedido.get('usuarios_id').value);
-    // this.usuario$.subscribe(data => console.log('data usuario', data));
+  ngOnInit() {}
+
+  onAtualizarPedido() {
+    let payload = {
+      id: this.dataParams.id,
+      status_pedido_id: this.formCRUDPedido.get("status_pedido_id").value,
+      ativo: this.formCRUDPedido.get("ativo").value
+    };
+    this.retorno$ = this.facadePedidos.update(payload);
+    this.retorno$.subscribe(data => {
+      if (data) {
+        this.dismiss();
+      } else {
+        this.presentAlert();
+      }
+    });
   }
 
-  onAtualizar() {
-    console.log("vai atualizar status ou ativo");
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: "Erro ao atualizar",
+      message: "Contate os desenvolvedores!!",
+      buttons: ["OK"]
+    });
+    await alert.present();
+  }
+
+  updateAtivoPedido(data?) {
+    let checked;
+    if (data) {
+      checked = 1;
+    } else {
+      checked = 0;
+    }
+    this.formCRUDPedido.get("ativo").setValue(checked);
+  }
+
+  showMore() {
+    this.usuario$ = this.facadeUsuarios.find(this.formCRUDPedido.get('usuarios_id').value);
+    this.usuario$.subscribe(data => {
+      if (data) {
+        this.moreInfo = true;
+        this.formCRUDUsuario.patchValue(data);
+      }
+    })
+  }
+
+  updateAtivoUsuario(data?) {
+    let checked;
+    if (data) {
+      checked = 1;
+    } else {
+      checked = 0;
+    }
+    this.formCRUDUsuario.get("ativo").setValue(checked);
+  }
+
+  onAtualizarUsuario() {
+    let payload = {
+      id: this.formCRUDPedido.get('usuarios_id').value,
+      ativo: this.formCRUDUsuario.get('ativo').value
+    };
+    this.retorno$ = this.facadeUsuarios.update(payload);
+    this.retorno$.subscribe(data => {
+      if (data) {
+        this.dismiss();
+      } else {
+        this.presentAlert();
+      }
+    });
   }
 }
 
