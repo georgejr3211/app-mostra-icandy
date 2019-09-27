@@ -11,13 +11,14 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
-
-  </ion-card>
-  <ion-card>
+  <ion-card style="padding: 0;">
     <form [formGroup]="formCRUDPedido" fxLayoutAlign="column" *ngIf="pedidoId">
       <ion-item>
         <ion-col lines="none">
+          <ion-item-group style="text-align: center; margin: 10px;">
+            <ion-label style="padding-bottom: 5px;">Informações</ion-label>
+            <ion-item-divider></ion-item-divider>
+          </ion-item-group>
           <ion-row class="row">Forma Pagamento -> {{(pedido$ | async)?.formaPagamento?.descricao}}
           </ion-row>
           <ion-row class="row">Usuário -> {{(pedido$ | async)?.usuario?.nome}}
@@ -62,25 +63,68 @@
         </ion-col>
       </ion-item>
 
-      <ion-item>
-        <ion-select formControlName="status_pedido_id" style="padding: 0; min-width: 100%;">
-          <ion-select-option *ngFor="let status of (status$ | async)" [value]="status?.id">
-            {{ status?.descricao }}</ion-select-option>
-        </ion-select>
+      <ion-item style="margin-top: 20px;">
+        <ion-col>
+          <ion-item-group style="text-align: center; margin: 10px;">
+            <ion-label style="padding-bottom: 5px;">Gerenciamento</ion-label>
+            <ion-item-divider></ion-item-divider>
+          </ion-item-group>
+          <ion-item style="margin: 10px;">
+            <ion-select formControlName="status_pedido_id" style="padding: 0; min-width: 100%;">
+              <ion-select-option *ngFor="let status of (status$ | async)" [value]="status?.id">
+                {{ status?.descricao }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item style="margin: 10px;">
+            <ion-label>Ativo</ion-label>
+            <ion-toggle formControlName="ativo" (ionChange)="updateAtivoPedido(formCRUDPedido.get('ativo').value)">
+            </ion-toggle>
+          </ion-item>
+          <ion-button [disabled]="!formCRUDPedido.valid" id="btnCriarConta" expand="full" (click)="onAtualizarPedido()">
+            Atualizar
+          </ion-button>
+        </ion-col>
       </ion-item>
-      <ion-item>
-        <ion-label>Ativo</ion-label>
-        <ion-toggle formControlName="ativo" (ionChange)="updateAtivo(formCRUDPedido.get('ativo').value)">
-        </ion-toggle>
-      </ion-item>
-      <ion-button [disabled]="!formCRUDPedido.valid" id="btnCriarConta" expand="full" (click)="onAtualizar()">Atualizar
-      </ion-button>
 
+      <ion-item-group *ngIf="!moreInfo" style="margin-top: 20px;">
+        <ion-button (click)="showMore()" expand="full">Mais Informações</ion-button>
+      </ion-item-group>
+
+      <ion-item *ngIf="(usuario$ | async)" style="margin-top: 20px;">
+        <ion-col>
+          <ion-item-group style="text-align: center; margin: 10px;">
+            <ion-label style="padding-bottom: 5px;">Usuário</ion-label>
+            <ion-item-divider></ion-item-divider>
+            <ion-row class="rowUsuario">{{(usuario$ | async)?.id}}
+            </ion-row>
+            <ion-row class="rowUsuario">{{(usuario$ | async)?.nome}}
+            </ion-row>
+            <ion-row class="rowUsuario">{{(usuario$ | async)?.email}}
+            </ion-row>
+            <ion-row class="rowUsuario">{{(usuario$ | async)?.cpf}}
+            </ion-row>
+            <ion-row class="rowUsuario">{{(usuario$ | async)?.telefone}}
+            </ion-row>
+            <ion-row class="rowUsuario">{{(usuario$ | async)?.perfil?.descricao}}
+            </ion-row>
+          </ion-item-group>
+          <form [formGroup]="formCRUDUsuario">
+            <ion-item style="margin: 10px;">
+              <ion-label>Ativo</ion-label>
+              <ion-toggle formControlName="ativo" (ionChange)="updateAtivoUsuario(formCRUDUsuario.get('ativo').value)">
+              </ion-toggle>
+            </ion-item>
+            <ion-button [disabled]="!formCRUDUsuario.valid" id="btnCriarConta" expand="full" (click)="onAtualizarUsuario()">
+              Atualizar
+            </ion-button>
+          </form>
+        </ion-col>
+      </ion-item>
 
     </form>
   </ion-card>
 
-  <pre>{{pedido$ | async | json}}</pre>
+  <!-- <pre>{{usuario$ | async | json}}</pre> -->
 
 </ion-content>
 
