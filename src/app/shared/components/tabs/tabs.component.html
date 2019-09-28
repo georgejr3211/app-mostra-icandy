@@ -8,11 +8,11 @@
       <ion-icon name="cart"></ion-icon>
       <ion-badge>{{(totalItensCarrinho$ | async)}}</ion-badge>
     </ion-tab-button>
-    
-    <ion-tab-button tab="status">
+
+    <ion-tab-button (click)="onNavigateStatus()">
       <ion-icon name="list-box"></ion-icon>
     </ion-tab-button>
-    
+
     <ion-tab-button tab="historico">
       <ion-icon name="folder-open"></ion-icon>
     </ion-tab-button>
@@ -21,6 +21,9 @@
       <ion-icon name="contact"></ion-icon>
     </ion-tab-button>
 
+    <ion-tab-button (click)="onNavigateAdmin()" *ngIf="(usuario$ | async)?.perfis_id === 2">
+      <ion-icon name="cube"></ion-icon>
+    </ion-tab-button>
 
   </ion-tab-bar>
 </ion-tabs>

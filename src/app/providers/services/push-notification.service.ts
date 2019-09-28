@@ -9,6 +9,12 @@ export class PushNotificationService {
 
   constructor(private oneSignal: OneSignal) { }
 
+  async getId() {
+    const userId = await this.oneSignal.getIds();
+
+    return userId;
+  }
+
   init() {
     this.oneSignal.startInit('61f5011f-5ec8-4a73-9cc1-1aef1b298b0c', '26412989148');
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
@@ -32,6 +38,20 @@ export class PushNotificationService {
         // const userId = data.userId;
         this.oneSignal.postNotification({
           include_player_ids: [userId],
+          contents: {
+            en: message
+          }
+        });
+      });
+  }
+
+  sendMessageToAdmins(usersIds, message) {
+    this.oneSignal.getIds()
+      .then(data => {
+        // '01d17a8c-2988-43a9-b549-c163cfe9fc27', 
+        // const userId = data.userId;
+        this.oneSignal.postNotification({
+          include_player_ids: usersIds,
           contents: {
             en: message
           }

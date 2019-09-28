@@ -23,6 +23,8 @@ const routes: Routes = [
       { path: 'status', loadChildren: '../status/status.module#StatusPageModule' },
       { path: 'historico', loadChildren: '../historico/historico.module#HistoricoPageModule' },
       { path: 'perfil', loadChildren: '../perfil/perfil.module#PerfilPageModule' },
+      { path: 'admin', loadChildren: '../admin/admin.module#AdminPageModule' },
+      { path: 'list', loadChildren: '../admin/list/list.module#ListPageModule' }
     ]
   },
 ];

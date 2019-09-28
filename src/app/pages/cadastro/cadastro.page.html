@@ -1,18 +1,18 @@
 <ion-header translucent>
-    <ion-toolbar color="primary">
-      <ion-title>Cadastrar</ion-title>
-      <ion-buttons slot="start">
-        <ion-button (click)="dismiss()">
-            <ion-icon name="arrow-round-back"></ion-icon>
-            <small>Voltar</small>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Cadastrar</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content>
+<ion-content color="primary">
   <ion-content padding>
     <form [formGroup]="formCRUD" fxLayoutAlign="column">
+
       <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text"
         placeholder="Nome" required></ion-input>
       <div class="input-group error">
@@ -23,6 +23,7 @@
           </div>
         </ng-container>
       </div>
+
       <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone"
         [brmasker]="{phone: true}" required>
       </ion-input>
@@ -34,16 +35,7 @@
           </div>
         </ng-container>
       </div>
-      <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
-        [brmasker]="{mask:'000.000.000-00', len:14}" required></ion-input>
-      <div class="input-group error">
-        <ng-container *ngFor="let validation of validation_messages.cpf">
-          <div class="validation-errors"
-            *ngIf="formCRUD.get('cpf').hasError(validation.type) && (formCRUD.get('cpf').dirty || formCRUD.get('cpf').touched)">
-            {{ validation.message }}
-          </div>
-        </ng-container>
-      </div>
+
       <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail" required>
       </ion-input>
       <div class="input-group error">
@@ -54,6 +46,7 @@
           </div>
         </ng-container>
       </div>
+
       <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"
         required>
       </ion-input>
@@ -65,16 +58,7 @@
           </div>
         </ng-container>
       </div>
-      <ion-input padding formControlName="password2" id="confirmPassword" class="input" type="password"
-        placeholder="Confirmar senha" required></ion-input>
-      <div class="input-group error">
-        <ng-container *ngFor="let validation of validation_messages.password">
-          <div class="validation-errors"
-            *ngIf="formCRUD.get('password').hasError(validation.type) && (formCRUD.get('password').dirty || formCRUD.get('password').touched)">
-            {{ validation.message }}
-          </div>
-        </ng-container>
-      </div>
+
     </form>
 
     <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="criarConta()">Criar conta

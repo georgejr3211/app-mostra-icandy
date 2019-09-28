@@ -9,6 +9,7 @@ import { AuthService } from "../../providers/services/auth.service";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { PedidosService } from "src/app/providers/services/pedidos.service";
+import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
 
 @Component({
   selector: "app-admin",
@@ -31,7 +32,7 @@ export class AdminPage implements OnInit {
   total = 0;
   telefone;
   cpf;
-
+  deviceId: string;
   moreInfo = false;
 
   formCRUDUsuario: FormGroup;
@@ -46,7 +47,8 @@ export class AdminPage implements OnInit {
     private router: Router,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private push: PushNotificationService
   ) {
     localStorage.getItem("auth/token");
 
@@ -76,6 +78,7 @@ export class AdminPage implements OnInit {
     this.pedido$.subscribe(data => {
       if (data) {
         this.pedidoId = true;
+        this.deviceId = data.usuario.device_id;
         this.formCRUDPedido.patchValue(data);
       }
     });
@@ -97,8 +100,7 @@ export class AdminPage implements OnInit {
   }
 
   dismiss() {
-    this.router.navigate(["/list"]);
-    // this.modalCtrl.dismiss();
+    this.router.navigate(['/main/list']);
   }
 
   ngOnInit() {}
@@ -117,6 +119,8 @@ export class AdminPage implements OnInit {
         this.presentAlert();
       }
     });
+    // this.usuario$.
+    this.push.sendMessage(this.deviceId, 'Corre lá no App!! Seu pedido acabou de mudar de status');
   }
 
   async presentAlert() {
@@ -174,92 +178,3 @@ export class AdminPage implements OnInit {
   }
 }
 
-// onSaveUsuario() {
-//   if (
-//     this.formCRUD.get("password").value ===
-//     this.formCRUD.get("password2").value
-//   ) {
-//     this.formatTelefone();
-//     this.formatCpf();
-//     this.formCRUD.disable();
-//     console.log("this.form", this.formCRUD.value);
-//     this.retorno$ = this.facade.insert(this.formCRUD.value);
-//     this.retorno$.subscribe(data => {
-//       if (data) {
-//         this.authService
-//           .auth(this.formCRUD.value.email, this.formCRUD.value.password)
-//           .subscribe(token => {
-//             this.formCRUD.disable();
-//             if (token) {
-//               localStorage.setItem("auth/token", token);
-//               this.router.navigate(["/main/home"]);
-//             } else {
-//               console.log("sem Token");
-//               return;
-//             }
-//           });
-//       } else {
-//         this.presentAlertErro();
-//         this.formCRUD.get("email").enable();
-//         this.formCRUD.get("cpf").enable();
-//         this.formCRUD.get("email").setValue("");
-//         this.formCRUD.get("cpf").setValue("");
-//       }
-//     });
-//   } else {
-//     console.log("nao");
-//     this.presentAlert();
-//     this.formCRUD.get("password").setValue(null);
-//     this.formCRUD.get("password2").setValue(null);
-//   }
-// }
-// dismiss() {
-//   this.router.navigate(["/login"]);
-// }
-// formatTelefone() {
-//   this.telefone = this.formCRUD.get("telefone").value;
-//   this.telefone = this.telefone.replace(/-/g, "");
-//   this.telefone = this.telefone.replace(/[{()}]/g, "");
-//   this.telefone = this.telefone.replace(/ /g, "");
-//   this.formCRUD.get("telefone").setValue(this.telefone);
-// }
-// formatCpf() {
-//   this.cpf = this.formCRUD.get("cpf").value;
-//   this.cpf = this.cpf.replace(/-/g, "");
-//   this.cpf = this.cpf.replace(/[{(.)}]/g, "");
-//   this.formCRUD.get("cpf").setValue(this.cpf);
-// }
-
-// async presentAlert() {
-//   const alert = await this.alertController.create({
-//     header: "Erro",
-//     message: "As senhas devem ser iguais!!",
-//     buttons: ["OK"]
-//   });
-//   await alert.present();
-// }
-// async presentAlertErro() {
-//   const alert = await this.alertController.create({
-//     header: "Erro",
-//     message: "Email ou CPF inválido ou já existentes!!",
-//     buttons: ["OK"]
-//   });
-//   await alert.present();
-// }
-
-// this.formCRUD = new FormGroup(
-//   {
-//     nome: new FormControl(null),
-//     sobrenome: new FormControl(null),
-//     username: new FormControl(null),
-//     password: new FormControl(null),
-//     password2: new FormControl(null),
-//     cpf: new FormControl(null),
-//     email: new FormControl(null),
-//     telefone: new FormControl(null),
-//     perfis_id: new FormControl(1),
-//     valor: new FormControl(null),
-//     pedido: new FormControl(null)
-//   },
-//   { updateOn: "change" }
-// );

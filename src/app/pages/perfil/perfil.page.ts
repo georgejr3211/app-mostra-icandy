@@ -45,7 +45,6 @@ export class PerfilPage implements OnInit, AfterViewInit {
     private router: Router,
     private camera: CameraService
   ) {
-    this.usuario$ = this.facade.usuarioLogado();
 
     this.formCRUD = new FormGroup(
       {
@@ -72,6 +71,11 @@ export class PerfilPage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+
+  }
+
+  ionViewDidEnter() {
+    this.usuario$ = this.facade.usuarioLogado();
     this.usuario$.subscribe(data => {
       if (data) {
         this.hasData = true;

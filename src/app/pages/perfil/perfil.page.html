@@ -5,17 +5,17 @@
 <ion-content>
   <ion-progress-bar *ngIf="!(usuario$ | async)" type="indeterminate"></ion-progress-bar>
 
-  <!-- <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="selectImage()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
-  </ion-fab> -->
-  {{ currentImage$ | async | json }}
+  </ion-fab>
+
   <form [formGroup]='formCRUD'>
     <ion-grid>
       <ion-row class="ion-justify-content-center">
         <ion-avatar class="avatar">
-          <ion-img (click)="selectImage()" [src]="pathImg + (currentImage$ | async)" *ngIf="currentImage$ | async"></ion-img>
+          <ion-img [src]="pathImg + (currentImage$ | async)" *ngIf="currentImage$ | async"></ion-img>
         </ion-avatar>
       </ion-row>
       <ion-row>

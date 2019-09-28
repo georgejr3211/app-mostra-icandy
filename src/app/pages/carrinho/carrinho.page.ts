@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { LocalizacoesService } from '../../providers/services/localizacoes.service';
 import { FormasPagamentoService } from 'src/app/providers/services/formas-pagamento.service';
 import { HomePage } from '../home/home.page';
+import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
+import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 
 @Component({
   selector: "app-carrinho",
@@ -24,7 +26,7 @@ export class CarrinhoPage implements OnInit {
   formasPagamento$: Observable<any[]>;
   totalCompra: number;
   disabled: boolean;
-
+  adminsDevices = [];
 
   constructor(
     private carrinhoCompraService: CarrinhoCompraService,
@@ -33,7 +35,9 @@ export class CarrinhoPage implements OnInit {
     private formasPagamentoService: FormasPagamentoService,
     public alertController: AlertController,
     private router: Router,
-    private homePage: HomePage
+    private homePage: HomePage,
+    private push: PushNotificationService,
+    private usuario: UsuariosService
   ) {
 
     this.formCRUD = new FormGroup(
@@ -49,10 +53,17 @@ export class CarrinhoPage implements OnInit {
       { updateOn: "change" }
     );
 
-    this.onRefresh();
   }
 
   ngOnInit() {
+  }
+
+  ionViewDidEnter() {
+    this.usuario.indexAdminDevices().subscribe(data => {
+      if (!data) {return;}
+      this.adminsDevices = data.filter(user => user.device_id).map(user => user.device_id);
+    });
+    this.onRefresh();
   }
 
   onRefresh() {
@@ -94,6 +105,7 @@ export class CarrinhoPage implements OnInit {
       localStorage.setItem('id-ultimo-pedido', data.id);
       this.router.navigate([`./main/status/${data.id}`]);
     });
+    this.push.sendMessageToAdmins(this.adminsDevices, 'Um novo pedido foi realizado!');
     this.carrinhoCompraService.addProdutoCarrinho({ carrinho: [], qtd: 0 });
   }
 

@@ -29,8 +29,19 @@ export class HomePage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    
+  }
+
+  ionViewDidEnter() {
     this.usuario$ = this.userService.usuarioLogado();
     this.produtos$ = this.produtosService.index();
+    this.usuario$.subscribe(async data => {
+      if (!data) {
+        return;
+      }
+      const { userId } = await this.push.getId();
+      this.userService.update({ id: data.id, device_id: userId }).subscribe();
+    })
   }
 
   onChangeValor(tipo, produto) {

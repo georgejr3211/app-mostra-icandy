@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment.prod';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { RestaurantesService } from 'src/app/providers/services/restaurantes.service';
@@ -23,7 +24,7 @@ export class StatusPage implements OnInit, AfterViewInit {
   avaliacoes$: Observable<any>;
   status$: Observable<any>;
   socket;
-  apiUrl = 'http://localhost:4000';
+  apiUrl = environment.api;
   numeroTelefone = '(34) 99977-1973';
   constructor(
     private authService: AuthService,
@@ -33,10 +34,14 @@ export class StatusPage implements OnInit, AfterViewInit {
     private statusService: StatusService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.socket = io(this.apiUrl);
   }
 
   ngOnInit() {
+
+  }
+
+  ionViewDidEnter() {
+    this.socket = io(this.apiUrl);
     const { id } = this.activatedRoute.snapshot.params;
     this.pedido$ = this.pedidosService.find(id);
     this.status$ = this.statusService.index();

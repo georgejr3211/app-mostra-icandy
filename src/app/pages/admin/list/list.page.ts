@@ -23,7 +23,7 @@ export class ListPage implements OnInit {
   }
 
   buscarId(id) {
-    this.router.navigate([`./admin/${id}`]);
+    this.router.navigate([`/main/admin/${id}`]);
   }
 
 }

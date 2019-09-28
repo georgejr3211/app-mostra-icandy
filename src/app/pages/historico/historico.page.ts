@@ -22,21 +22,25 @@ export class HistoricoPage implements OnInit {
     private facadeUsuarios: UsuariosService,
     public popoverController: PopoverController
   ) {
-    this.usuario$ = this.facadeUsuarios.usuarioLogado();
-    this.restaurante$ = this.facadeRestaurante.index();
+
   }
 
   ngOnInit() {
+
+  }
+
+  ionViewDidEnter() {
+    this.usuario$ = this.facadeUsuarios.usuarioLogado();
+    this.restaurante$ = this.facadeRestaurante.index();
+
     this.usuario$.subscribe(data => {
       if (data) {
-        console.log("usuarioooo", data.id);
         this.pedido$ = this.facade.findByUser(data.id);
-      }
-    });
+        }
+      });
   }
 
   async presentPopover(ev: any) {
-    console.log('ev', ev);
     const popover = await this.popoverController.create({
       component: DetalhesHistoricoPage,
       componentProps: {

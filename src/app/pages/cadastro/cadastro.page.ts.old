@@ -79,7 +79,21 @@ export class CadastroPage implements OnInit {
           null,
           Validators.compose([Validators.minLength(6), Validators.required])
         ),
-
+        cpf: new FormControl(
+          null,
+          Validators.compose([
+            Validators.minLength(14),
+            Validators.required,
+            Validators.pattern(/(0|[1-9]\d)/)
+          ])
+        ),
+        sobrenome: new FormControl(null),
+        username: new FormControl(null),
+        password2: new FormControl(
+          null,
+          Validators.compose([Validators.minLength(6), Validators.required])
+        ),
+        
         email: new FormControl(
           null,
           Validators.compose([
@@ -103,9 +117,14 @@ export class CadastroPage implements OnInit {
   ngOnInit() { }
 
   criarConta() {
+    if (this.formCRUD.get("password").value === this.formCRUD.get("password2").value) {
       this.formatTelefone();
-      this.retorno$ = this.facade.insert(this.formCRUD.value);
+      this.formatCpf();
 
+      this.formCRUD.disable();
+
+      console.log("this.form", this.formCRUD.value);
+      this.retorno$ = this.facade.insert(this.formCRUD.value);
       this.retorno$.subscribe(data => {
         if (data) {
           this.authService
@@ -122,8 +141,18 @@ export class CadastroPage implements OnInit {
             });
         } else {
           this.presentAlertErro();
+          this.formCRUD.get("email").enable();
+          this.formCRUD.get("cpf").enable();
+          this.formCRUD.get("email").setValue("");
+          this.formCRUD.get("cpf").setValue("");
         }
       });
+    } else {
+      console.log("nao");
+      this.presentAlert();
+      this.formCRUD.get("password").setValue(null);
+      this.formCRUD.get("password2").setValue(null);
+    }
   }
 
   async presentAlert() {
@@ -141,7 +170,7 @@ export class CadastroPage implements OnInit {
     const alert = await this.alertController.create({
       header: "Erro",
       // subHeader: "Verifique seu e-mail",
-      message: "Email inválido ou já existente!!",
+      message: "Email ou CPF inválido ou já existentes!!",
       buttons: ["OK"]
     });
 

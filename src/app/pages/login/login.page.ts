@@ -36,7 +36,6 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    this.auth$ = this.authService.auth('georgefeitosajr12@gmail.com', 'georgejr');
   }
 
   async presentModal() {
