@@ -6,9 +6,7 @@ import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { EsqueciMinhaSenhaPage } from '../esqueci-minha-senha/esqueci-minha-senha.page';
-// import { Crop } from '@ionic-native/crop/ngx';
-// import { ImagePicker } from '@ionic-native/image-picker/ngx';
-// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+
 
 @Component({
   selector: 'app-login',

@@ -28,6 +28,8 @@ const routes: Routes = [
   ],
   declarations: [LoginPage, EsqueciMinhaSenhaPage],
   entryComponents: [EsqueciMinhaSenhaPage],
-  exports: [LoginPage]
+  exports: [LoginPage],
+  providers: [
+  ]
 })
 export class LoginPageModule { }

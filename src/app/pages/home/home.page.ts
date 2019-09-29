@@ -29,12 +29,8 @@ export class HomePage implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    
-  }
-
-  ionViewDidEnter() {
     this.usuario$ = this.userService.usuarioLogado();
-    this.produtos$ = this.produtosService.index();
+
     this.usuario$.subscribe(async data => {
       if (!data) {
         return;
@@ -42,6 +38,10 @@ export class HomePage implements OnInit, OnDestroy {
       const { userId } = await this.push.getId();
       this.userService.update({ id: data.id, device_id: userId }).subscribe();
     })
+  }
+
+  ionViewDidEnter() {
+    this.produtos$ = this.produtosService.index();
   }
 
   onChangeValor(tipo, produto) {

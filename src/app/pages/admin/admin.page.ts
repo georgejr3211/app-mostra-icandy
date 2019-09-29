@@ -103,7 +103,11 @@ export class AdminPage implements OnInit {
     this.router.navigate(['/main/list']);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  ionViewDidEnter() {
+    
+  }
 
   onAtualizarPedido() {
     let payload = {
@@ -111,6 +115,7 @@ export class AdminPage implements OnInit {
       status_pedido_id: this.formCRUDPedido.get("status_pedido_id").value,
       ativo: this.formCRUDPedido.get("ativo").value
     };
+    this.push.sendMessage(this.deviceId, 'Corre lá no App!! Seu pedido acabou de mudar de status');
     this.retorno$ = this.facadePedidos.update(payload);
     this.retorno$.subscribe(data => {
       if (data) {
@@ -119,8 +124,6 @@ export class AdminPage implements OnInit {
         this.presentAlert();
       }
     });
-    // this.usuario$.
-    this.push.sendMessage(this.deviceId, 'Corre lá no App!! Seu pedido acabou de mudar de status');
   }
 
   async presentAlert() {

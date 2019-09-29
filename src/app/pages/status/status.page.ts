@@ -32,7 +32,7 @@ export class StatusPage implements OnInit, AfterViewInit {
     private restaurantesService: RestaurantesService,
     private avaliacoesService: AvaliacoesService,
     private statusService: StatusService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
   ) {
   }
 

@@ -15,11 +15,14 @@ export class ListPage implements OnInit {
   constructor(
     private facade: PedidosService,
     private router: Router
-    ) { 
-    this.pedidos$ = this.facade.index();
+  ) {
   }
 
   ngOnInit() {
+  }
+
+  ionViewDidEnter() {
+    this.pedidos$ = this.facade.index();
   }
 
   buscarId(id) {

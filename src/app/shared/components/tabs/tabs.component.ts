@@ -25,9 +25,6 @@ export class TabsComponent implements OnInit {
 
   ngOnInit() {
     this.usuario$ = this.usuario.usuarioLogado();
-  }
-
-  ionViewDidEnter() {
     this.totalItensCarrinho$ = this.carrinhoCompra.getProdutosCarrinho()
       .pipe(
         map((data: any) => {
@@ -38,6 +35,10 @@ export class TabsComponent implements OnInit {
           return data.carrinho.map(item => item.qtd).reduce((a, b) => a + b, 0);
         })
       );
+  }
+
+  ionViewDidEnter() {
+    
   }
 
   onNavigateStatus() {

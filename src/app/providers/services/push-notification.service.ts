@@ -34,8 +34,6 @@ export class PushNotificationService {
   sendMessage(userId, message) {
     this.oneSignal.getIds()
       .then(data => {
-        // '01d17a8c-2988-43a9-b549-c163cfe9fc27', 
-        // const userId = data.userId;
         this.oneSignal.postNotification({
           include_player_ids: [userId],
           contents: {
@@ -48,8 +46,6 @@ export class PushNotificationService {
   sendMessageToAdmins(usersIds, message) {
     this.oneSignal.getIds()
       .then(data => {
-        // '01d17a8c-2988-43a9-b549-c163cfe9fc27', 
-        // const userId = data.userId;
         this.oneSignal.postNotification({
           include_player_ids: usersIds,
           contents: {
