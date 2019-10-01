@@ -7,7 +7,7 @@
   </ion-progress-bar>
   <div *ngIf="(pedido$ | async)?.status_pedido_id">
 
-    <ion-item style="padding-right: 16px;" *ngFor="let restaurante of restaurantes$ | async">
+    <ion-item style="padding-right: 16px; padding: 0;" *ngFor="let restaurante of restaurantes$ | async">
       <ion-col style="height: 100%;">
         <ion-row style="justify-content: center;">
           <ion-label class="imgRestaurante">

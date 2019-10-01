@@ -16,28 +16,41 @@ export class HistoricoPage implements OnInit {
   restaurante$: Observable<any>;
   usuario$: Observable<any>;
 
+  hasData = false;
+  empty = false;
+
+  imageArrow = '/assets/images/arrow.png';
+
+
   constructor(
     private facade: PedidosService,
     private facadeRestaurante: RestaurantesService,
     private facadeUsuarios: UsuariosService,
     public popoverController: PopoverController
-  ) {
+  ) {}
 
-  }
-
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   ionViewDidEnter() {
+    this.hasData = false;
+    this.empty = false;
     this.usuario$ = this.facadeUsuarios.usuarioLogado();
     this.restaurante$ = this.facadeRestaurante.index();
 
     this.usuario$.subscribe(data => {
       if (data) {
         this.pedido$ = this.facade.findByUser(data.id);
-        }
-      });
+        this.pedido$.subscribe(data => {
+          if (data.length) {
+            this.hasData = true;
+            this.empty = false;
+          } else {
+            this.empty = true;
+            this.hasData = true;
+          }
+        })
+      }
+    });
   }
 
   async presentPopover(ev: any) {
@@ -45,7 +58,7 @@ export class HistoricoPage implements OnInit {
       component: DetalhesHistoricoPage,
       componentProps: {
         custom_id: ev
-      },
+      }
       // translucent: true
     });
     popover.present();

@@ -4,7 +4,30 @@
 
 <ion-content>
   <!-- {{pedido$ | async | json}} -->
-  <ion-progress-bar *ngIf="!(pedido$ | async)?.length" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar *ngIf="(!hasData)" type="indeterminate"></ion-progress-bar>
+
+
+  <ion-col *ngIf="empty">
+    <ion-row style="justify-content: center; opacity: 0.5;">
+      <ion-label>
+        <ion-icon style="font-size: 150px" name="folder-open"></ion-icon>
+      </ion-label>
+    </ion-row>
+    <ion-row style="justify-content: center; opacity: 0.5; margin-top: -25px;">
+      <h3>Oops!</h3>
+    </ion-row>
+    <ion-row style="justify-content: center; opacity: 0.5;">
+      <h3>Ainda não existem pedidos.</h3>
+    </ion-row>
+    <ion-row style="text-align: center; opacity: 0.5; margin: 10px;">
+      <h6>Realize um pedido e veja o quão fácil e rápido é o nosso serviço!!</h6>
+    </ion-row>
+    <ion-row style="padding-left: 25px; opacity: 0.5;">
+        <ion-label>
+          <img style="height: 100px;" [src]="imageArrow" />
+        </ion-label>
+      </ion-row>
+  </ion-col>
 
   <ion-item *ngFor="let item of (pedido$ | async) " style="padding-top: 5px;">
     <ion-row>

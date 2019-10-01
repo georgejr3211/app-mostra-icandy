@@ -3,6 +3,8 @@
 </ion-header>
 
 <ion-content class="content">
+  <ion-progress-bar *ngIf="!(pedido$ | async)?.length" type="indeterminate"></ion-progress-bar>
+
   <ion-card-content>
     <ion-list *ngFor="let item of pedido$ | async">
       <ion-row>
