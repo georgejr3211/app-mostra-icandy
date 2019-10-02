@@ -4,6 +4,10 @@
 
 <ion-content>
   
+  <ion-row style="justify-content: center;">
+    <ion-button (click)="cadastrar()">Cadastrar Produtos</ion-button>
+  </ion-row>
+
   <ion-card (click)="buscarId(pedidos?.id)" *ngFor="let pedidos of (pedidos$ | async)?.rows">
     <ion-item lines="none">
       <ion-label>

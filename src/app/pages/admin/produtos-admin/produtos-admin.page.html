@@ -1,9 +1,58 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>produtos-admin</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title style="font-size: 17px;">Cadastro de Produtos</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+        <small>Voltar</small>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- <pre>{{categorias$ | async | json}}</pre> -->
+  <ion-card>
+    <form [formGroup]="formCRUDCategoria" fxLayoutAlign="column">
+      <ion-item style="margin-top: 20px;">
+        <ion-col lines="none">
+          <ion-item-group style="text-align: center; margin: 10px;">
+            <ion-label style="padding-bottom: 5px;">Categoria</ion-label>
+            <ion-item-divider></ion-item-divider>
+          </ion-item-group>
+          <ion-select style="min-width: 100%;" formControlName="OPTION">
+            <ion-select-option *ngFor="let item of options" [value]="item.id">
+              {{item.descricao}}
+            </ion-select-option>
+          </ion-select>
+          <ion-input *ngIf="!formCRUDCategoria.get('OPTION').value" style="margin-bottom: 10px;" padding
+            formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+          <ion-select style="min-width: 100%;" *ngIf="formCRUDCategoria.get('OPTION').value"
+            formControlName="nome">
+            <ion-select-option *ngFor="let item of (categorias$ | async)">
+              {{item?.nome}}
+            </ion-select-option>
+          </ion-select>
+          <ion-button [disabled]="!formCRUDCategoria.valid" id="btnCriarConta" expand="full"
+            (click)="onInserirCategoria()">
+            Inserir
+          </ion-button>
+        </ion-col>
+      </ion-item>
+    </form>
+  </ion-card>
+  <form [formGroup]="formCRUD" fxLayoutAlign="column">
+    <ion-select formControlName="categorias_id">
+      <ion-select-option *ngFor="let item of (categorias$ | async)">
+        {{item?.nome}}
+      </ion-select-option>
+    </ion-select>
+    <!-- <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+    <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+    <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+    <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+    <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input> -->
+
+  </form>
 
 </ion-content>
