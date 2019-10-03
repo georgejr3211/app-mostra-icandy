@@ -22,6 +22,10 @@ export class ListPage implements OnInit {
   }
 
   ionViewDidEnter() {
+    this.onRefresh();
+  }
+
+  onRefresh() {
     this.pedidos$ = this.facade.index();
   }
 

@@ -4,6 +4,11 @@
 
 <ion-content>
   
+<!-- Default Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-row style="justify-content: center;">
     <ion-button (click)="cadastrar()">Cadastrar Produtos</ion-button>
   </ion-row>
