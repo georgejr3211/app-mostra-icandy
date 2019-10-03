@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs/internal/Observable';
-import { AlertController } from '@ionic/angular';
+import { Observable } from "rxjs/internal/Observable";
+import { AlertController } from "@ionic/angular";
 import { CategoriasService } from "./../../../providers/services/categorias.service";
 import { ProdutosService } from "./../../../providers/services/produtos.service";
 import { Component, OnInit } from "@angular/core";
@@ -12,7 +12,6 @@ import { Router } from "@angular/router";
   styleUrls: ["./produtos-admin.page.scss"]
 })
 export class ProdutosAdminPage implements OnInit {
-
   retornoInsert$: Observable<any>;
   retornoUpdate$: Observable<any>;
 
@@ -61,10 +60,8 @@ export class ProdutosAdminPage implements OnInit {
 
   ngOnInit() {}
 
-  ionViewDidEnter() {
-    
-  }
-  
+  ionViewDidEnter() {}
+
   buscarId(id) {
     this.categoria$ = this.categoriasService.find(id);
     this.categoria$.subscribe(data => {
@@ -78,17 +75,27 @@ export class ProdutosAdminPage implements OnInit {
 
   onConfirm() {
     if (this.formCRUDCategoria.get("OPTION").value) {
-      this.retornoUpdate$ = this.categoriasService
-        .update(this.formCRUDCategoria.value);
-        this.retornoUpdate$.subscribe(data => {
+      this.retornoUpdate$ = this.categoriasService.update(
+        this.formCRUDCategoria.value
+      );
+      this.retornoUpdate$.subscribe(data => {
+        if (data) {
           console.log("UPDATE", data);
-        });
+        } else {
+          this.presentAlert();
+        }
+      });
     } else {
-      this.retornoInsert$ = this.categoriasService
-        .update(this.formCRUDCategoria.value);
-        this.retornoInsert$.subscribe(data => {
+      this.retornoInsert$ = this.categoriasService.update(
+        this.formCRUDCategoria.value
+      );
+      this.retornoInsert$.subscribe(data => {
+        if (data) {
           console.log("INSERT", data);
-        });
+        } else {
+          this.presentAlert();
+        }
+      });
     }
   }
 
@@ -104,7 +111,9 @@ export class ProdutosAdminPage implements OnInit {
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: "Erro ao atualizar",
+      header: this.formCRUDCategoria.get("OPTION").value
+        ? "Erro ao atualizar"
+        : "Erro ao Inserir",
       message: "Contate os desenvolvedores!!",
       buttons: ["OK"]
     });
