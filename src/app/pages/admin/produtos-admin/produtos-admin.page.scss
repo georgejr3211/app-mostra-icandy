@@ -1,7 +1,6 @@
 :host {
   ion-content {
     --background: url("../../../../assets/images/bg.jpeg");
-    // --background: rgb(131, 207, 226);
   }
 }
 
@@ -9,16 +8,72 @@
   min-height: 1px !important;
 }
 
+.label-md {
+  margin-bottom: 1px !important;
+  margin-top: 1px !important;
+}
+
 ion-item-divider {
   margin-top: 0px;
   min-height: 1px !important;
 }
 
+#titulo {
+  text-align: center;
+}
+
+#btnCriarConta {
+  margin-top: 20px;
+  --background: #b41661;
+}
+
+.validation-errors {
+  color: #cc0033;
+  display: inline-block;
+  font-size: 12px;
+  line-height: 15px;
+  margin: 5px 0 0;
+}
+
 .input {
+  padding: 0;
+  padding-top: 10px;
+}
+
+ion-item {
   background: #ffffff;
-  border: 1px solid #766f74;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 5px;
-  margin-top: 10px;
-  height: 40px;
+  border: 1px solid #dbd5d5;
+  box-sizing: border-box;
+  margin-top: 15px;
+}
+
+ion-list {
+  width: 100%;
+}
+
+.row {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6f2367;
+}
+
+.rowUsuario {
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 10px;
+  line-height: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6f2367;
 }
