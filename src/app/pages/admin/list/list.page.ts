@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./list.page.scss'],
 })
 export class ListPage implements OnInit {
-
+  hasData = false;
   pedidos$: Observable<any>;
 
   constructor(
@@ -19,14 +19,23 @@ export class ListPage implements OnInit {
   }
 
   ngOnInit() {
+    
   }
 
   ionViewDidEnter() {
     this.onRefresh();
   }
 
-  onRefresh() {
+  onRefresh(event?) {
     this.pedidos$ = this.facade.index();
+    if (event) {
+      this.pedidos$.subscribe(data => {
+        if (data) {
+          event.detail.complete();
+        }
+      });
+    }
+
   }
 
   buscarId(id) {

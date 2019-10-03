@@ -41,7 +41,18 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
+    this.onRefresh();
+  }
+
+  onRefresh(event?) {
     this.produtos$ = this.produtosService.index();
+    this.produtos$.subscribe(data => {
+      if (data) {
+        if (event) {
+          event.detail.complete();
+        }
+      }
+    })
   }
 
   onChangeValor(tipo, produto) {
