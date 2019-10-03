@@ -1,6 +1,6 @@
 :host {
   ion-content {
-    --background: url("../../../assets/images/bg.jpeg");
+    --background: url("../../../assets/images/bg.jpg");
   }
 }
 
@@ -12,7 +12,7 @@ form {
 .input {
   margin-top: 10px;
   background: #ffffff;
-  border: 1px solid #766f74;
+  border: 1px solid #572c4b;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding: 5px;
 }
@@ -45,7 +45,7 @@ form {
   margin-top: 20px;
   text-transform: uppercase;
   color: #fff;
-  font-weight: 500;
+  // font-weight: 500;
   letter-spacing: 2px;
   cursor: pointer;
 }
@@ -60,6 +60,6 @@ form {
 }
 
 .img-card {
-  height: 200px;
-  margin-top: 20px;
+  // margin-top: 20px;
+  // height: calc(100% - 30px);
 }
