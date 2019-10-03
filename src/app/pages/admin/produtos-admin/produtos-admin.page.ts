@@ -73,7 +73,7 @@ export class ProdutosAdminPage implements OnInit {
 
   ionViewDidEnter() {}
 
-  buscarId(id) {
+  buscarIdCategoria(id) {
     this.categoria$ = this.categoriasService.find(id);
     this.categoria$.subscribe(data => {
       if (data) {
@@ -82,6 +82,17 @@ export class ProdutosAdminPage implements OnInit {
         console.log('Não foi possível buscar id');
       }
     });
+  }
+
+  buscarIdProduto(id) {
+    // this.categoria$ = this.categoriasService.find(id);
+    // this.categoria$.subscribe(data => {
+    //   if (data) {
+    //     this.formCRUDCategoria.patchValue(data);
+    //   } else {
+    //     console.log('Não foi possível buscar id');
+    //   }
+    // });
   }
 
   onConfirmCategoria() {

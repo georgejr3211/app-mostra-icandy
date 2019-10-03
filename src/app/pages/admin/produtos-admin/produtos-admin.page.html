@@ -29,13 +29,13 @@
             </ion-select>
           </ion-item>
           <ion-item *ngIf="!formCRUDCategoria.get('OPTION').value" lines="none" style="margin: 10px;">
-            <ion-input *ngIf="!formCRUDCategoria.get('OPTION').value" padding formControlName="nome" class="input"
+            <ion-input padding formControlName="nome" class="input"
               type="text" placeholder="Nome da Categoria" required></ion-input>
           </ion-item>
 
           <ion-item *ngIf="formCRUDCategoria.get('OPTION').value" style="margin: 10px;">
             <ion-select style="min-width: 100%;" formControlName="id" placeholder="Selecione"
-              (ionChange)="buscarId(formCRUDCategoria.get('id').value)">
+              (ionChange)="buscarIdCategoria(formCRUDCategoria.get('id').value)">
               <ion-select-option *ngFor="let item of (categorias$ | async)" [value]="item.id">
                 {{item?.nome}}
               </ion-select-option>
@@ -84,14 +84,14 @@
             </ion-select>
           </ion-item>
           <ion-item *ngIf="formCRUD.get('OPTION').value" lines="none" style="margin: 10px;">
-            <ion-select style="min-width: 100%;" formControlName="id" placeholder="Selecione">
+            <ion-select style="min-width: 100%;" formControlName="id" placeholder="Produto" (ionChange)="buscarIdProduto(formCRUD.get('id').value)">
               <ion-select-option *ngFor="let item of (produtos$ | async)" [value]="item.id">
                 {{item.nome}}
               </ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="formCRUD.get('OPTION').value" style="margin: 10px;">
-            <ion-select style="min-width: 100%;" formControlName="categorias_id" placeholder="Selecione">
+            <ion-select style="min-width: 100%;" formControlName="categorias_id" placeholder="Categoria">
               <ion-select-option *ngFor="let item of (categorias$ | async)">
                 {{item?.nome}}
               </ion-select-option>
