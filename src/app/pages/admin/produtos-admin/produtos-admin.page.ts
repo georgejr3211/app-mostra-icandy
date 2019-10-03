@@ -1,8 +1,10 @@
+import { Observable } from 'rxjs/internal/Observable';
+import { AlertController } from '@ionic/angular';
+import { CategoriasService } from "./../../../providers/services/categorias.service";
 import { ProdutosService } from "./../../../providers/services/produtos.service";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
-import { CategoriasService } from "src/app/providers/services/categorias.service";
-import { Observable } from 'rxjs';
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-produtos-admin",
@@ -11,13 +13,32 @@ import { Observable } from 'rxjs';
 })
 export class ProdutosAdminPage implements OnInit {
 
+  retornoInsert$: Observable<any>;
+  retornoUpdate$: Observable<any>;
+
   categoria$: Observable<any>;
+  categorias$: Observable<any>;
   formCRUD: FormGroup;
+  formCRUDCategoria: FormGroup;
+
+  options = [{ id: 0, descricao: "Inserir" }, { id: 1, descricao: "Editar" }];
 
   constructor(
-    private facadeProdutos: ProdutosService,
-    private facadeCategorias: CategoriasService
+    private router: Router,
+    private categoriasService: CategoriasService,
+    private produtosService: ProdutosService,
+    private alertController: AlertController
   ) {
+    this.formCRUDCategoria = new FormGroup(
+      {
+        id: new FormControl(null),
+        nome: new FormControl(null),
+        ativo: new FormControl(1),
+        OPTION: new FormControl(0)
+      },
+      { updateOn: "change" }
+    );
+
     this.formCRUD = new FormGroup(
       {
         id: new FormControl(null),
@@ -31,7 +52,66 @@ export class ProdutosAdminPage implements OnInit {
       },
       { updateOn: "change" }
     );
+
+    this.categorias$ = this.categoriasService.index();
+    this.categorias$.subscribe(data => {
+      console.log("data", data);
+    });
   }
 
   ngOnInit() {}
+
+  ionViewDidEnter() {
+    
+  }
+  
+  buscarId(id) {
+    this.categoria$ = this.categoriasService.find(id);
+    this.categoria$.subscribe(data => {
+      if (data) {
+        this.formCRUDCategoria.patchValue(data);
+      } else {
+        //apresentar alert
+      }
+    });
+  }
+
+  onConfirm() {
+    if (this.formCRUDCategoria.get("OPTION").value) {
+      this.retornoUpdate$ = this.categoriasService
+        .update(this.formCRUDCategoria.value);
+        this.retornoUpdate$.subscribe(data => {
+          console.log("UPDATE", data);
+        });
+    } else {
+      this.retornoInsert$ = this.categoriasService
+        .update(this.formCRUDCategoria.value);
+        this.retornoInsert$.subscribe(data => {
+          console.log("INSERT", data);
+        });
+    }
+  }
+
+  updateAtivoCategoria(data?) {
+    let checked;
+    if (data) {
+      checked = 1;
+    } else {
+      checked = 0;
+    }
+    this.formCRUDCategoria.get("ativo").setValue(checked);
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: "Erro ao atualizar",
+      message: "Contate os desenvolvedores!!",
+      buttons: ["OK"]
+    });
+    await alert.present();
+  }
+
+  dismiss() {
+    this.router.navigate(["/main/list"]);
+  }
 }

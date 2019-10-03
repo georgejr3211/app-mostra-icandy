@@ -1,9 +1,84 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>produtos-admin</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title style="font-size: 17px;">Cadastro de Produtos</ion-title>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="arrow-round-back"></ion-icon>
+        <small>Voltar</small>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- <pre>{{categorias$ | async | json}}</pre> -->
+  <ion-card>
+    <form [formGroup]="formCRUDCategoria" fxLayoutAlign="column">
+      <ion-item style="margin-top: 20px;">
+        <ion-col lines="none">
+          <ion-item-group style="text-align: center; margin: 10px;">
+            <ion-label style="padding-bottom: 5px;">Categoria</ion-label>
+            <ion-item-divider></ion-item-divider>
+          </ion-item-group>
+
+          <ion-item style="margin: 10px;">
+            <ion-select style="min-width: 100%;" formControlName="OPTION">
+              <ion-select-option *ngFor="let item of options" [value]="item.id">
+                {{item.descricao}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="!formCRUDCategoria.get('OPTION').value" lines="none" style="margin: 10px;">
+            <ion-input *ngIf="!formCRUDCategoria.get('OPTION').value" padding
+              formControlName="nome" class="input" type="text" placeholder="Nome da Categoria" required></ion-input>
+          </ion-item>
+
+          <ion-item *ngIf="formCRUDCategoria.get('OPTION').value" style="margin: 10px;">
+            <ion-select style="min-width: 100%;" formControlName="id" placeholder="Selecione"
+              (ionChange)="buscarId(formCRUDCategoria.get('id').value)">
+              <ion-select-option *ngFor="let item of (categorias$ | async)" [value]="item.id">
+                {{item?.nome}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item-divider></ion-item-divider>
+
+          <ion-col *ngIf="formCRUDCategoria.get('OPTION').value" lines="none">
+              <ion-item lines="none" style="margin: 10px;">
+                <ion-input padding formControlName="nome" class="input" type="text"
+                  placeholder="Nome da categoria" required></ion-input>
+              </ion-item>
+              <ion-item style="margin: 10px;">
+                <ion-label>Ativo</ion-label>
+                <ion-toggle formControlName="ativo"
+                  (ionChange)="updateAtivoCategoria(formCRUDCategoria.get('ativo').value)">
+                </ion-toggle>
+              </ion-item>
+          </ion-col>
+          <ion-button style="margin: 0;" [disabled]="!formCRUDCategoria.valid" id="btnCriarConta" expand="full"
+            (click)="onConfirm()">
+            <ion-label *ngIf="!formCRUDCategoria.get('OPTION').value; else atualizar">Inserir</ion-label>
+            <ng-template #atualizar>
+              Atualizar
+            </ng-template>
+          </ion-button>
+        </ion-col>
+      </ion-item>
+    </form>
+  </ion-card>
+  <form [formGroup]="formCRUD" fxLayoutAlign="column">
+    <ion-select formControlName="categorias_id">
+      <ion-select-option *ngFor="let item of (categorias$ | async)">
+        {{item?.nome}}
+      </ion-select-option>
+    </ion-select>
+    <!-- <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+    <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+    <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+    <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input>
+    <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required></ion-input> -->
+
+  </form>
 
 </ion-content>

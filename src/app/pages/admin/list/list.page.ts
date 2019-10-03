@@ -29,4 +29,8 @@ export class ListPage implements OnInit {
     this.router.navigate([`/main/admin/${id}`]);
   }
 
+  cadastrar() {
+    this.router.navigate([`/produtos-admin`]);
+  }
+
 }
