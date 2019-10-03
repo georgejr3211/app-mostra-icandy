@@ -12,11 +12,17 @@ import { Router } from "@angular/router";
   styleUrls: ["./produtos-admin.page.scss"]
 })
 export class ProdutosAdminPage implements OnInit {
-  retornoInsert$: Observable<any>;
-  retornoUpdate$: Observable<any>;
+  retornoInsertCategoria$: Observable<any>;
+  retornoUpdateCategoria$: Observable<any>;
+
+  retornoInsertProduto$: Observable<any>;
+  retornoUpdateProduto$: Observable<any>;
 
   categoria$: Observable<any>;
   categorias$: Observable<any>;
+
+  produtos$: Observable<any>;
+
   formCRUD: FormGroup;
   formCRUDCategoria: FormGroup;
 
@@ -35,7 +41,7 @@ export class ProdutosAdminPage implements OnInit {
         ativo: new FormControl(1),
         OPTION: new FormControl(0)
       },
-      { updateOn: "change" }
+      { updateOn: 'change' }
     );
 
     this.formCRUD = new FormGroup(
@@ -47,15 +53,20 @@ export class ProdutosAdminPage implements OnInit {
         foto: new FormControl(null),
         descricao: new FormControl(null),
         preco: new FormControl(null),
-        ativo: new FormControl(null)
+        ativo: new FormControl(1),
+        OPTION: new FormControl(0)
       },
-      { updateOn: "change" }
+      { updateOn: 'change' }
     );
 
     this.categorias$ = this.categoriasService.index();
     this.categorias$.subscribe(data => {
-      console.log("data", data);
+      console.log('DATA CATEGORIAS$ =>', data);
     });
+    this.produtos$ = this.produtosService.index();
+    this.produtos$.subscribe(data => {
+      console.log('DATA PRODUTOS$ =>', data);
+    })
   }
 
   ngOnInit() {}
@@ -68,32 +79,58 @@ export class ProdutosAdminPage implements OnInit {
       if (data) {
         this.formCRUDCategoria.patchValue(data);
       } else {
-        //apresentar alert
+        console.log('Não foi possível buscar id');
       }
     });
   }
 
-  onConfirm() {
+  onConfirmCategoria() {
     if (this.formCRUDCategoria.get("OPTION").value) {
-      this.retornoUpdate$ = this.categoriasService.update(
+      this.retornoUpdateCategoria$ = this.categoriasService.update(
         this.formCRUDCategoria.value
       );
-      this.retornoUpdate$.subscribe(data => {
+      this.retornoUpdateCategoria$.subscribe(data => {
         if (data) {
           console.log("UPDATE", data);
         } else {
-          this.presentAlert();
+          this.presentAlertCategoria();
         }
       });
     } else {
-      this.retornoInsert$ = this.categoriasService.update(
+      this.retornoInsertCategoria$ = this.categoriasService.insert(
         this.formCRUDCategoria.value
       );
-      this.retornoInsert$.subscribe(data => {
+      this.retornoInsertCategoria$.subscribe(data => {
         if (data) {
           console.log("INSERT", data);
         } else {
-          this.presentAlert();
+          this.presentAlertCategoria();
+        }
+      });
+    }
+  }
+
+  onConfirmProduto() {
+    if (this.formCRUDCategoria.get("OPTION").value) {
+      this.retornoUpdateProduto$ = this.produtosService.update(
+        this.formCRUDCategoria.value
+      );
+      this.retornoUpdateProduto$.subscribe(data => {
+        if (data) {
+          console.log("UPDATE", data);
+        } else {
+          this.presentAlertProduto();
+        }
+      });
+    } else {
+      this.retornoInsertProduto$ = this.produtosService.insert(
+        this.formCRUDCategoria.value
+      );
+      this.retornoInsertProduto$.subscribe(data => {
+        if (data) {
+          console.log("INSERT", data);
+        } else {
+          this.presentAlertProduto();
         }
       });
     }
@@ -109,9 +146,30 @@ export class ProdutosAdminPage implements OnInit {
     this.formCRUDCategoria.get("ativo").setValue(checked);
   }
 
-  async presentAlert() {
+  updateAtivoProduto(data?) {
+    let checked;
+    if (data) {
+      checked = 1;
+    } else {
+      checked = 0;
+    }
+    this.formCRUDCategoria.get("ativo").setValue(checked);
+  }
+
+  async presentAlertCategoria() {
     const alert = await this.alertController.create({
       header: this.formCRUDCategoria.get("OPTION").value
+        ? "Erro ao atualizar"
+        : "Erro ao Inserir",
+      message: "Contate os desenvolvedores!!",
+      buttons: ["OK"]
+    });
+    await alert.present();
+  }
+
+  async presentAlertProduto() {
+    const alert = await this.alertController.create({
+      header: this.formCRUD.get("OPTION").value
         ? "Erro ao atualizar"
         : "Erro ao Inserir",
       message: "Contate os desenvolvedores!!",
