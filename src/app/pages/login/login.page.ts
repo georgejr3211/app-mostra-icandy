@@ -34,6 +34,14 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log(JSON.parse(localStorage.getItem('auth/data')));
+    let authData: any = localStorage.getItem('auth/data');
+    if (authData) {
+      authData = JSON.parse(authData);
+      this.formCRUD.patchValue(authData);
+      this.onLogin();
+    }
+    // this.formCRUD.patchValue(localStorage.getItem('auth/token'));
   }
 
   async presentModal() {
@@ -49,6 +57,7 @@ export class LoginPage implements OnInit {
     this.authService.auth(email, password).subscribe(token => {
       if (token.length) {
         localStorage.setItem('auth/token', token);
+        localStorage.setItem('auth/data', JSON.stringify({ email, password }));
         // this.router.navigate(['/list']);
         this.router.navigate(['/main/home']);
       } else {
