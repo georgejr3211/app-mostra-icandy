@@ -3,14 +3,19 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onClickCart()">
+      <ion-icon name="cart">
+      </ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <!-- Default Refresher -->
   <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para atualizar" refreshingSpinner="circles"
       refreshingText="Atualizando...">
     </ion-refresher-content>
   </ion-refresher>
-  
+
   <ion-progress-bar *ngIf="!(produtos$ | async)?.length" type="indeterminate"></ion-progress-bar>
 
   <ion-searchbar animated (ionChange)="onSearch($event.target.value)"></ion-searchbar>

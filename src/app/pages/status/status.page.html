@@ -18,7 +18,8 @@
           <rating [rate]="(avaliacoes$ | async)?.avgAvaliacao" [readonly]="true" size="5">
           </rating>
         </ion-row>
-        <small style="margin-left: 20px;">WhatsApp/Celular {{numeroTelefone}}</small>
+        <a href="whatsapp://send?phone=YOUR_NUMBER">Link<a>
+        <!-- <small style="margin-left: 20px;">WhatsApp/Celular {{numeroTelefone}}</small> -->
       </ion-col>
     </ion-item>
 
