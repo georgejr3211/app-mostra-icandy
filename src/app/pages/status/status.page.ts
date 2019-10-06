@@ -25,7 +25,8 @@ export class StatusPage implements OnInit, AfterViewInit {
   status$: Observable<any>;
   socket;
   apiUrl = environment.api;
-  numeroTelefone = '(34) 99977-1973';
+  whatsAppPhone = 'https://api.whatsapp.com/send?phone=5534999771973&text=Olá, iCandy';
+  artesNew = 'https://www.instagram.com/artesnew_confeitaria';
   constructor(
     private authService: AuthService,
     private pedidosService: PedidosService,

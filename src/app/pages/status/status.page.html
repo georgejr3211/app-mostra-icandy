@@ -14,11 +14,20 @@
             <img class="card-img" [src]="imageLogo" />
           </ion-label>
         </ion-row>
-        <ion-row style="margin-top: -5%;padding-left: 15px; padding-bottom: 5px; justify-content: center;">
+        <ion-row style="margin-top: 5%; padding-left: 15px; padding-bottom: 5px; justify-content: center;">
           <rating [rate]="(avaliacoes$ | async)?.avgAvaliacao" [readonly]="true" size="5">
           </rating>
         </ion-row>
-        <small style="margin-left: 20px;">WhatsApp/Celular {{numeroTelefone}}</small>
+        <ion-col style="margin-top: 30px; display: flex; justify-content: space-between">
+          <a ion-button style="font-size: 18px" [href]="whatsAppPhone">
+            <ion-icon class="icon" name="logo-whatsapp"></ion-icon>
+            <span class="text">iCandy</span>
+          </a>
+          <a ion-button style="font-size: 18px" [href]="artesNew">
+            <ion-icon class="icon" name="logo-instagram"></ion-icon>
+            <span class="text">ArtesNeW</span>
+          </a>
+        </ion-col>
       </ion-col>
     </ion-item>
 

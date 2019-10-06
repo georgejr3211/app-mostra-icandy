@@ -5,6 +5,7 @@ import { ProdutosService } from 'src/app/providers/services/produtos.service';
 import { environment } from '../../../environments/environment';
 import { CarrinhoCompraService } from 'src/app/providers/services/carrinho-compra.service';
 import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 @Component({
@@ -25,7 +26,8 @@ export class HomePage implements OnInit, OnDestroy {
     private userService: UsuariosService,
     private produtosService: ProdutosService,
     private carrinhoCompraService: CarrinhoCompraService,
-    private push: PushNotificationService
+    private push: PushNotificationService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -41,7 +43,22 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ionViewDidEnter() {
+    this.onRefresh();
+  }
+
+  onRefresh(event?) {
     this.produtos$ = this.produtosService.index();
+    this.produtos$.subscribe(data => {
+      if (data) {
+        if (event) {
+          event.detail.complete();
+        }
+      }
+    })
+  }
+
+  onClickCart() {
+    this.router.navigate(['/main/carrinho']);
   }
 
   onChangeValor(tipo, produto) {

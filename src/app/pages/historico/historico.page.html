@@ -7,7 +7,7 @@
   <ion-progress-bar *ngIf="(!hasData)" type="indeterminate"></ion-progress-bar>
 
 
-  <ion-col *ngIf="empty">
+  <ion-col *ngIf="empty" class="ion-justify-content-between">
     <ion-row style="justify-content: center; opacity: 0.5;">
       <ion-label>
         <ion-icon style="font-size: 150px" name="folder-open"></ion-icon>
@@ -22,11 +22,11 @@
     <ion-row style="text-align: center; opacity: 0.5; margin: 10px;">
       <h6>Realize um pedido e veja o quão fácil e rápido é o nosso serviço!!</h6>
     </ion-row>
-    <ion-row style="padding-left: 25px; opacity: 0.5;">
-        <ion-label>
-          <img style="height: 100px;" [src]="imageArrow" />
-        </ion-label>
-      </ion-row>
+  </ion-col>
+  <ion-col *ngIf="empty" style="position: absolute; bottom: 0; width: 130px;">
+    <ion-row style="opacity: 0.5;">
+      <ion-img style="height: 100px;" [src]="imageArrow"></ion-img>
+    </ion-row>
   </ion-col>
 
   <ion-item *ngFor="let item of (pedido$ | async) " style="padding-top: 5px;">

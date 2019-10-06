@@ -132,6 +132,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
 
   doLogout() {
     localStorage.removeItem('auth/token');
+    localStorage.removeItem('auth/data');
     this.router.navigate(['/login']);
   }
 }

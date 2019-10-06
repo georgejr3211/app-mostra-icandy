@@ -1,10 +1,11 @@
+import { AlertController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../providers/services/auth.service';
 import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
 import { EsqueciMinhaSenhaPage } from '../esqueci-minha-senha/esqueci-minha-senha.page';
 
 
@@ -23,9 +24,10 @@ export class LoginPage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private usuariosService: UsuariosService,
     private router: Router,
     public modalController: ModalController,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController
   ) {
     this.formCRUD = new FormGroup({
       email: new FormControl(null, Validators.required),
@@ -34,6 +36,12 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    let authData: any = localStorage.getItem('auth/data');
+    if (authData) {
+      authData = JSON.parse(authData);
+      this.formCRUD.patchValue(authData);
+      this.onLogin();
+    }
   }
 
   async presentModal() {
@@ -43,19 +51,31 @@ export class LoginPage implements OnInit {
     return await modal.present();
   }
 
-  onLogin() {
+  async onLogin() {
     const email = this.formCRUD.get('email').value;
     const password = this.formCRUD.get('password').value;
-    this.authService.auth(email, password).subscribe(token => {
+    const loading = await this.loadingCtrl.create({ message: 'Por favor aguarde' });
+    loading.present();
+
+    this.authService.auth(email, password).subscribe(async token => {
       if (token.length) {
         localStorage.setItem('auth/token', token);
-        // this.router.navigate(['/list']);
+        localStorage.setItem('auth/data', JSON.stringify({ email, password }));
         this.router.navigate(['/main/home']);
       } else {
-        alert('Dados inválidos');
-        console.log('sem Token');
+        const alert = await this.alertCtrl.create({
+          message: 'Falha ao tentar realizar autenticação, informe os dados corretamente', buttons: ['Ok']
+        });
+        alert.present();
       }
+
+      loading.dismiss();
+    }, async err => {
+      const alert = await this.alertCtrl.create({ message: err.error, buttons: ['Ok'] });
+      alert.present();
+      loading.dismiss();
     });
+
   }
 
   onCadastro() {

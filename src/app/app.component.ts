@@ -22,6 +22,7 @@ export class AppComponent {
   }
   
   initializeApp() {
+    this.platform.backButton.subscribeWithPriority(9999, () => {});
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
