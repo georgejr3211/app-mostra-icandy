@@ -16,6 +16,21 @@ export class ProdutosService {
     const url = `${this.apiURL}/v1/produtos`;
     return this.http.get(url, { params: payload }).pipe(map((data: any) => data.value));
   }
+
+  find(id?) {
+    const url = `${this.apiURL}/v1/produtos/${id}`;
+    return this.http.get(url).pipe(map((data: any) => data.value));
+  }
+
+  insert(payload?) {
+    const url = `${this.apiURL}/v1/produtos`;
+    return this.http.post(url, payload).pipe(map((data: any) => data.value));
+  }
+
+  update(payload?) {
+    const url = `${this.apiURL}/v1/produtos/${payload.id}`;
+    return this.http.put(url, payload).pipe(map((data: any) => data.value));
+  }
 }
 
 
