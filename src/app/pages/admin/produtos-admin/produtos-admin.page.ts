@@ -5,6 +5,8 @@ import { ProdutosService } from "./../../../providers/services/produtos.service"
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment";
+import { CameraService } from "src/app/providers/services/camera.service";
 
 @Component({
   selector: "app-produtos-admin",
@@ -21,6 +23,7 @@ export class ProdutosAdminPage implements OnInit {
   categoria$: Observable<any>;
   categorias$: Observable<any>;
 
+  produto$: Observable<any>;
   produtos$: Observable<any>;
 
   formCRUD: FormGroup;
@@ -28,11 +31,18 @@ export class ProdutosAdminPage implements OnInit {
 
   options = [{ id: 0, descricao: "Inserir" }, { id: 1, descricao: "Editar" }];
 
+  currentImage$: Observable<any>;
+  pathImg = environment.api + "/assets/images/";
+
+  listarProdutos = false;
+  cadastrarProdutos = false;
+
   constructor(
     private router: Router,
     private categoriasService: CategoriasService,
     private produtosService: ProdutosService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private camera: CameraService
   ) {
     this.formCRUDCategoria = new FormGroup(
       {
@@ -41,7 +51,7 @@ export class ProdutosAdminPage implements OnInit {
         ativo: new FormControl(1),
         OPTION: new FormControl(0)
       },
-      { updateOn: 'change' }
+      { updateOn: "change" }
     );
 
     this.formCRUD = new FormGroup(
@@ -56,22 +66,44 @@ export class ProdutosAdminPage implements OnInit {
         ativo: new FormControl(1),
         OPTION: new FormControl(0)
       },
-      { updateOn: 'change' }
+      { updateOn: "change" }
     );
-
-    this.categorias$ = this.categoriasService.index();
-    this.categorias$.subscribe(data => {
-      console.log('DATA CATEGORIAS$ =>', data);
-    });
-    this.produtos$ = this.produtosService.index();
-    this.produtos$.subscribe(data => {
-      console.log('DATA PRODUTOS$ =>', data);
-    })
   }
 
   ngOnInit() {}
 
-  ionViewDidEnter() {}
+  ionViewDidEnter() {
+    this.categorias$ = this.categoriasService.index();
+    this.produtos$ = this.produtosService.index();
+  }
+
+  cadastrar(data?) {
+    if (data) {
+      this.cadastrarProdutos = false;
+    } else {
+      this.cadastrarProdutos = true;
+    }
+  }
+
+  listar(data?) {
+    if (data) {
+      this.listarProdutos = false;
+    } else {
+      this.listarProdutos = true;
+    }
+  }
+
+  trocarOperacao(form?) {
+    if (form === 1) {
+      this.formCRUDCategoria.get("id").setValue(null);
+      this.formCRUDCategoria.get("nome").setValue(null);
+    } else {
+      this.formCRUD.get("id").setValue(null);
+      this.formCRUD.get("nome").setValue(null);
+      this.formCRUD.get("preco").setValue(null);
+      this.formCRUD.get("categorias_id").setValue(null);
+    }
+  }
 
   buscarIdCategoria(id) {
     this.categoria$ = this.categoriasService.find(id);
@@ -79,20 +111,20 @@ export class ProdutosAdminPage implements OnInit {
       if (data) {
         this.formCRUDCategoria.patchValue(data);
       } else {
-        console.log('Não foi possível buscar id');
+        console.log("Não foi possível buscar id da categoria");
       }
     });
   }
 
   buscarIdProduto(id) {
-    // this.categoria$ = this.categoriasService.find(id);
-    // this.categoria$.subscribe(data => {
-    //   if (data) {
-    //     this.formCRUDCategoria.patchValue(data);
-    //   } else {
-    //     console.log('Não foi possível buscar id');
-    //   }
-    // });
+    this.produto$ = this.produtosService.find(id);
+    this.produto$.subscribe(data => {
+      if (data) {
+        this.formCRUD.patchValue(data);
+      } else {
+        console.log("Não foi possível buscar id do produto");
+      }
+    });
   }
 
   onConfirmCategoria() {
@@ -102,7 +134,8 @@ export class ProdutosAdminPage implements OnInit {
       );
       this.retornoUpdateCategoria$.subscribe(data => {
         if (data) {
-          console.log("UPDATE", data);
+          this.presentAlertSuccess();
+          console.log("UPDATE CATEGORIA", data);
         } else {
           this.presentAlertCategoria();
         }
@@ -113,7 +146,8 @@ export class ProdutosAdminPage implements OnInit {
       );
       this.retornoInsertCategoria$.subscribe(data => {
         if (data) {
-          console.log("INSERT", data);
+          this.presentAlertSuccess();
+          console.log("INSERT CATEGORIA", data);
         } else {
           this.presentAlertCategoria();
         }
@@ -122,24 +156,27 @@ export class ProdutosAdminPage implements OnInit {
   }
 
   onConfirmProduto() {
-    if (this.formCRUDCategoria.get("OPTION").value) {
+    console.log("FORMCRUD AOBA => ", this.formCRUD.value);
+    if (this.formCRUD.get("OPTION").value) {
       this.retornoUpdateProduto$ = this.produtosService.update(
-        this.formCRUDCategoria.value
+        this.formCRUD.value
       );
       this.retornoUpdateProduto$.subscribe(data => {
         if (data) {
-          console.log("UPDATE", data);
+          this.presentAlertSuccess();
+          console.log("UPDATE PRODUTO", data);
         } else {
           this.presentAlertProduto();
         }
       });
     } else {
       this.retornoInsertProduto$ = this.produtosService.insert(
-        this.formCRUDCategoria.value
+        this.formCRUD.value
       );
       this.retornoInsertProduto$.subscribe(data => {
         if (data) {
-          console.log("INSERT", data);
+          this.presentAlertSuccess();
+          console.log("INSERT PRODUTO", data);
         } else {
           this.presentAlertProduto();
         }
@@ -164,15 +201,25 @@ export class ProdutosAdminPage implements OnInit {
     } else {
       checked = 0;
     }
-    this.formCRUDCategoria.get("ativo").setValue(checked);
+    this.formCRUD.get("ativo").setValue(checked);
+  }
+
+  async presentAlertSuccess() {
+    const alert = await this.alertController.create({
+      header: "Sucesso",
+      message: "Operação realizada com sucesso!!",
+      buttons: ["OK"]
+    });
+    await alert.present();
+    this.ionViewDidEnter();
   }
 
   async presentAlertCategoria() {
     const alert = await this.alertController.create({
-      header: this.formCRUDCategoria.get("OPTION").value
-        ? "Erro ao atualizar"
-        : "Erro ao Inserir",
-      message: "Contate os desenvolvedores!!",
+      header: "Erro",
+      message: this.formCRUDCategoria.get("OPTION").value
+        ? "Houve um erro ao atualizar!!"
+        : "Houve um erro ao Inserir!!",
       buttons: ["OK"]
     });
     await alert.present();
@@ -180,10 +227,10 @@ export class ProdutosAdminPage implements OnInit {
 
   async presentAlertProduto() {
     const alert = await this.alertController.create({
-      header: this.formCRUD.get("OPTION").value
-        ? "Erro ao atualizar"
-        : "Erro ao Inserir",
-      message: "Contate os desenvolvedores!!",
+      header: "Erro",
+      message: this.formCRUD.get("OPTION").value
+        ? "Houve um erro ao atualizar!!"
+        : "Houve um erro ao Inserir!!",
       buttons: ["OK"]
     });
     await alert.present();
@@ -191,5 +238,13 @@ export class ProdutosAdminPage implements OnInit {
 
   dismiss() {
     this.router.navigate(["/main/list"]);
+  }
+
+  async selectImage() {
+    this.camera.idUsuario = this.formCRUD.get("id").value;
+    this.camera.nomeUsuario = this.formCRUD.get("nome").value;
+    this.camera.selectImage().then(data => {
+      this.currentImage$ = this.camera.getCurrentImage();
+    });
   }
 }

@@ -4,6 +4,13 @@
   }
 }
 
+.avatar {
+  height: 102px;
+  width: 102px;
+  border: 10px solid #e6e9e8;
+  position: relative;
+}
+
 .item-inner {
   min-height: 1px !important;
 }

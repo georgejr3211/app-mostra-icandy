@@ -11,8 +11,29 @@
 </ion-header>
 
 <ion-content>
-  <!-- <pre>{{categorias$ | async | json}}</pre> -->
-  <ion-card style="padding: 0;">
+
+  <ion-progress-bar *ngIf="!(categorias$ && produtos$)" type="indeterminate"></ion-progress-bar>
+
+  <ion-row style="margin: 10px;">
+    <ion-col>
+      <ion-button (click)="listar(listarProdutos)" style="justify-content: start;" expand="full">
+        <ion-icon style="padding-right: 5px;" name="list"></ion-icon>Listar
+      </ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button style="justify-content: end;" expand="full" (click)="cadastrar(cadastrarProdutos)">
+        <ion-icon style="padding-right: 5px;" name="add"></ion-icon>Cadastrar
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-card style="background-color: white;" *ngIf="listarProdutos">
+    <ion-card-content *ngFor="let item of produtos$ | async">
+      {{item?.id}}. {{item?.nome}} - R${{item?.preco}}  ({{item?.categoria?.nome}})
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="cadastrarProdutos" style="padding: 0;">
     <form [formGroup]="formCRUDCategoria" fxLayoutAlign="column">
       <ion-item style="margin-top: 10px;">
         <ion-col lines="none">
@@ -22,15 +43,15 @@
           </ion-item-group>
 
           <ion-item style="margin: 10px;">
-            <ion-select style="min-width: 100%;" formControlName="OPTION">
+            <ion-select style="min-width: 100%;" formControlName="OPTION" (ionChange)="trocarOperacao(1)">
               <ion-select-option *ngFor="let item of options" [value]="item.id">
                 {{item.descricao}}
               </ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item *ngIf="!formCRUDCategoria.get('OPTION').value" lines="none" style="margin: 10px;">
-            <ion-input padding formControlName="nome" class="input"
-              type="text" placeholder="Nome da Categoria" required></ion-input>
+            <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome da Categoria"
+              required></ion-input>
           </ion-item>
 
           <ion-item *ngIf="formCRUDCategoria.get('OPTION').value" style="margin: 10px;">
@@ -49,7 +70,7 @@
               <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome da categoria"
                 required></ion-input>
             </ion-item>
-            <ion-item style="margin: 10px;">
+            <ion-item lines="none" style="margin: 10px;">
               <ion-label>Ativo</ion-label>
               <ion-toggle formControlName="ativo"
                 (ionChange)="updateAtivoCategoria(formCRUDCategoria.get('ativo').value)">
@@ -68,43 +89,54 @@
     </form>
   </ion-card>
 
-  <ion-card style="padding: 0;">
+  <ion-card *ngIf="cadastrarProdutos" style="padding: 0;">
     <form [formGroup]="formCRUD" fxLayoutAlign="column">
-      <ion-item style="margin-top: 10px;">
+      <ion-item lines="none" style="margin-top: 10px;">
         <ion-col lines="none">
           <ion-item-group style="text-align: center; margin: 10px;">
             <ion-label style="padding-bottom: 5px;">Produto</ion-label>
             <ion-item-divider></ion-item-divider>
           </ion-item-group>
-          <ion-item style="margin: 10px;">
-            <ion-select style="min-width: 100%;" formControlName="OPTION">
+          <ion-row class="ion-justify-content-center">
+            <ion-avatar class="avatar">
+              <ion-img [src]="pathImg + (currentImage$ | async)" *ngIf="currentImage$ | async"></ion-img>
+            </ion-avatar>
+          </ion-row>
+          <ion-item lines="none" style="margin: 10px;">
+            <ion-select style="min-width: 100%;" formControlName="OPTION" (ionChange)="trocarOperacao(2)">
               <ion-select-option *ngFor="let item of options" [value]="item.id">
                 {{item.descricao}}
               </ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item *ngIf="formCRUD.get('OPTION').value" lines="none" style="margin: 10px;">
-            <ion-select style="min-width: 100%;" formControlName="id" placeholder="Produto" (ionChange)="buscarIdProduto(formCRUD.get('id').value)">
+          <ion-item lines="none" *ngIf="formCRUD.get('OPTION').value" lines="none" style="margin: 10px;">
+            <ion-select style="min-width: 100%;" formControlName="id" placeholder="Produto"
+              (ionChange)="buscarIdProduto(formCRUD.get('id').value)">
               <ion-select-option *ngFor="let item of (produtos$ | async)" [value]="item.id">
                 {{item.nome}}
               </ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item *ngIf="formCRUD.get('OPTION').value" style="margin: 10px;">
+          <ion-item lines="none" *ngIf="formCRUD.get('id').value || !formCRUD.get('OPTION').value"
+            style="margin: 10px;">
             <ion-select style="min-width: 100%;" formControlName="categorias_id" placeholder="Categoria">
-              <ion-select-option *ngFor="let item of (categorias$ | async)">
+              <ion-select-option *ngFor="let item of (categorias$ | async)" [value]="item.id">
                 {{item?.nome}}
               </ion-select-option>
             </ion-select>
           </ion-item>
-          <ion-item style="margin: 10px;">
-            <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome do Produto" required></ion-input>
+          <ion-item lines="none" style="margin: 10px;">
+            <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome do Produto" required>
+            </ion-input>
+            <ion-button (click)="selectImage()" expand="full">
+              <ion-icon name="camera"></ion-icon>
+            </ion-button>
           </ion-item>
-          <ion-item style="margin: 10px;">
+          <ion-item lines="none" style="margin: 10px;">
             <ion-input padding formControlName="preco" class="input" type="text" placeholder="Preço" required>
             </ion-input>
           </ion-item>
-          <ion-item *ngIf="formCRUD.get('OPTION').value" style="margin: 10px;">
+          <ion-item lines="none" style="margin: 10px;" *ngIf="formCRUD.get('OPTION').value">
             <ion-label>Ativo</ion-label>
             <ion-toggle formControlName="ativo" (ionChange)="updateAtivoProduto(formCRUD.get('ativo').value)">
             </ion-toggle>
