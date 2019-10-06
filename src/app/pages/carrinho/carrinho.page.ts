@@ -1,3 +1,4 @@
+import { ModalController, NavController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit, ViewChild, Injectable } from "@angular/core";
 import { Observable } from 'rxjs/internal/Observable';
@@ -11,6 +12,7 @@ import { FormasPagamentoService } from 'src/app/providers/services/formas-pagame
 import { HomePage } from '../home/home.page';
 import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
+import { LocalEntregaPage } from '../local-entrega/local-entrega.page';
 
 @Component({
   selector: "app-carrinho",
@@ -27,7 +29,7 @@ export class CarrinhoPage implements OnInit {
   totalCompra: number;
   disabled: boolean;
   adminsDevices = [];
-
+  
   constructor(
     private carrinhoCompraService: CarrinhoCompraService,
     private pedidoService: PedidosService,
@@ -35,12 +37,13 @@ export class CarrinhoPage implements OnInit {
     private formasPagamentoService: FormasPagamentoService,
     public alertController: AlertController,
     private router: Router,
-    private homePage: HomePage,
     private push: PushNotificationService,
-    private usuario: UsuariosService
-  ) {
-
-    this.formCRUD = new FormGroup(
+    private usuario: UsuariosService,
+    private modalCtrl: ModalController,
+    private nav: NavController
+    ) {
+      
+      this.formCRUD = new FormGroup(
       {
         id: new FormControl(null, {}),
         formas_pagamento_id: new FormControl(1, Validators.required),
@@ -114,6 +117,10 @@ export class CarrinhoPage implements OnInit {
       id: 14,
       status_pedido_id: 1 + Math.floor(Math.random() * Math.floor(4))
     }).subscribe();
+  }
+
+  escolherLocalEntrega() {
+    this.nav.navigateForward('/main/local-entrega');
   }
 
 }

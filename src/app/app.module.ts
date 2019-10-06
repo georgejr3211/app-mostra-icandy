@@ -14,6 +14,8 @@ import { TokenInterceptor } from "./providers/interceptors/token-interceptor.ser
 import { LoginPageModule } from "./pages/login/login.module";
 import { PushNotificationService } from './providers/services/push-notification.service';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { GoogleMaps } from '@ionic-native/google-maps/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,7 +38,9 @@ import { OneSignal } from '@ionic-native/onesignal/ngx';
       useClass: TokenInterceptor,
       multi: true
     },
+    Geolocation,
+    GoogleMaps
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

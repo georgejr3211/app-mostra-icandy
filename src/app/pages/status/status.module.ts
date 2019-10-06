@@ -24,6 +24,9 @@ const routes: Routes = [
     SharedModule,
     IonicRatingModule,
   ],
+  providers: [
+
+  ],
   declarations: [StatusPage]
 })
 export class StatusPageModule {}

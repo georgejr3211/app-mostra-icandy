@@ -3,11 +3,13 @@
 </ion-header>
 
 <ion-content>
-  <ion-progress-bar *ngIf="!(localizacoes$ | async)?.rows?.length || !(formasPagamento$ | async)?.length" type="indeterminate"></ion-progress-bar>
 
-  <!-- <ion-button (click)="updateStatus()">update realtime teste</ion-button> -->
+  <ion-progress-bar *ngIf="!(localizacoes$ | async)?.rows?.length || !(formasPagamento$ | async)?.length"
+    type="indeterminate"></ion-progress-bar>
+
   <form [formGroup]="formCRUD">
     <ion-card>
+      <ion-button (click)="escolherLocalEntrega()">Escolher local de entrega</ion-button>
 
       <ion-item lines="none">
         <ion-icon name="pin" slot="start"></ion-icon>

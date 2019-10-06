@@ -3,6 +3,7 @@
 </ion-header>
 
 <ion-content>
+
   <ion-progress-bar *ngIf="!(restaurantes$ | async)?.length || !(status$ | async)?.length" type="indeterminate">
   </ion-progress-bar>
   <div *ngIf="(pedido$ | async)?.status_pedido_id">
@@ -36,7 +37,6 @@
         Situação do pedido
       </ion-row>
     </ion-grid>
-    <!-- {{pedido$ | async | json}} -->
     <ion-grid class="timeLine">
       <ion-col>
         <ion-row style="justify-content: center;" *ngFor="let s of status$ | async">

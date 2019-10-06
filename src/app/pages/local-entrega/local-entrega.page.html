@@ -1,0 +1,11 @@
+<ion-content>
+  <div #map id="map" style="height: 100%">
+    <ion-searchbar [(ngModel)]="search" (ionChange)="searchChanged()" placeholder="Onde?" [debounce]="250">
+    </ion-searchbar>
+    <ion-list class="ion-margin-horizontal" [hidden]="!search?.length">
+      <ion-item *ngFor="let result of searchResults" (click)="calcRouteResult(result)">
+        {{ result?.description }}
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

@@ -24,7 +24,8 @@ const routes: Routes = [
       { path: 'historico', loadChildren: '../historico/historico.module#HistoricoPageModule' },
       { path: 'perfil', loadChildren: '../perfil/perfil.module#PerfilPageModule' },
       { path: 'admin', loadChildren: '../admin/admin.module#AdminPageModule' },
-      { path: 'list', loadChildren: '../admin/list/list.module#ListPageModule' }
+      { path: 'list', loadChildren: '../admin/list/list.module#ListPageModule' },
+      { path: 'local-entrega', loadChildren: '../local-entrega/local-entrega.module#LocalEntregaPageModule' },
     ]
   },
 ];
