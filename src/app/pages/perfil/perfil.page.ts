@@ -45,7 +45,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
     private router: Router,
     private camera: CameraService
   ) {
-
+    this.camera.field = 'foto_usuario';
     this.formCRUD = new FormGroup(
       {
         id: new FormControl(null, {}),

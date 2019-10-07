@@ -17,6 +17,7 @@ export class CameraService {
   nomeUsuario;
   idUsuario;
   subject = new BehaviorSubject<any[]>(null);
+  field;
 
   constructor(
     private http: HttpClient,
@@ -77,7 +78,7 @@ export class CameraService {
     const fileTransfer: FileTransferObject = this.transfer.create();
 
     let options: FileUploadOptions = {
-      fileKey: 'foto_usuario',
+      fileKey: this.field,
       fileName: `${this.nomeUsuario}.jpg`,
       headers: {
         'x-access-token': localStorage.getItem('auth/token')

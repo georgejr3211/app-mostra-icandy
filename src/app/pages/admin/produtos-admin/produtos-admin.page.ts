@@ -35,7 +35,7 @@ export class ProdutosAdminPage implements OnInit {
   pathImg = environment.api + "/assets/images/";
 
   listarProdutos = false;
-  cadastrarProdutos = false;
+  cadastrarProdutos = true;
 
   constructor(
     private router: Router,
@@ -241,10 +241,12 @@ export class ProdutosAdminPage implements OnInit {
   }
 
   async selectImage() {
+    this.camera.field = 'foto_produto';
     this.camera.idUsuario = this.formCRUD.get("id").value;
     this.camera.nomeUsuario = this.formCRUD.get("nome").value;
     this.camera.selectImage().then(data => {
-      this.currentImage$ = this.camera.getCurrentImage();
+      console.log('data', data);
+      // this.currentImage$ = this.camera.getCurrentImage();
     });
   }
 }
