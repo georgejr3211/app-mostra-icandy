@@ -6,7 +6,8 @@
 
   <ion-progress-bar *ngIf="!(restaurantes$ | async)?.length || !(status$ | async)?.length" type="indeterminate">
   </ion-progress-bar>
-  <div *ngIf="(pedido$ | async)?.status_pedido_id">
+
+  <div>
 
     <ion-item style="padding-right: 16px; padding: 0;" *ngFor="let restaurante of restaurantes$ | async">
       <ion-col style="height: 100%;">
@@ -19,7 +20,7 @@
           <rating [rate]="(avaliacoes$ | async)?.avgAvaliacao" [readonly]="true" size="5">
           </rating>
         </ion-row>
-        <ion-col style="margin-top: 30px; display: flex; justify-content: space-between">
+        <ion-col style="margin-top: 25px; display: flex; justify-content: space-between">
           <a ion-button style="font-size: 18px" [href]="whatsAppPhone">
             <ion-icon class="icon" name="logo-whatsapp"></ion-icon>
             <span class="text">iCandy</span>
@@ -32,12 +33,12 @@
       </ion-col>
     </ion-item>
 
-    <ion-grid style="padding-top: 20px;">
+    <ion-grid *ngIf="(pedido$ | async)?.id" style="padding-top: 20px;">
       <ion-row style="justify-content: center;">
         Situação do pedido
       </ion-row>
     </ion-grid>
-    <ion-grid class="timeLine">
+    <ion-grid *ngIf="(pedido$ | async)?.id" class="timeLine">
       <ion-col>
         <ion-row style="justify-content: center;" *ngFor="let s of status$ | async">
           <ion-col class="icone">
