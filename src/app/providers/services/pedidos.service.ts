@@ -29,7 +29,7 @@ export class PedidosService {
 
   findByUser(payload?) {
     const url = `${this.apiURL}/v1/pedidos/user/${payload}`;
-    return this.http.get(url).pipe(map((data: any) => data.value));
+    return this.http.get(url).pipe(map((data: any) => data.value[data.value.length - 1]));
   }
 
   insert(payload?) {

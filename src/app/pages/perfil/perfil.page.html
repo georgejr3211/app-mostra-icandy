@@ -50,6 +50,12 @@
               </ng-container>
             </div>
 
+            <ion-item>
+              <ion-label class="label">CPF</ion-label>
+              <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
+                [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+            </ion-item>
+
             <div class="input-group error">
               <ng-container *ngFor="let validation of validation_messages.telefone">
                 <div class="validation-errors"
