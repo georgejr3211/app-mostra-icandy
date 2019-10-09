@@ -157,7 +157,10 @@ export class CadastroPage implements OnInit {
     this.telefone = this.telefone.replace(/-/g, "");
     this.telefone = this.telefone.replace(/[{()}]/g, "");
     this.telefone = this.telefone.replace(/ /g, "");
-    this.formCRUD.get("telefone").setValue(this.telefone);
+    this.formCRUD.get('telefone').setValidators(Validators.compose([Validators.minLength(1), 
+      Validators.required])),
+    this.formCRUD.get('telefone').setValue(this.telefone);
+
   }
 
   formatCpf() {

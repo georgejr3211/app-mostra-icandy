@@ -1,21 +1,20 @@
-import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
-import { UsuariosService } from 'src/app/providers/services/usuarios.service';
-import { Observable } from 'rxjs';
-import { ProdutosService } from 'src/app/providers/services/produtos.service';
-import { environment } from '../../../environments/environment';
-import { CarrinhoCompraService } from 'src/app/providers/services/carrinho-compra.service';
-import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy, Injectable } from "@angular/core";
+import { UsuariosService } from "src/app/providers/services/usuarios.service";
+import { Observable } from "rxjs";
+import { ProdutosService } from "src/app/providers/services/produtos.service";
+import { environment } from "../../../environments/environment";
+import { CarrinhoCompraService } from "src/app/providers/services/carrinho-compra.service";
+import { PushNotificationService } from "src/app/providers/services/push-notification.service";
+import { Router } from "@angular/router";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: "app-home",
+  templateUrl: "./home.page.html",
+  styleUrls: ["./home.page.scss"]
 })
 export class HomePage implements OnInit, OnDestroy {
-
-  images = environment.api + '/assets/images/';
+  images = environment.api + "/assets/images/";
   usuario$: Observable<any>;
   produtos$: Observable<any>;
   teste$: Observable<any>;
@@ -28,9 +27,11 @@ export class HomePage implements OnInit, OnDestroy {
     private carrinhoCompraService: CarrinhoCompraService,
     private push: PushNotificationService,
     private router: Router
-  ) { }
+  ) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewDidEnter() {
     this.usuario$ = this.userService.usuarioLogado();
 
     this.usuario$.subscribe(async data => {
@@ -39,10 +40,7 @@ export class HomePage implements OnInit, OnDestroy {
       }
       const { userId } = await this.push.getId();
       this.userService.update({ id: data.id, device_id: userId }).subscribe();
-    })
-  }
-
-  ionViewDidEnter() {
+    });
     this.onRefresh();
   }
 
@@ -54,26 +52,28 @@ export class HomePage implements OnInit, OnDestroy {
           event.detail.complete();
         }
       }
-    })
+    });
   }
 
   onClickCart() {
-    this.router.navigate(['/main/carrinho']);
+    this.router.navigate(["/main/carrinho"]);
   }
 
   onChangeValor(tipo, produto) {
-    const index = this.produtoCarrinho.findIndex(item => item.id === produto.id);
+    const index = this.produtoCarrinho.findIndex(
+      item => item.id === produto.id
+    );
     let qtd = 0;
     switch (tipo) {
-      case 'add':
+      case "add":
         if (index > -1) {
           qtd = this.produtoCarrinho[index].qtd + 1;
-          this.produtoCarrinho[index] = { ...produto, qtd }
+          this.produtoCarrinho[index] = { ...produto, qtd };
         } else {
           this.produtoCarrinho.push({ ...produto, qtd: 1 });
         }
         break;
-      case 'remove':
+      case "remove":
         if (this.produtoCarrinho[index]) {
           qtd = this.produtoCarrinho[index].qtd - 1;
           if (qtd < 0) {
@@ -86,7 +86,10 @@ export class HomePage implements OnInit, OnDestroy {
 
         break;
     }
-    this.carrinhoCompraService.addProdutoCarrinho({ carrinho: this.produtoCarrinho, qtd });
+    this.carrinhoCompraService.addProdutoCarrinho({
+      carrinho: this.produtoCarrinho,
+      qtd
+    });
   }
 
   countQtdItemCarrinho(idProduto) {
@@ -94,8 +97,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   totalProduto(preco, idProduto) {
-    let data = this.produtoCarrinho
-      .find(item => item.id === idProduto);
+    let data = this.produtoCarrinho.find(item => item.id === idProduto);
 
     if (!data || data.qtd === 0) {
       return preco;
@@ -108,12 +110,9 @@ export class HomePage implements OnInit, OnDestroy {
     this.produtos$ = this.produtosService.index({ s: value });
   }
 
-
   sendMessage() {
     this.push.sendMessage(this.userId, this.mensagem);
   }
 
-  ngOnDestroy() {
-  }
-
+  ngOnDestroy() {}
 }

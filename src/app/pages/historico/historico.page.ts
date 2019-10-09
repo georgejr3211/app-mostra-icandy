@@ -41,7 +41,7 @@ export class HistoricoPage implements OnInit {
       if (data) {
         this.pedido$ = this.facade.findByUser(data.id);
         this.pedido$.subscribe(data => {
-          if (data.length) {
+          if (data) {
             this.hasData = true;
             this.empty = false;
           } else {
