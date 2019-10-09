@@ -1,5 +1,11 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent, LatLng, GoogleMapsAnimation, GoogleMapsMapTypeId, Marker, Geocoder, ILatLng } from '@ionic-native/google-maps/ngx';
+import {
+  GoogleMap,
+  GoogleMapOptions,
+  LocationService,
+  Environment,
+  GoogleMaps, GoogleMapsEvent, LatLng, GoogleMapsAnimation, GoogleMapsMapTypeId, Marker, Geocoder, ILatLng
+} from '@ionic-native/google-maps/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 declare const google: any;
@@ -12,13 +18,14 @@ declare const google: any;
 export class LocalEntregaPage implements OnInit {
 
   map: GoogleMap;
+  googleAutoComplete = new google.maps.places.AutocompleteService();
+  googleDirectionsService = new google.maps.DirectionsService();
+  geocoder = new google.maps.Geocoder();
   loading: any;
   search: string;
-  googleAutoComplete = new google.maps.places.AutocompleteService();
   searchResults = new Array<any>();
   originMaker: Marker;
   destination: any;
-  googleDirectionsService = new google.maps.DirectionsService();
 
   constructor(
     private geolocation: Geolocation,
@@ -35,15 +42,19 @@ export class LocalEntregaPage implements OnInit {
   }
 
   initMap() {
+    Environment.setEnv({
+      API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyCONimGXbVJHJVAvK7bJzaqU4RyXt0PVg4',
+      API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyCONimGXbVJHJVAvK7bJzaqU4RyXt0PVg4'
+    })
     const mapOptions: GoogleMapOptions = {
       mapType: GoogleMapsMapTypeId.ROADMAP,
 
       controls: {
-        'compass': false,
+        'compass': true,
         'myLocationButton': true,
         'myLocation': true,   // (blue dot)
         'indoorPicker': true,
-        'zoom': false,          // android only
+        'zoom': true,          // android only
         'mapToolbar': true     // android only
       },
 
@@ -53,6 +64,7 @@ export class LocalEntregaPage implements OnInit {
         zoom: true,
         rotate: true
       },
+      draggable: true
     };
 
     this.map = GoogleMaps.create('map', mapOptions);
@@ -72,7 +84,7 @@ export class LocalEntregaPage implements OnInit {
           tilt: 10
         });
 
-        this.originMaker = this.map.addMarkerSync({ position: loc, title: 'Me', animation: GoogleMapsAnimation.BOUNCE });
+        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.BOUNCE, draggable: true });
       });
   }
 
@@ -87,41 +99,27 @@ export class LocalEntregaPage implements OnInit {
 
   }
 
-  async calcRouteResult(item: any) {
+  async goToAddress(item) {
+    this.map.clear();
+
     this.search = '';
-    this.destination = item;
-    const info: any = await Geocoder.geocode({ address: this.destination.description });
-    const markerDestionation: Marker = this.map.addMarkerSync({
-      title: this.destination.description,
-      icon: '#000',
-      animation: GoogleMapsAnimation.BOUNCE,
-      position: info[0].position
-    });
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      address: item.description
+    }, (results, status) => {
+      if (status === 'OK') {
+        const lat = results[0].geometry.location.lat();
+        const lng = results[0].geometry.location.lng();
+        const loc = new LatLng(lat, lng);
 
-    this.googleDirectionsService.route({
-      origin: this.originMaker.getPosition(),
-      destination: markerDestionation.getPosition(),
-      travelMode: 'DRIVING'
-    }, async results => {
-      const points = new Array<ILatLng>();
-      const routes = results.routes[0].overview_path;
+        this.map.moveCamera({
+          target: loc,
+          zoom: 15,
+          tilt: 10
+        });
 
-      routes.map((route, index) => {
-        points[index] = {
-          lat: route.lat(),
-          lng: route.lng()
-        }
-      });
-
-
-      await this.map.addPolyline({
-        points: points,
-        color: '#000',
-        width: 3
-      });
-      
-      this.map.moveCamera({ target: points });
-
+        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.DROP, draggable: true });
+      }
     });
 
   }

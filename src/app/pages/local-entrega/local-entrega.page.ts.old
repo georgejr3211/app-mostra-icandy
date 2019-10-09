@@ -1,0 +1,150 @@
+import { Component, OnInit, NgZone } from '@angular/core';
+import { GoogleMap, GoogleMapOptions, GoogleMaps, GoogleMapsEvent, LatLng, GoogleMapsAnimation, GoogleMapsMapTypeId, Marker, Geocoder, ILatLng } from '@ionic-native/google-maps/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+declare const google: any;
+
+@Component({
+  selector: 'app-local-entrega',
+  templateUrl: './local-entrega.page.html',
+  styleUrls: ['./local-entrega.page.scss'],
+})
+export class LocalEntregaPage implements OnInit {
+
+  map: GoogleMap;
+  loading: any;
+  search: string;
+  googleAutoComplete = new google.maps.places.AutocompleteService();
+  searchResults = new Array<any>();
+  originMaker: Marker;
+  destination: any;
+  googleDirectionsService = new google.maps.DirectionsService();
+
+  constructor(
+    private geolocation: Geolocation,
+    private ngZone: NgZone,
+  ) {
+    console.log(this.googleAutoComplete);
+  }
+
+  ngOnInit() {
+  }
+
+  ngAfterViewInit() {
+    this.initMap();
+  }
+
+  initMap() {
+    const mapOptions: GoogleMapOptions = {
+      mapType: GoogleMapsMapTypeId.ROADMAP,
+
+      controls: {
+        'compass': false,
+        'myLocationButton': true,
+        'myLocation': true,   // (blue dot)
+        'indoorPicker': true,
+        'zoom': false,          // android only
+        'mapToolbar': true     // android only
+      },
+
+      gestures: {
+        scroll: true,
+        tilt: true,
+        zoom: true,
+        rotate: true
+      },
+    };
+
+    this.map = GoogleMaps.create('map', mapOptions);
+    this.map.one(GoogleMapsEvent.MAP_READY);
+    // this.currentPosition();
+  }
+
+  currentPosition() {
+    this.geolocation.getCurrentPosition({ enableHighAccuracy: true })
+      .then(res => {
+
+        const loc = new LatLng(res.coords.latitude, res.coords.longitude);
+
+        this.map.moveCamera({
+          target: loc,
+          zoom: 15,
+          tilt: 10
+        });
+
+        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.BOUNCE });
+      });
+  }
+
+  searchChanged() {
+    if (!this.search.trim().length) return;
+
+    this.googleAutoComplete.getPlacePredictions({ input: this.search }, res => {
+      this.ngZone.run(() => {
+        this.searchResults = res;
+      });
+    });
+
+  }
+
+  async goToAddress(item: any) {
+    this.destination = item;
+    const info: any = await Geocoder.geocode({ address: this.destination.description });
+    console.log('info', info);
+
+    this.geolocation.getCurrentPosition({ enableHighAccuracy: true })
+      .then(res => {
+
+        const loc = new LatLng(info[0].lng, info[0].lat);
+
+        this.map.moveCamera({
+          target: loc,
+          zoom: 15,
+          tilt: 10
+        });
+
+        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.BOUNCE });
+      });
+
+  }
+
+  async calcRouteResult(item: any) {
+    this.search = '';
+    this.destination = item;
+    const info: any = await Geocoder.geocode({ address: this.destination.description });
+    // const markerDestionation: Marker = this.map.addMarkerSync({
+    //   title: this.destination.description,
+    //   icon: '#000',
+    //   animation: GoogleMapsAnimation.BOUNCE,
+    //   position: info[0].position
+    // });
+
+    // this.googleDirectionsService.route({
+    //   origin: this.originMaker.getPosition(),
+    //   destination: markerDestionation.getPosition(),
+    //   travelMode: 'DRIVING'
+    // }, async results => {
+    //   const points = new Array<ILatLng>();
+    //   const routes = results.routes[0].overview_path;
+
+    //   routes.map((route, index) => {
+    //     points[index] = {
+    //       lat: route.lat(),
+    //       lng: route.lng()
+    //     }
+    //   });
+
+
+    //   await this.map.addPolyline({
+    //     points: points,
+    //     color: '#000',
+    //     width: 3
+    //   });
+
+    //   this.map.moveCamera({ target: points });
+
+    // });
+
+  }
+
+}
