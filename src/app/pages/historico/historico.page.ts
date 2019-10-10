@@ -1,3 +1,4 @@
+import { map } from "rxjs/operators";
 import { UsuariosService } from "./../../providers/services/usuarios.service";
 import { PedidosService } from "./../../providers/services/pedidos.service";
 import { Component, OnInit } from "@angular/core";
@@ -20,8 +21,7 @@ export class HistoricoPage implements OnInit {
   hasData = false;
   empty = false;
 
-  imageArrow = '/assets/images/arrow.png';
-
+  imageArrow = "/assets/images/arrow.png";
 
   constructor(
     private facade: PedidosService,
@@ -40,20 +40,22 @@ export class HistoricoPage implements OnInit {
 
     this.usuario$.subscribe(data => {
       if (data) {
-        this.pedido$ = this.facade.findByUser(data.id);
-        this.pedido$.subscribe(data => {
-          if (data) {
-            if (!Array.isArray(data)) {
-              /// fazerrr
-          
+        this.pedido$ = this.facade.findByUserHistorico(data.id).pipe(
+          map(data => {
+            if (data) {
+              this.hasData = true;
+              this.empty = false;
+              if (!Array.isArray(data)) {
+                return [data];
+              } else {
+                return data;
+              }
+            } else {
+              this.empty = true;
+              this.hasData = true;
             }
-            this.hasData = true;
-            this.empty = false;
-          } else {
-            this.empty = true;
-            this.hasData = true;
-          }
-        })
+          })
+        );
       }
     });
   }
