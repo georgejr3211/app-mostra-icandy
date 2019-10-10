@@ -16,6 +16,7 @@ export class HistoricoPage implements OnInit {
   restaurante$: Observable<any>;
   usuario$: Observable<any>;
 
+  array = [];
   hasData = false;
   empty = false;
 
@@ -42,6 +43,10 @@ export class HistoricoPage implements OnInit {
         this.pedido$ = this.facade.findByUser(data.id);
         this.pedido$.subscribe(data => {
           if (data) {
+            if (!Array.isArray(data)) {
+              /// fazerrr
+          
+            }
             this.hasData = true;
             this.empty = false;
           } else {
