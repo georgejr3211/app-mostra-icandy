@@ -35,12 +35,6 @@
               <ion-label class="label">SENHA</ion-label>
               <ion-input formControlName="password" type="password" placeholder="SENHA"></ion-input>
             </ion-item>
-
-            <ion-item lines="none">
-              <ion-label class="label">TELEFONE</ion-label>
-              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE" [brmasker]="{phone: true}">
-              </ion-input>
-            </ion-item>
             <div class="input-group error">
               <ng-container *ngFor="let validation of validation_messages.password">
                 <div class="validation-errors"
@@ -50,12 +44,11 @@
               </ng-container>
             </div>
 
-            <ion-item>
-              <ion-label class="label">CPF</ion-label>
-              <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
-                [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+            <ion-item lines="none">
+              <ion-label class="label">TELEFONE</ion-label>
+              <ion-input formControlName="telefone" type="text" placeholder="TELEFONE" [brmasker]="{phone: true}">
+              </ion-input>
             </ion-item>
-
             <div class="input-group error">
               <ng-container *ngFor="let validation of validation_messages.telefone">
                 <div class="validation-errors"
