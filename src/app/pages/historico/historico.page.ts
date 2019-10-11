@@ -44,14 +44,14 @@ export class HistoricoPage implements OnInit {
           map(data => {
             if (data) {
               this.hasData = true;
-              this.empty = false;
+              this.empty = true;
               if (!Array.isArray(data)) {
                 return [data];
               } else {
                 return data;
               }
             } else {
-              this.empty = true;
+              this.empty = false;
               this.hasData = true;
             }
           })
