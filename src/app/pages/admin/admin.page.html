@@ -95,17 +95,15 @@
           <ion-item-group style="text-align: center; margin: 10px;">
             <ion-label style="padding-bottom: 5px;">Usuário</ion-label>
             <ion-item-divider></ion-item-divider>
-            <ion-row class="rowUsuario">{{(usuario$ | async)?.id}}
-            </ion-row>
-            <ion-row class="rowUsuario">{{(usuario$ | async)?.nome}}
+            <ion-row class="rowUsuario">{{(usuario$ | async)?.id}} - {{(usuario$ | async)?.nome}}
             </ion-row>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.email}}
-            </ion-row>
-            <ion-row class="rowUsuario">{{(usuario$ | async)?.cpf}}
             </ion-row>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.telefone}}
             </ion-row>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.perfil?.descricao}}
+            </ion-row>
+                <ion-row class="rowUsuario">{{(usuario$ | async)?.cpf}}
             </ion-row>
           </ion-item-group>
           <form [formGroup]="formCRUDUsuario">
@@ -114,7 +112,8 @@
               <ion-toggle formControlName="ativo" (ionChange)="updateAtivoUsuario(formCRUDUsuario.get('ativo').value)">
               </ion-toggle>
             </ion-item>
-            <ion-button [disabled]="!formCRUDUsuario.valid" id="btnCriarConta" expand="full" (click)="onAtualizarUsuario()">
+            <ion-button [disabled]="!formCRUDUsuario.valid" id="btnCriarConta" expand="full"
+              (click)="onAtualizarUsuario()">
               Atualizar
             </ion-button>
           </form>
@@ -124,26 +123,4 @@
     </form>
   </ion-card>
 
-  <!-- <pre>{{usuario$ | async | json}}</pre> -->
-
 </ion-content>
-
-<!-- <ion-card-content *ngIf="usuarioId">
-          <form [formGroup]="formCRUD" fxLayoutAlign="column">
-            <ion-input style="margin-right: 10px;" padding formControlName="nome" id="nome" class="input" type="text"
-              placeholder="Nome" required></ion-input>
-            <ion-input padding formControlName="telefone" id="telefone" class="input" type="string" placeholder="Telefone"
-              [brmasker]="{phone: true}" required>
-            </ion-input>
-            <ion-input padding formControlName="cpf" id="cpf" class="input" type="string" placeholder="CPF"
-              [brmasker]="{mask:'000.000.000-00', len:14}" required></ion-input>     
-            <ion-input padding formControlName="email" id="email" class="input" type="email" placeholder="E-mail" required>
-            </ion-input>
-            <ion-input padding formControlName="password" id="password" class="input" type="password" placeholder="Senha"
-              required>
-            </ion-input>
-          </form>
-      
-          <ion-button [disabled]="!formCRUD.valid" id="btnCriarConta" expand="full" (click)="onSaveUsuario()">Criar
-          </ion-button>
-        </ion-card-content> -->

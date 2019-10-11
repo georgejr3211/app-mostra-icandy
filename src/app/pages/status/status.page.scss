@@ -46,12 +46,19 @@
   min-width: 200px;
 }
 
-.icon {
+#iconWhats {
  display: inline-block;
  font-size: 35px;
- color: #ffC977;
+ color: rgb(76, 209, 24);
  vertical-align: middle;
 }
+
+#iconInsta {
+  display: inline-block;
+  font-size: 35px;
+  color: rgb(209, 24, 154);
+  vertical-align: middle;
+ }
 
 .text{
   display: inline-block;

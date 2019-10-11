@@ -32,6 +32,11 @@ export class PedidosService {
     return this.http.get(url).pipe(map((data: any) => data.value[data.value.length - 1]));
   }
 
+  findByUserHistorico(payload?) {
+    const url = `${this.apiURL}/v1/pedidos/user/${payload}`;
+    return this.http.get(url).pipe(map((data: any) => data.value));
+  }
+
   insert(payload?) {
     const url = `${this.apiURL}/v1/pedidos`;
 
