@@ -7,17 +7,20 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { UsuariosService } from './usuarios.service';
+import { ProdutosService } from './produtos.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CameraService {
   private apiURL: string = environment.api;
-  currentImage = "assets/images/profile.jpeg";
+  currentImage;
   nomeUsuario;
   idUsuario;
   subject = new BehaviorSubject<any[]>(null);
   field;
+  urlFoto;
+  method;
 
   constructor(
     private http: HttpClient,
@@ -26,11 +29,12 @@ export class CameraService {
     private transfer: FileTransfer,
     private file: File,
     private facade: UsuariosService,
+    private facadeProduto: ProdutosService
   ) { }
 
   pickImage(sourceType) {
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
@@ -81,20 +85,29 @@ export class CameraService {
       fileKey: this.field,
       fileName: `${this.nomeUsuario}.jpg`,
       headers: {
+        Connection: 'close',
         'x-access-token': localStorage.getItem('auth/token')
       },
-      httpMethod: 'PUT'
+      httpMethod: this.method,
     }
 
-    const url = `${this.apiURL}/v1/usuarios/${this.idUsuario}`;
+    const url = `${this.apiURL}${this.urlFoto}`;
     try {
-      fileTransfer.upload(this.currentImage, url, options).then(() => {
-        this.facade.usuarioLogado().subscribe((data: any) => {
-          if (data) {
-            this.subject.next(data.foto);
+      fileTransfer.upload(this.currentImage, url, options)
+        .then(() => {
+          if (this.field === 'foto_usuario') {
+            this.facade.usuarioLogado().subscribe((data: any) => {
+              if (data) {
+                this.subject.next(data.foto);
+              }
+            });
+          } else if (this.field === 'foto_produto') {
+            // this.subject.next
+            // console.log(this.currentImage);
+            this.subject.next(this.currentImage);
           }
+
         });
-      });
     } catch (error) {
       throw new Error(error);
     }

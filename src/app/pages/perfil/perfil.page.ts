@@ -53,7 +53,6 @@ export class PerfilPage implements OnInit, AfterViewInit {
     private router: Router,
     private camera: CameraService
   ) {
-    this.camera.field = 'foto_usuario';
     this.formCRUD = new FormGroup(
       {
         id: new FormControl(null, {}),
@@ -127,7 +126,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
     this.telefone = this.telefone.replace(/ /g, "");
     this.formCRUD.get('telefone').setValue(this.telefone);
   }
-  
+
   formatCpf() {
     this.cpf = this.formCRUD.get('cpf').value;
     this.cpf = this.cpf.replace(/-/g, "");
@@ -136,8 +135,11 @@ export class PerfilPage implements OnInit, AfterViewInit {
   }
 
   async selectImage() {
+    this.camera.field = 'foto_usuario';
+    this.camera.method = 'PUT';
     this.camera.idUsuario = this.formCRUD.get('id').value;
     this.camera.nomeUsuario = this.formCRUD.get('nome').value;
+    this.camera.urlFoto = `/v1/usuarios/${this.formCRUD.get('id').value}`;
     this.camera.selectImage().then(data => {
       this.currentImage$ = this.camera.getCurrentImage();
     });

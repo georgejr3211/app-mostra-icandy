@@ -32,8 +32,8 @@ const routes: Routes = [
   providers: [
     Camera,
     File,
+    FileTransfer,
     CameraService,
-    FileTransfer
   ]
 })
 export class ProdutosAdminPageModule {}

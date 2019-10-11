@@ -29,7 +29,7 @@
 
   <ion-card style="background-color: white;" *ngIf="listarProdutos">
     <ion-card-content *ngFor="let item of produtos$ | async">
-      {{item?.id}}. {{item?.nome}} - R${{item?.preco}}  ({{item?.categoria?.nome}})
+      {{item?.id}}. {{item?.nome}} - R${{item?.preco}} ({{item?.categoria?.nome}})
     </ion-card-content>
   </ion-card>
 

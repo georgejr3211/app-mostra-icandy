@@ -32,6 +32,7 @@ export class ProdutosAdminPage implements OnInit {
   options = [{ id: 0, descricao: "Inserir" }, { id: 1, descricao: "Editar" }];
 
   currentImage$: Observable<any>;
+  currentImage;
   pathImg = environment.api + "/assets/images/";
 
   listarProdutos = false;
@@ -64,13 +65,14 @@ export class ProdutosAdminPage implements OnInit {
         descricao: new FormControl(null),
         preco: new FormControl(null),
         ativo: new FormControl(1),
-        OPTION: new FormControl(0)
+        OPTION: new FormControl(0),
+        foto_produto: new FormControl(null)
       },
       { updateOn: "change" }
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewDidEnter() {
     this.categorias$ = this.categoriasService.index();
@@ -170,9 +172,9 @@ export class ProdutosAdminPage implements OnInit {
         }
       });
     } else {
-      this.retornoInsertProduto$ = this.produtosService.insert(
-        this.formCRUD.value
-      );
+      // this.retornoInsertProduto$ = this.produtosService.insert(
+      //   this.formCRUD.value
+      // );
       this.retornoInsertProduto$.subscribe(data => {
         if (data) {
           this.presentAlertSuccess();
@@ -242,11 +244,21 @@ export class ProdutosAdminPage implements OnInit {
 
   async selectImage() {
     this.camera.field = 'foto_produto';
-    this.camera.idUsuario = this.formCRUD.get("id").value;
-    this.camera.nomeUsuario = this.formCRUD.get("nome").value;
+    this.camera.idUsuario = this.formCRUD.get('id').value;
+    this.camera.nomeUsuario = this.formCRUD.get('nome').value;
+    this.camera.urlFoto = `/v1/produtos`;
     this.camera.selectImage().then(data => {
-      console.log('data', data);
-      // this.currentImage$ = this.camera.getCurrentImage();
+      this.formCRUD.get('foto_produto').setValue(this.camera.currentImage);
+      this.currentImage$ = this.camera.getCurrentImage();
+      this.produtosService.insert(this.formCRUD);
     });
+
+    // this.camera.field = 'foto_produto';
+    // this.camera.idUsuario = this.formCRUD.get("id").value;
+    // this.camera.nomeUsuario = this.formCRUD.get("nome").value;
+    // this.camera.selectImage().then(data => {
+    //   console.log('data', data);
+    //   // this.currentImage$ = this.camera.getCurrentImage();
+    // });
   }
 }
