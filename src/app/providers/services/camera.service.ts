@@ -13,7 +13,7 @@ import { ProdutosService } from './produtos.service';
   providedIn: 'root'
 })
 export class CameraService {
-  private apiURL: string = environment.api;
+  apiURL: string = environment.api;
   currentImage;
   nomeUsuario;
   idUsuario;
@@ -93,21 +93,17 @@ export class CameraService {
 
     const url = `${this.apiURL}${this.urlFoto}`;
     try {
-      fileTransfer.upload(this.currentImage, url, options)
-        .then(() => {
-          if (this.field === 'foto_usuario') {
+      if (this.field === 'foto_usuario') {
+        fileTransfer.upload(this.currentImage, url, options)
+          .then(() => {
             this.facade.usuarioLogado().subscribe((data: any) => {
-              if (data) {
-                this.subject.next(data.foto);
-              }
+              if (!data) { return; }
+              this.subject.next(data.foto);
             });
-          } else if (this.field === 'foto_produto') {
-            // this.subject.next
-            // console.log(this.currentImage);
-            this.subject.next(this.currentImage);
-          }
-
-        });
+          });
+      } else {
+        this.subject.next(this.currentImage);
+      }
     } catch (error) {
       throw new Error(error);
     }

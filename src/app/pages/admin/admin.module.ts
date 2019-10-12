@@ -25,6 +25,7 @@ const routes: Routes = [
     SharedModule,
     BrMaskerModule
   ],
-  declarations: [AdminPage]
+  declarations: [AdminPage],
+  entryComponents: []
 })
 export class AdminPageModule {}
