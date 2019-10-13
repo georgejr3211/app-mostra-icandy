@@ -129,13 +129,13 @@ export class CarrinhoPage implements OnInit {
   }
 
   createPedido() {
-    if (this.formCRUDCPF.value) {
+    if (this.formCRUDCPF.get('cpf').value) {
       this.usuario$ = this.usuario.usuarioLogado();
       this.usuario$.subscribe(data => {
         if (data) {
           this.formatCpf();
           this.usuario
-            .update({ id: data.id, cpf: this.formCRUDCPF.get("cpf").value })
+            .update({ id: data.id, cpf: this.formCRUDCPF.get('cpf').value })
             .subscribe(data => {
               if (data) {
                 if (data.length) {
@@ -152,6 +152,8 @@ export class CarrinhoPage implements OnInit {
             });
         }
       });
+    } else {
+      this.canCreatePedido();
     }
   }
 
@@ -162,7 +164,9 @@ export class CarrinhoPage implements OnInit {
 
   canCreatePedido() {
     const data = this.formCRUD.value;
+    console.log('data 1', data);
     this.pedidoService.insert(data).subscribe(data => {
+      console.log('data', data);
       localStorage.setItem("id-ultimo-pedido", data.id);
       this.router.navigate([`./main/status/${data.id}`]);
     });
