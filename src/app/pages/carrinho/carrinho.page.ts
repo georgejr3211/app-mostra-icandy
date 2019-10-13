@@ -1,6 +1,6 @@
 import { ModalController, NavController } from '@ionic/angular';
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Component, OnInit, ViewChild, Injectable } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Observable } from 'rxjs/internal/Observable';
 import { CarrinhoCompraService } from '../../providers/services/carrinho-compra.service';
 import { map } from 'rxjs/operators';
@@ -9,10 +9,8 @@ import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { LocalizacoesService } from '../../providers/services/localizacoes.service';
 import { FormasPagamentoService } from 'src/app/providers/services/formas-pagamento.service';
-import { HomePage } from '../home/home.page';
 import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
-import { LocalEntregaPage } from '../local-entrega/local-entrega.page';
 
 @Component({
   selector: "app-carrinho",
@@ -29,7 +27,7 @@ export class CarrinhoPage implements OnInit {
   totalCompra: number;
   disabled: boolean;
   adminsDevices = [];
-  
+
   constructor(
     private carrinhoCompraService: CarrinhoCompraService,
     private pedidoService: PedidosService,
@@ -39,11 +37,10 @@ export class CarrinhoPage implements OnInit {
     private router: Router,
     private push: PushNotificationService,
     private usuario: UsuariosService,
-    private modalCtrl: ModalController,
-    private nav: NavController
-    ) {
-      
-      this.formCRUD = new FormGroup(
+    private nav: NavController,
+  ) {
+
+    this.formCRUD = new FormGroup(
       {
         id: new FormControl(null, {}),
         formas_pagamento_id: new FormControl(1, Validators.required),
@@ -63,7 +60,7 @@ export class CarrinhoPage implements OnInit {
 
   ionViewDidEnter() {
     this.usuario.indexAdminDevices().subscribe(data => {
-      if (!data) {return;}
+      if (!data) { return; }
       this.adminsDevices = data.filter(user => user.device_id).map(user => user.device_id);
     });
     this.onRefresh();
@@ -103,6 +100,7 @@ export class CarrinhoPage implements OnInit {
   }
 
   createPedido() {
+    const pedido = JSON.parse(localStorage.getItem('user/localizacao'));
     const data = this.formCRUD.value;
     this.pedidoService.insert(data).subscribe(data => {
       localStorage.setItem('id-ultimo-pedido', data.id);

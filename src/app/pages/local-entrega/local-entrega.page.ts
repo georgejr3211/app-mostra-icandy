@@ -2,11 +2,11 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import {
   GoogleMap,
   GoogleMapOptions,
-  LocationService,
   Environment,
   GoogleMaps, GoogleMapsEvent, LatLng, GoogleMapsAnimation, GoogleMapsMapTypeId, Marker, Geocoder, ILatLng
 } from '@ionic-native/google-maps/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NavController } from '@ionic/angular';
 
 declare const google: any;
 
@@ -27,9 +27,12 @@ export class LocalEntregaPage implements OnInit {
   originMaker: Marker;
   destination: any;
 
+  localUsuario;
+
   constructor(
     private geolocation: Geolocation,
     private ngZone: NgZone,
+    private navCtrl: NavController
   ) {
     console.log(this.googleAutoComplete);
   }
@@ -50,11 +53,11 @@ export class LocalEntregaPage implements OnInit {
       mapType: GoogleMapsMapTypeId.ROADMAP,
 
       controls: {
-        'compass': true,
-        'myLocationButton': true,
+        'compass': false,
+        'myLocationButton': false,
         'myLocation': true,   // (blue dot)
         'indoorPicker': true,
-        'zoom': true,          // android only
+        'zoom': false,          // android only
         'mapToolbar': true     // android only
       },
 
@@ -73,6 +76,9 @@ export class LocalEntregaPage implements OnInit {
   }
 
   currentPosition() {
+    this.map.clear();
+    this.localUsuario = null;
+
     this.geolocation.getCurrentPosition({ enableHighAccuracy: true })
       .then(res => {
 
@@ -80,9 +86,14 @@ export class LocalEntregaPage implements OnInit {
 
         this.map.moveCamera({
           target: loc,
-          zoom: 15,
+          zoom: 18,
           tilt: 10
         });
+
+        this.localUsuario = {
+          latitude: res.coords.latitude,
+          longitude: res.coords.longitude
+        };
 
         this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.BOUNCE, draggable: true });
       });
@@ -97,6 +108,12 @@ export class LocalEntregaPage implements OnInit {
       });
     });
 
+  }
+
+  onConfirmar() {
+    localStorage.setItem('user/localizacao', JSON.stringify(this.localUsuario));
+    this.navCtrl.back();
+    // this.modalCtrl.dismiss({ localUsuario: this.localUsuario });
   }
 
   async goToAddress(item) {
