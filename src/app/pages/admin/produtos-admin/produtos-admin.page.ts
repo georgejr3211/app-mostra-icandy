@@ -77,8 +77,19 @@ export class ProdutosAdminPage implements OnInit {
   ngOnInit() { }
 
   ionViewDidEnter() {
+    this.onRefresh();
+  }
+
+  onRefresh(event?) {
     this.categorias$ = this.categoriasService.index();
     this.produtos$ = this.produtosService.index();
+    this.produtos$.subscribe(data => {
+      if (data) {
+        if (event) {
+          event.detail.complete();
+        }
+      }
+    });
   }
 
   cadastrar(data?) {

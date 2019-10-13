@@ -1,3 +1,19 @@
 ion-select {
   max-width: 100% !important;
 }
+
+.input {
+  padding: 0;
+  padding-top: 10px;
+}
+
+ion-item {
+  background: #ffffff;
+  border: 1px solid #dbd5d5;
+  box-sizing: border-box;
+  margin-top: 15px;
+}
+
+ion-list {
+  width: 100%;
+}

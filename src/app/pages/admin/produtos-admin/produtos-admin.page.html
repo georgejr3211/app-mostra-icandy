@@ -13,6 +13,12 @@
 <ion-content>
 
   <ion-progress-bar *ngIf="!(categorias$ && produtos$)" type="indeterminate"></ion-progress-bar>
+  <!-- Default Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="onRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Puxe para atualizar" refreshingSpinner="circles"
+      refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <ion-row style="margin: 10px;">
     <ion-col>
@@ -28,9 +34,15 @@
   </ion-row>
 
   <ion-card style="background-color: white;" *ngIf="listarProdutos">
+
+    <ion-button size="default" expand="full" (click)="openProdutoModal()">
+      Adicionar Produto
+    </ion-button>
+
     <ion-card-content (click)="openProdutoModal(item)" *ngFor="let item of produtos$ | async">
       {{item?.id}}. {{item?.nome}} - R${{item?.preco}} ({{item?.categoria?.nome}})
     </ion-card-content>
+
   </ion-card>
 
   <ion-card *ngIf="cadastrarProdutos" style="padding: 0;">
@@ -88,9 +100,6 @@
       </ion-item>
     </form>
 
-    <ion-button size="default" expand="full" (click)="openProdutoModal()">
-      Adicionar Produto
-    </ion-button>
   </ion-card>
 
 

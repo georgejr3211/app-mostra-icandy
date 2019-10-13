@@ -49,7 +49,6 @@ export class ProdutosPage implements OnInit, AfterViewInit {
 
   ionViewDidEnter() {
     this.categorias$ = this.categoriaService.index();
-    console.log('this.navParams.data', this.navParams.data);
     this.formData.patchValue(this.navParams.data);
   }
 
@@ -59,6 +58,37 @@ export class ProdutosPage implements OnInit, AfterViewInit {
 
   onSave() {
     let obj = { ...this.formData.value };
+
+    if (this.formData.get('foto_produto').value) {
+      this.uploadImage(obj);
+    } else if (this.formData.get('id').value) {
+      this.produtoService.update(this.formData.value).subscribe(async () => {
+        const msg = 'Produto atualizado com sucesso';
+        const alert = await this.alertCtrl.create({
+          message: msg
+        });
+
+        alert.present();
+
+      });
+    }
+  }
+
+  selectImage() {
+    this.cameraService.selectImage()
+      .then(data => {
+        this.cameraService.getCurrentImage().subscribe(c => {
+          if (!c) { return; }
+          this.formData.get('foto_produto').setValue(c);
+        });
+      });
+  }
+
+  dismiss() {
+    this.modalCtrl.dismiss();
+  }
+
+  uploadImage(obj) {
     let url = `${this.cameraService.apiURL}${this.cameraService.urlFoto}`;
     if (this.formData.get('id').value) {
       url += `/${this.formData.get('id').value}`;
@@ -83,8 +113,9 @@ export class ProdutosPage implements OnInit, AfterViewInit {
 
     fileTransfer.upload(this.formData.get('foto_produto').value, url, options)
       .then(async data => {
+        const msg = this.cameraService.method === 'POST' ? 'Produto cadastrado com sucesso' : 'Produto atualizado com sucesso';
         const alert = await this.alertCtrl.create({
-          message: 'Produto cadastrado com sucesso'
+          message: msg
         });
 
         alert.present();
@@ -96,20 +127,6 @@ export class ProdutosPage implements OnInit, AfterViewInit {
 
         alert.present();
       });
-  }
-
-  selectImage() {
-    this.cameraService.selectImage()
-      .then(data => {
-        this.cameraService.getCurrentImage().subscribe(c => {
-          if (!c) { return; }
-          this.formData.get('foto_produto').setValue(c);
-        });
-      });
-  }
-
-  dismiss() {
-    this.modalCtrl.dismiss();
   }
 
 }
