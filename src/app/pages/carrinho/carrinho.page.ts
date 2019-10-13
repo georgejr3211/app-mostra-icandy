@@ -24,7 +24,7 @@ export class CarrinhoPage implements OnInit {
     cpf: [
       {
         type: "minlength",
-        message: "O CPF deve ter 11 caracteres."
+        message: "O CPF deve ter 11 números."
       }
     ]
   };
@@ -42,6 +42,7 @@ export class CarrinhoPage implements OnInit {
   totalCompra: number;
   disabled: boolean;
   adminsDevices = [];
+  canAdd = true;
 
   constructor(
     private carrinhoCompraService: CarrinhoCompraService,
@@ -129,32 +130,55 @@ export class CarrinhoPage implements OnInit {
 
   createPedido() {
     if (this.formCRUDCPF.value) {
-      console.log('entrou');
       this.usuario$ = this.usuario.usuarioLogado();
       this.usuario$.subscribe(data => {
         if (data) {
           this.formatCpf();
-          console.log(data.id, this.formCRUDCPF.get('cpf').value);
-          this.usuario.update({id: data.id, cpf: this.formCRUDCPF.get('cpf').value }).subscribe(data => console.log('data',data));
+          this.usuario
+            .update({ id: data.id, cpf: this.formCRUDCPF.get("cpf").value })
+            .subscribe(data => {
+              if (data) {
+                if (data.length) {
+                  console.log("tudo nos conformes", data);
+                  this.canCreatePedido();
+                } else {
+                  console.log("Ocorreu um erro", data);
+                  this.canNotCreatePedido();
+                }
+              } else {
+                console.log("Ocorreu um erro", data);
+                this.canNotCreatePedido();
+              }
+            });
         }
       });
     }
-    // const data = this.formCRUD.value;
-    // this.pedidoService.insert(data).subscribe(data => {
-    //   localStorage.setItem("id-ultimo-pedido", data.id);
-    //   this.router.navigate([`./main/status/${data.id}`]);
-    // });
-    // this.push.sendMessageToAdmins(
-    //   this.adminsDevices,
-    //   "Um novo pedido foi realizado!"
-    // );
-    // this.carrinhoCompraService.addProdutoCarrinho({ carrinho: [], qtd: 0 });
+  }
+
+  canNotCreatePedido() {
+    this.formCRUDCPF.get("cpf").setValue(null);
+    this.formCRUDCPF.get("cpf").setValidators(Validators.minLength(14));
+  }
+
+  canCreatePedido() {
+    const data = this.formCRUD.value;
+    this.pedidoService.insert(data).subscribe(data => {
+      localStorage.setItem("id-ultimo-pedido", data.id);
+      this.router.navigate([`./main/status/${data.id}`]);
+    });
+    this.push.sendMessageToAdmins(
+      this.adminsDevices,
+      "Um novo pedido foi realizado!"
+    );
+    this.carrinhoCompraService.addProdutoCarrinho({ carrinho: [], qtd: 0 });
+    this.formCRUDCPF.get("cpf").setValue(null);
   }
 
   formatCpf() {
     this.cpf = this.formCRUDCPF.get("cpf").value;
     this.cpf = this.cpf.replace(/-/g, "");
     this.cpf = this.cpf.replace(/[{(.)}]/g, "");
+    this.formCRUDCPF.get("cpf").setValidators(Validators.minLength(1));
     this.formCRUDCPF.get("cpf").setValue(this.cpf);
   }
 
