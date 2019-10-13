@@ -1,5 +1,5 @@
 import { Observable } from "rxjs/internal/Observable";
-import { AlertController } from "@ionic/angular";
+import { AlertController, ModalController } from "@ionic/angular";
 import { CategoriasService } from "./../../../providers/services/categorias.service";
 import { ProdutosService } from "./../../../providers/services/produtos.service";
 import { Component, OnInit } from "@angular/core";
@@ -7,6 +7,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { CameraService } from "src/app/providers/services/camera.service";
+import { ProdutosPage } from '../produtos/produtos.page';
 
 @Component({
   selector: "app-produtos-admin",
@@ -43,7 +44,8 @@ export class ProdutosAdminPage implements OnInit {
     private categoriasService: CategoriasService,
     private produtosService: ProdutosService,
     private alertController: AlertController,
-    private camera: CameraService
+    private camera: CameraService,
+    private modalCtrl: ModalController
   ) {
     this.formCRUDCategoria = new FormGroup(
       {
@@ -157,35 +159,6 @@ export class ProdutosAdminPage implements OnInit {
     }
   }
 
-  onConfirmProduto() {
-    console.log("FORMCRUD AOBA => ", this.formCRUD.value);
-    if (this.formCRUD.get("OPTION").value) {
-      this.retornoUpdateProduto$ = this.produtosService.update(
-        this.formCRUD.value
-      );
-      this.retornoUpdateProduto$.subscribe(data => {
-        if (data) {
-          this.presentAlertSuccess();
-          console.log("UPDATE PRODUTO", data);
-        } else {
-          this.presentAlertProduto();
-        }
-      });
-    } else {
-      // this.retornoInsertProduto$ = this.produtosService.insert(
-      //   this.formCRUD.value
-      // );
-      this.retornoInsertProduto$.subscribe(data => {
-        if (data) {
-          this.presentAlertSuccess();
-          console.log("INSERT PRODUTO", data);
-        } else {
-          this.presentAlertProduto();
-        }
-      });
-    }
-  }
-
   updateAtivoCategoria(data?) {
     let checked;
     if (data) {
@@ -242,23 +215,12 @@ export class ProdutosAdminPage implements OnInit {
     this.router.navigate(["/main/list"]);
   }
 
-  async selectImage() {
-    this.camera.field = 'foto_produto';
-    this.camera.idUsuario = this.formCRUD.get('id').value;
-    this.camera.nomeUsuario = this.formCRUD.get('nome').value;
-    this.camera.urlFoto = `/v1/produtos`;
-    this.camera.selectImage().then(data => {
-      this.formCRUD.get('foto_produto').setValue(this.camera.currentImage);
-      this.currentImage$ = this.camera.getCurrentImage();
-      this.produtosService.insert(this.formCRUD);
+  async openProdutoModal(data) {
+    const modal = await this.modalCtrl.create({
+      component: ProdutosPage,
+      componentProps: data
     });
 
-    // this.camera.field = 'foto_produto';
-    // this.camera.idUsuario = this.formCRUD.get("id").value;
-    // this.camera.nomeUsuario = this.formCRUD.get("nome").value;
-    // this.camera.selectImage().then(data => {
-    //   console.log('data', data);
-    //   // this.currentImage$ = this.camera.getCurrentImage();
-    // });
+    modal.present();
   }
 }

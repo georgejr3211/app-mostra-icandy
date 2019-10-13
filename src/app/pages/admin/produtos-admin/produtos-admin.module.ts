@@ -11,6 +11,7 @@ import { FileTransfer } from "@ionic-native/file-transfer/ngx";
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { CameraService } from './../../../providers/services/camera.service';
+import { ProdutosPage } from '../produtos/produtos.page';
 
 
 const routes: Routes = [
@@ -28,12 +29,13 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes),
   ],
-  declarations: [ProdutosAdminPage],
+  declarations: [ProdutosAdminPage, ProdutosPage],
   providers: [
     Camera,
     File,
     FileTransfer,
     CameraService,
-  ]
+  ],
+  entryComponents: [ProdutosPage]
 })
 export class ProdutosAdminPageModule {}
