@@ -1,7 +1,7 @@
 import { AlertController } from '@ionic/angular';
 import { ProdutosService } from 'src/app/providers/services/produtos.service';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CameraService } from 'src/app/providers/services/camera.service';
 import { CategoriasService } from 'src/app/providers/services/categorias.service';
 import { Observable } from 'rxjs';
@@ -36,6 +36,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.formData = new FormGroup({
+      id: new FormControl(null),
       nome: new FormControl(null),
       preco: new FormControl(null),
       foto_produto: new FormControl(null),
@@ -57,6 +58,16 @@ export class ProdutosPage implements OnInit, AfterViewInit {
   }
 
   onSave() {
+    let obj = { ...this.formData.value };
+    let url = `${this.cameraService.apiURL}${this.cameraService.urlFoto}`;
+    if (this.formData.get('id').value) {
+      url += `/${this.formData.get('id').value}`;
+      this.cameraService.method = 'PUT';
+    } else {
+      this.cameraService.method = 'POST';
+      delete obj.id;
+    }
+
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
     const options: FileUploadOptions = {
       fileKey: this.cameraService.field,
@@ -66,10 +77,10 @@ export class ProdutosPage implements OnInit, AfterViewInit {
         'x-access-token': localStorage.getItem('auth/token')
       },
       httpMethod: this.cameraService.method,
-      params: this.formData.value
+      params: obj
     }
 
-    const url = `${this.cameraService.apiURL}${this.cameraService.urlFoto}`;
+
     fileTransfer.upload(this.formData.get('foto_produto').value, url, options)
       .then(async data => {
         const alert = await this.alertCtrl.create({

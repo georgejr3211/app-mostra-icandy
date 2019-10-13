@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
   async onLogin() {
     const email = this.formCRUD.get('email').value;
     const password = this.formCRUD.get('password').value;
-    const loading = await this.loadingCtrl.create({ message: 'Por favor aguarde' });
+    const loading = await this.loadingCtrl.create({ message: 'Por favor aguarde...' });
     loading.present();
 
     this.authService.auth(email, password).subscribe(async token => {
@@ -71,7 +71,7 @@ export class LoginPage implements OnInit {
 
       loading.dismiss();
     }, async err => {
-      const alert = await this.alertCtrl.create({ message: err.error, buttons: ['Ok'] });
+      const alert = await this.alertCtrl.create({ message: 'Falha ao tentar realizar autenticação', buttons: ['Ok'] });
       alert.present();
       loading.dismiss();
     });
