@@ -1,18 +1,16 @@
 import { ModalController, NavController } from "@ionic/angular";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Component, OnInit, ViewChild, Injectable } from "@angular/core";
-import { Observable } from "rxjs/internal/Observable";
-import { CarrinhoCompraService } from "../../providers/services/carrinho-compra.service";
-import { map } from "rxjs/operators";
-import { PedidosService } from "src/app/providers/services/pedidos.service";
-import { AlertController } from "@ionic/angular";
-import { Router } from "@angular/router";
-import { LocalizacoesService } from "../../providers/services/localizacoes.service";
-import { FormasPagamentoService } from "src/app/providers/services/formas-pagamento.service";
-import { HomePage } from "../home/home.page";
-import { PushNotificationService } from "src/app/providers/services/push-notification.service";
-import { UsuariosService } from "src/app/providers/services/usuarios.service";
-import { LocalEntregaPage } from "../local-entrega/local-entrega.page";
+import { Component, OnInit } from "@angular/core";
+import { Observable } from 'rxjs/internal/Observable';
+import { CarrinhoCompraService } from '../../providers/services/carrinho-compra.service';
+import { map } from 'rxjs/operators';
+import { PedidosService } from 'src/app/providers/services/pedidos.service';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { LocalizacoesService } from '../../providers/services/localizacoes.service';
+import { FormasPagamentoService } from 'src/app/providers/services/formas-pagamento.service';
+import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
+import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 
 @Component({
   selector: "app-carrinho",
@@ -84,12 +82,8 @@ export class CarrinhoPage implements OnInit {
 
   ionViewDidEnter() {
     this.usuario.indexAdminDevices().subscribe(data => {
-      if (!data) {
-        return;
-      }
-      this.adminsDevices = data
-        .filter(user => user.device_id)
-        .map(user => user.device_id);
+      if (!data) { return; }
+      this.adminsDevices = data.filter(user => user.device_id).map(user => user.device_id);
     });
     this.onRefresh();
   }
@@ -163,6 +157,7 @@ export class CarrinhoPage implements OnInit {
   }
 
   canCreatePedido() {
+    const pedido = JSON.parse(localStorage.getItem('user/localizacao'));
     const data = this.formCRUD.value;
     console.log('data 1', data);
     this.pedidoService.insert(data).subscribe(data => {

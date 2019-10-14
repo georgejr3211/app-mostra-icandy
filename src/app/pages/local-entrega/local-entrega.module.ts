@@ -16,17 +16,16 @@ const routes: Routes = [
   }
 ];
 
-
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    SharedModule
+    SharedModule,
+    RouterModule.forChild(routes)
   ],
   providers: [
-    Geolocation
+    Geolocation,
   ],
   declarations: [LocalEntregaPage]
 })
