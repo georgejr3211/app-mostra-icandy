@@ -3,7 +3,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-progress-bar *ngIf="(!hasData)" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar *ngIf="!hasData" type="indeterminate"></ion-progress-bar>
 
   <ion-col *ngIf="empty" class="ion-justify-content-between">
     <ion-row style="justify-content: center; opacity: 0.5;">
