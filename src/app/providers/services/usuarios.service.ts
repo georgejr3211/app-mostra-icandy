@@ -43,7 +43,7 @@ export class UsuariosService {
 
   update(payload?) {
     const url = `${this.apiURL}/v1/usuarios/${payload.id}`;
-    console.log('url', url);
+    console.log('url', url, payload);
     return this.http.put(url, payload).pipe(map((data: any) => data.value));
   }
 }

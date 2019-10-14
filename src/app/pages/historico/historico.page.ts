@@ -33,8 +33,6 @@ export class HistoricoPage implements OnInit {
   ngOnInit() {}
 
   ionViewDidEnter() {
-    this.hasData = false;
-    this.empty = false;
     this.usuario$ = this.facadeUsuarios.usuarioLogado();
     this.restaurante$ = this.facadeRestaurante.index();
 
@@ -43,16 +41,18 @@ export class HistoricoPage implements OnInit {
         this.pedido$ = this.facade.findByUserHistorico(data.id).pipe(
           map(data => {
             if (data) {
-              this.hasData = true;
-              this.empty = true;
-              if (!Array.isArray(data)) {
-                return [data];
+              if (data.length) {
+                this.hasData = true;
+                this.empty = false;
+                if (!Array.isArray(data)) {
+                  return [data];
+                } else {
+                  return data;
+                }
               } else {
-                return data;
+                this.empty = true;
+                this.hasData = true;
               }
-            } else {
-              this.empty = false;
-              this.hasData = true;
             }
           })
         );

@@ -56,6 +56,24 @@
       </ion-item>
     </ion-card>
 
+    <form [formGroup]="formCRUDCPF">
+      <ion-card>
+        <ion-item lines="none">
+          <ion-label class="label">CPF</ion-label>
+          <ion-input style="font-size:14px; text-align: center;" padding formControlName="cpf" id="cpf" class="input" type="string"
+            placeholder="Informe seu CPF" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+        </ion-item>
+        <div class="input-group error">
+            <ng-container *ngFor="let validation of validation_messages.cpf">
+              <div class="validation-errors"
+                *ngIf="formCRUDCPF.get('cpf').hasError(validation.type) && (formCRUDCPF.get('cpf').dirty || formCRUDCPF.get('cpf').touched)">
+                {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+      </ion-card>
+    </form>
+
     <ion-card>
       <ion-item lines="none">
         <ion-label position="floating">Alguma observação?</ion-label>
@@ -64,7 +82,8 @@
     </ion-card>
 
     <ion-label color="primary">
-      <ion-button id="btnPagamento" expand="full" [disabled]="!this.formCRUD.valid" (click)="createPedido()">Comprar
+      <ion-button id="btnPagamento" expand="full" [disabled]="(!this.formCRUD.valid || !this.formCRUDCPF.valid)" 
+      (click)="createPedido()">Comprar
       </ion-button>
     </ion-label>
   </form>

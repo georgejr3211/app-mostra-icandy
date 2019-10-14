@@ -27,13 +27,6 @@ export class PerfilPage implements OnInit, AfterViewInit {
         message: "A senha deve ter pelo menos 6 caracteres."
       }
     ],
-    cpf: [
-      { type: "required", message: "Campo CPF obrigatório." },
-      {
-        type: "minlength",
-        message: "A senha deve ter 11 caracteres."
-      }
-    ],
   };
 
   usuario$: Observable<any>;
@@ -64,7 +57,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
           null,
           Validators.compose([Validators.minLength(6), Validators.required])
         ),
-        cpf: new FormControl(null, Validators.compose([Validators.minLength(14), Validators.required])),
+        cpf: new FormControl(null, {}),
         email: new FormControl(null, {}),
         telefone: new FormControl(
           null,
@@ -104,14 +97,11 @@ export class PerfilPage implements OnInit, AfterViewInit {
     if (data) {
       this.valorTelefone = this.formCRUD.get('telefone').value;
       this.formCRUD.get('telefone').setValue('');
-      this.formCRUD.get('cpf').setValue('');
       this.formCRUD.get('password').enable();
       this.formCRUD.get('telefone').enable();
-      this.formCRUD.get('cpf').enable();
       return (this.canEdit = true);
     } else {
       this.formatTelefone();
-      this.formatCpf();
       console.log('formCRUD', this.formCRUD.value);
       this.facade.update(this.formCRUD.value).subscribe();
       this.formCRUD.disable();
@@ -125,13 +115,6 @@ export class PerfilPage implements OnInit, AfterViewInit {
     this.telefone = this.telefone.replace(/[{()}]/g, "");
     this.telefone = this.telefone.replace(/ /g, "");
     this.formCRUD.get('telefone').setValue(this.telefone);
-  }
-
-  formatCpf() {
-    this.cpf = this.formCRUD.get('cpf').value;
-    this.cpf = this.cpf.replace(/-/g, "");
-    this.cpf = this.cpf.replace(/[{(.)}]/g, "");
-    this.formCRUD.get('cpf').setValue(this.cpf);
   }
 
   async selectImage() {

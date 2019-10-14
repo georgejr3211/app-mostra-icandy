@@ -19,14 +19,25 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <!-- <ion-row style="justify-content: center; margin-top: 10px;">
-    <ion-button (click)="cadastrar()">Cadastrar Produtos</ion-button>
-  </ion-row> -->
-  <ion-chip style="background-color: white;" outline color="tertiary">
-      <ion-icon name="restaurant"></ion-icon>
-      <ion-label>{{(pedidos$ | async)?.count}} Pedidos</ion-label>
-      <ion-icon name="close-circle"></ion-icon>
-    </ion-chip>
+  <ion-item>
+    <ion-label>Informações Status</ion-label>
+    <ion-select interface="popover">
+      <ion-select-option>
+        <ion-chip style="background-color: white;" outline>
+          <ion-icon name="restaurant"></ion-icon>
+          <ion-label>
+            {{(pedidos$ | async)?.count}} Pedidos
+          </ion-label>
+        </ion-chip>
+      </ion-select-option>
+      <ion-select-option *ngFor="let item of (pedidos$ | async)?.status">
+        <ion-chip style="background-color: white;" outline>
+          <ion-label color="primary">{{item.qtd}} {{item.statusPedido.descricao}}
+          </ion-label>
+        </ion-chip>
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
 
   <ion-card (click)="buscarId(pedidos?.id)" *ngFor="let pedidos of (pedidos$ | async)?.rows">
     <ion-item lines="none">
