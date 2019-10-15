@@ -26,6 +26,7 @@ const routes: Routes = [
       { path: 'admin', loadChildren: '../admin/admin.module#AdminPageModule' },
       { path: 'list', loadChildren: '../admin/list/list.module#ListPageModule' },
       { path: 'local-entrega', loadChildren: '../local-entrega/local-entrega.module#LocalEntregaPageModule' },
+      { path: 'localizacao-usuario', loadChildren: '../admin/localizacao-usuario/localizacao-usuario.module#LocalizacaoUsuarioPageModule' },
     ]
   },
 ];

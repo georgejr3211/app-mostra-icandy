@@ -1,20 +1,21 @@
-import { PedidosProdutosService } from "./../../providers/services/pedidos-produtos.service";
-import { StatusService } from "./../../providers/services/status.service";
-import { Observable } from "rxjs/internal/Observable";
-import { UsuariosService } from "../../providers/services/usuarios.service";
-import { ProdutosService } from "./../../providers/services/produtos.service";
-import { AlertController, ModalController } from "@ionic/angular";
-import { Router, ActivatedRoute } from "@angular/router";
-import { AuthService } from "../../providers/services/auth.service";
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { PedidosService } from "src/app/providers/services/pedidos.service";
+import { PedidosProdutosService } from './../../providers/services/pedidos-produtos.service';
+import { StatusService } from './../../providers/services/status.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { UsuariosService } from '../../providers/services/usuarios.service';
+import { ProdutosService } from './../../providers/services/produtos.service';
+import { AlertController, ModalController, NavController } from '@ionic/angular';
+import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../providers/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PedidosService } from 'src/app/providers/services/pedidos.service';
 import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
+import { LocalizacoesPedidosService } from 'src/app/providers/services/localizacoes-pedidos.service';
 
 @Component({
-  selector: "app-admin",
-  templateUrl: "./admin.page.html",
-  styleUrls: ["./admin.page.scss"]
+  selector: 'app-admin',
+  templateUrl: './admin.page.html',
+  styleUrls: ['./admin.page.scss']
 })
 export class AdminPage implements OnInit {
   dataParams;
@@ -26,6 +27,7 @@ export class AdminPage implements OnInit {
   produtos$: Observable<any>;
   usuario$: Observable<any>;
   status$: Observable<any>;
+  localizacaoPedido$: Observable<any>;
 
   troco = null;
   preco;
@@ -45,12 +47,12 @@ export class AdminPage implements OnInit {
     private facadePedidosProdutos: PedidosProdutosService,
     public alertController: AlertController,
     private router: Router,
-    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private modalCtrl: ModalController,
-    private push: PushNotificationService
+    private push: PushNotificationService,
+    private navCtrl: NavController,
+    private localizacaoPedidoService: LocalizacoesPedidosService
   ) {
-    localStorage.getItem("auth/token");
+    localStorage.getItem('auth/token');
 
     this.status$ = this.facadeStatus.index();
 
@@ -58,7 +60,7 @@ export class AdminPage implements OnInit {
       {
         ativo: new FormControl(null)
       },
-      { updateOn: "change" }
+      { updateOn: 'change' }
     );
 
     this.formCRUDPedido = new FormGroup(
@@ -71,7 +73,7 @@ export class AdminPage implements OnInit {
         troco: new FormControl(null),
         ativo: new FormControl(null)
       },
-      { updateOn: "change" }
+      { updateOn: 'change' }
     );
     this.dataParams = this.activatedRoute.snapshot.params;
     this.pedido$ = this.facadePedidos.find(this.dataParams.id);
@@ -90,10 +92,10 @@ export class AdminPage implements OnInit {
         this.total = this.total + this.preco;
         this.total = parseFloat(this.total.toFixed(2));
         if (
-          this.formCRUDPedido.get("troco").value > 0 &&
-          this.formCRUDPedido.get("troco").value < 101
+          this.formCRUDPedido.get('troco').value > 0 &&
+          this.formCRUDPedido.get('troco').value < 101
         ) {
-          this.troco = this.formCRUDPedido.get("troco").value - this.total;
+          this.troco = this.formCRUDPedido.get('troco').value - this.total;
         }
       });
     });
@@ -106,14 +108,26 @@ export class AdminPage implements OnInit {
   ngOnInit() { }
 
   ionViewDidEnter() {
-    
+
+  }
+
+  onClickLocalizacaoUsuario() {
+    this.localizacaoPedidoService.index(this.dataParams.id).subscribe(data => {
+      console.log('data', data);
+      if (!data) {
+        return;
+      }
+
+      this.navCtrl.navigateForward('/main/localizacao-usuario', { queryParams: data });
+
+    });
   }
 
   onAtualizarPedido() {
     let payload = {
       id: this.dataParams.id,
-      status_pedido_id: this.formCRUDPedido.get("status_pedido_id").value,
-      ativo: this.formCRUDPedido.get("ativo").value
+      status_pedido_id: this.formCRUDPedido.get('status_pedido_id').value,
+      ativo: this.formCRUDPedido.get('ativo').value
     };
     this.push.sendMessage(this.deviceId, 'Corre lá no App!! Seu pedido acabou de mudar de status');
     this.retorno$ = this.facadePedidos.update(payload);
@@ -128,9 +142,9 @@ export class AdminPage implements OnInit {
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: "Erro ao atualizar",
-      message: "Contate os desenvolvedores!!",
-      buttons: ["OK"]
+      header: 'Erro ao atualizar',
+      message: 'Contate os desenvolvedores!!',
+      buttons: ['OK']
     });
     await alert.present();
   }
@@ -142,7 +156,7 @@ export class AdminPage implements OnInit {
     } else {
       checked = 0;
     }
-    this.formCRUDPedido.get("ativo").setValue(checked);
+    this.formCRUDPedido.get('ativo').setValue(checked);
   }
 
   showMore() {
@@ -162,7 +176,7 @@ export class AdminPage implements OnInit {
     } else {
       checked = 0;
     }
-    this.formCRUDUsuario.get("ativo").setValue(checked);
+    this.formCRUDUsuario.get('ativo').setValue(checked);
   }
 
   onAtualizarUsuario() {

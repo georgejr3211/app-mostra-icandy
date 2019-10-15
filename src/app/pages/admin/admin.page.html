@@ -13,11 +13,13 @@
 <ion-content>
   <ion-card style="padding: 0;">
     <form [formGroup]="formCRUDPedido" fxLayoutAlign="column" *ngIf="pedidoId">
+
       <ion-item>
         <ion-col lines="none">
           <ion-item-group style="text-align: center; margin: 10px;">
             <ion-label style="padding-bottom: 5px;">Informações</ion-label>
             <ion-item-divider></ion-item-divider>
+
           </ion-item-group>
           <ion-row class="row">Forma Pagamento -> {{(pedido$ | async)?.formaPagamento?.descricao}}
           </ion-row>
@@ -59,6 +61,9 @@
                 R$ {{troco}}
               </ion-col>
             </ion-row>
+            <ion-button expand="full" (click)="onClickLocalizacaoUsuario()">
+              Ver localização
+            </ion-button>
           </ion-list>
         </ion-col>
       </ion-item>
@@ -103,7 +108,7 @@
             </ion-row>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.perfil?.descricao}}
             </ion-row>
-                <ion-row class="rowUsuario">{{(usuario$ | async)?.cpf}}
+            <ion-row class="rowUsuario">{{(usuario$ | async)?.cpf}}
             </ion-row>
           </ion-item-group>
           <form [formGroup]="formCRUDUsuario">

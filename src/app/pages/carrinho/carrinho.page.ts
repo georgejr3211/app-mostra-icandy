@@ -78,7 +78,7 @@ export class CarrinhoPage implements OnInit {
     );
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewDidEnter() {
     this.usuario.indexAdminDevices().subscribe(data => {
@@ -158,10 +158,8 @@ export class CarrinhoPage implements OnInit {
 
   canCreatePedido() {
     const pedido = JSON.parse(localStorage.getItem('user/localizacao'));
-    const data = this.formCRUD.value;
-    console.log('data 1', data);
+    const data = { ...this.formCRUD.value, ...pedido };
     this.pedidoService.insert(data).subscribe(data => {
-      console.log('data', data);
       localStorage.setItem("id-ultimo-pedido", data.id);
       this.router.navigate([`./main/status/${data.id}`]);
     });
