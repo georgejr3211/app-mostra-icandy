@@ -1,16 +1,17 @@
-import { ModalController, NavController } from "@ionic/angular";
+import { ModalController, NavController, IonInput } from "@ionic/angular";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Observable } from 'rxjs/internal/Observable';
 import { CarrinhoCompraService } from '../../providers/services/carrinho-compra.service';
 import { map } from 'rxjs/operators';
 import { PedidosService } from 'src/app/providers/services/pedidos.service';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { LocalizacoesService } from '../../providers/services/localizacoes.service';
+// import { LocalizacoesService } from '../../providers/services/localizacoes.service';
 import { FormasPagamentoService } from 'src/app/providers/services/formas-pagamento.service';
 import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
+import { LocalizacoesPedidosService } from 'src/app/providers/services/localizacoes-pedidos.service';
 
 @Component({
   selector: "app-carrinho",
@@ -33,7 +34,7 @@ export class CarrinhoPage implements OnInit {
   auth$: Observable<string>;
   usuario$: Observable<any>;
   produtoCarrinho$: Observable<any[]>;
-  localizacoes$: Observable<any[]>;
+  // localizacoes$: Observable<any[]>;
   formasPagamento$: Observable<any[]>;
 
   cpf: string;
@@ -41,11 +42,15 @@ export class CarrinhoPage implements OnInit {
   disabled: boolean;
   adminsDevices = [];
   canAdd = true;
+  pedidoLoc$: Observable<any>;
+
+  @ViewChild('troco', { static: false }) troco: IonInput;
 
   constructor(
     private carrinhoCompraService: CarrinhoCompraService,
     private pedidoService: PedidosService,
-    private localizacoesService: LocalizacoesService,
+    // private localizacoesService: LocalizacoesService,
+    private localizacaoService: LocalizacoesPedidosService,
     private formasPagamentoService: FormasPagamentoService,
     public alertController: AlertController,
     private router: Router,
@@ -76,11 +81,13 @@ export class CarrinhoPage implements OnInit {
       },
       { updateOn: "change" }
     );
+
   }
 
   ngOnInit() { }
 
   ionViewDidEnter() {
+    this.pedidoLoc$ = this.localizacaoService.getLocalizacao();
     this.usuario.indexAdminDevices().subscribe(data => {
       if (!data) { return; }
       this.adminsDevices = data.filter(user => user.device_id).map(user => user.device_id);
@@ -89,7 +96,7 @@ export class CarrinhoPage implements OnInit {
   }
 
   onRefresh() {
-    this.localizacoes$ = this.localizacoesService.index();
+    // this.localizacoes$ = this.localizacoesService.index();
     this.formasPagamento$ = this.formasPagamentoService.index();
     this.produtoCarrinho$ = this.carrinhoCompraService
       .getProdutosCarrinho()
@@ -113,6 +120,8 @@ export class CarrinhoPage implements OnInit {
   }
 
   hasTroco(value) {
+    this.troco.setFocus();
+
     const disabled = !value.detail.checked;
     if (disabled) {
       this.formCRUD.get("troco").setValue(null);
@@ -158,9 +167,13 @@ export class CarrinhoPage implements OnInit {
 
   canCreatePedido() {
     const pedido = JSON.parse(localStorage.getItem('user/localizacao'));
+
     const data = { ...this.formCRUD.value, ...pedido };
     this.pedidoService.insert(data).subscribe(data => {
+      console.log('data', data);
       localStorage.setItem("id-ultimo-pedido", data.id);
+      localStorage.removeItem('user/localizacao');
+      this.localizacaoService.addLocalizacao(null);
       this.router.navigate([`./main/status/${data.id}`]);
     });
     this.push.sendMessageToAdmins(

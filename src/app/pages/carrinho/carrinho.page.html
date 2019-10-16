@@ -4,23 +4,20 @@
 
 <ion-content>
 
-  <ion-progress-bar *ngIf="!(localizacoes$ | async)?.rows?.length || !(formasPagamento$ | async)?.length"
-    type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar *ngIf="!(formasPagamento$ | async)?.length" type="indeterminate"></ion-progress-bar>
 
   <form [formGroup]="formCRUD">
-    <ion-card>
-      <ion-button (click)="escolherLocalEntrega()">Escolher local de entrega</ion-button>
+    <ion-button (click)="escolherLocalEntrega()" expand="full">Escolher local de entrega</ion-button>
 
-      <ion-item lines="none">
+    <!-- <ion-item lines="none">
         <ion-icon name="pin" slot="start"></ion-icon>
         <ion-label>Local de entrega</ion-label>
         <ion-select id="endEntrega" formControlName="localEntrega">
           <ion-select-option *ngFor="let localizacao of (localizacoes$ | async)?.rows" [value]="localizacao?.id">
             {{ localizacao?.local }}</ion-select-option>
         </ion-select>
-      </ion-item>
+      </ion-item> -->
 
-    </ion-card>
 
     <ion-card>
       <ion-row class="center" padding *ngFor="let produto of produtoCarrinho$ | async">
@@ -36,7 +33,7 @@
       <ion-item lines="none">
         <ion-label style="padding-right: 5px;">Troco?</ion-label>
         <ion-checkbox color="primary" (ionChange)="hasTroco($event)"></ion-checkbox>
-        <ion-input type="text" formControlName="troco" placeholder="(R$)" class="ion-text-end"
+        <ion-input type="text" #troco formControlName="troco" placeholder="Informe aqui" class="ion-text-end"
           [brmasker]="{money: true}">
         </ion-input>
       </ion-item>
@@ -60,17 +57,17 @@
       <ion-card>
         <ion-item lines="none">
           <ion-label class="label">CPF</ion-label>
-          <ion-input style="font-size:14px; text-align: center;" padding formControlName="cpf" id="cpf" class="input" type="string"
-            placeholder="Informe seu CPF" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+          <ion-input style="font-size:14px; text-align: center;" padding formControlName="cpf" id="cpf" class="input"
+            type="string" placeholder="Informe seu CPF" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
         </ion-item>
         <div class="input-group error">
-            <ng-container *ngFor="let validation of validation_messages.cpf">
-              <div class="validation-errors"
-                *ngIf="formCRUDCPF.get('cpf').hasError(validation.type) && (formCRUDCPF.get('cpf').dirty || formCRUDCPF.get('cpf').touched)">
-                {{ validation.message }}
-              </div>
-            </ng-container>
-          </div>
+          <ng-container *ngFor="let validation of validation_messages.cpf">
+            <div class="validation-errors"
+              *ngIf="formCRUDCPF.get('cpf').hasError(validation.type) && (formCRUDCPF.get('cpf').dirty || formCRUDCPF.get('cpf').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
       </ion-card>
     </form>
 
@@ -82,8 +79,8 @@
     </ion-card>
 
     <ion-label color="primary">
-      <ion-button id="btnPagamento" expand="full" [disabled]="(!this.formCRUD.valid || !this.formCRUDCPF.valid)" 
-      (click)="createPedido()">Comprar
+      <ion-button id="btnPagamento" expand="full" [disabled]="(!formCRUD.valid || !formCRUDCPF.valid || !(pedidoLoc$ | async))"
+        (click)="createPedido()">Comprar
       </ion-button>
     </ion-label>
   </form>

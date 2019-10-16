@@ -104,7 +104,13 @@
             </ion-row>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.email}}
             </ion-row>
-            <ion-row class="rowUsuario">{{(usuario$ | async)?.telefone}}
+            <ion-row class="rowUsuario">
+              <!-- {{(usuario$ | async)?.telefone}} -->
+              <a ion-button style="font-size: 18px"
+                href="https://api.whatsapp.com/send?phone={{(usuario$ | async)?.telefone}}&text=">
+                <ion-icon id="iconWhats" name="logo-whatsapp"></ion-icon>
+              </a>
+
             </ion-row>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.perfil?.descricao}}
             </ion-row>

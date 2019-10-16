@@ -7,6 +7,7 @@ import {
 } from '@ionic-native/google-maps/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NavController } from '@ionic/angular';
+import { LocalizacoesPedidosService } from 'src/app/providers/services/localizacoes-pedidos.service';
 
 declare const google: any;
 
@@ -32,7 +33,8 @@ export class LocalEntregaPage implements OnInit {
   constructor(
     private geolocation: Geolocation,
     private ngZone: NgZone,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private localizacaoPedidoService: LocalizacoesPedidosService
   ) {
     console.log(this.googleAutoComplete);
   }
@@ -58,7 +60,7 @@ export class LocalEntregaPage implements OnInit {
         'myLocation': true,   // (blue dot)
         'indoorPicker': true,
         'zoom': false,          // android only
-        'mapToolbar': true     // android only
+        'mapToolbar': true,     // android only
       },
 
       gestures: {
@@ -67,7 +69,7 @@ export class LocalEntregaPage implements OnInit {
         zoom: true,
         rotate: true
       },
-      draggable: true
+      draggable: false
     };
 
     this.map = GoogleMaps.create('map', mapOptions);
@@ -95,7 +97,7 @@ export class LocalEntregaPage implements OnInit {
           longitude: res.coords.longitude
         };
 
-        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.BOUNCE, draggable: true });
+        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.BOUNCE, draggable: false });
       });
   }
 
@@ -112,6 +114,7 @@ export class LocalEntregaPage implements OnInit {
 
   onConfirmar() {
     localStorage.setItem('user/localizacao', JSON.stringify(this.localUsuario));
+    this.localizacaoPedidoService.addLocalizacao(this.localUsuario);
     this.navCtrl.back();
     // this.modalCtrl.dismiss({ localUsuario: this.localUsuario });
   }
@@ -135,7 +138,7 @@ export class LocalEntregaPage implements OnInit {
           tilt: 10
         });
 
-        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.DROP, draggable: true });
+        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.DROP, draggable: false });
       }
     });
 

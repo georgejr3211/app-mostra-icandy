@@ -49,7 +49,9 @@ export class StatusPage implements OnInit {
 
   ionViewDidEnter() {
     this.socket = io(this.apiUrl);
+
     const { id } = this.activatedRoute.snapshot.params;
+
     this.usuario$ = this.usuariosService.usuarioLogado();
     this.usuario$.subscribe(data => {
       if (data) {
@@ -59,6 +61,7 @@ export class StatusPage implements OnInit {
     this.status$ = this.statusService.index();
     this.avaliacoes$ = this.avaliacoesService.index();
     this.restaurantes$ = this.restaurantesService.index();
+
 
     this.socket.on(id, () => {
       this.status$ = this.statusService.index();
