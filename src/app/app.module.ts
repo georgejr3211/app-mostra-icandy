@@ -16,6 +16,8 @@ import { PushNotificationService } from './providers/services/push-notification.
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { GoogleMaps } from '@ionic-native/google-maps/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,7 +41,9 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
       multi: true
     },
     Geolocation,
-    GoogleMaps
+    GoogleMaps,
+    LocationAccuracy,
+    AndroidPermissions
   ],
   bootstrap: [AppComponent]
 })

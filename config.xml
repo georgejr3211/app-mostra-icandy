@@ -108,4 +108,5 @@
     <allow-navigation href="http://localhost:8100" sessionid="64d6fb2b" />
     <allow-navigation href="http://localhost:8101" sessionid="d3e16027" />
     <access launch-external="yes" origin="whatsapp://*" />
+    <allow-navigation href="http://10.3.12.156:8100" sessionid="d7ad6ebb" />
 </widget>

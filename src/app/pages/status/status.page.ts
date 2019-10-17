@@ -28,7 +28,7 @@ export class StatusPage implements OnInit {
   socket;
   imageLogo = '/assets/images/ArtesNeW.jpeg';
   apiUrl = environment.api;
-  whatsAppPhone = 'https://api.whatsapp.com/send?phone=5534999771973&text=Olá, iCandy';
+  whatsAppPhone = 'https://api.whatsapp.com/send?phone=553498872066&text=Olá, iCandy';
   artesNew = 'https://www.instagram.com/artesnew_confeitaria';
 
 
