@@ -20,19 +20,19 @@
   </ion-refresher>
 
   <ion-item>
-    <ion-label>Informações Status</ion-label>
+    <ion-label>Quantidade por Status</ion-label>
     <ion-select interface="popover">
-      <ion-select-option>
+      <!-- <ion-select-option>
         <ion-chip style="background-color: white;" outline>
           <ion-icon name="restaurant"></ion-icon>
           <ion-label>
             {{(pedidos$ | async)?.count}} Pedidos
           </ion-label>
         </ion-chip>
-      </ion-select-option>
+      </ion-select-option> -->
       <ion-select-option *ngFor="let item of (pedidos$ | async)?.status">
         <ion-chip style="background-color: white;" outline>
-          <ion-label color="primary">{{item.qtd}} {{item.statusPedido.descricao}}
+          <ion-label color="primary">{{item.qtd}} - {{item.statusPedido.descricao}}
           </ion-label>
         </ion-chip>
       </ion-select-option>

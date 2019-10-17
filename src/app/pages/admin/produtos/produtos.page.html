@@ -20,7 +20,7 @@
   <ion-progress-bar *ngIf="!(categorias$ | async)" type="indeterminate"></ion-progress-bar>
   <form [formGroup]="formData">
     <ion-card padding>
-      <ion-card-title class="ion-text-center">Foto</ion-card-title>
+      <ion-card-title class="ion-text-center">Foto do Produto</ion-card-title>
       <ion-row>
         <ion-item *ngIf="formData.get('foto')?.value">
           <ion-img [src]="images + formData?.get('foto')?.value"></ion-img>
@@ -44,7 +44,7 @@
 
           <ion-item>
             <ion-label>Categoria</ion-label>
-            <ion-select class="input" style="width: 100%" placeholder="Categoria" formControlName="categorias_id">
+            <ion-select class="input" style="width: 100%; text-align: center; padding-bottom: 5px;" placeholder="Selecione a Categoria" formControlName="categorias_id">
               <ion-select-option [value]="cat?.id" *ngFor="let cat of (categorias$ | async)">{{ cat.id }} -
                 {{ cat?.nome }}
               </ion-select-option>
@@ -63,17 +63,17 @@
           </ion-item>
 
           <ion-item lines="none">
-            <ion-label>Exibir produto na página principal?</ion-label>
+            <ion-label><small>Exibir produto na página principal?</small></ion-label>
             <ion-toggle formControlName="ativo"></ion-toggle>
           </ion-item>
         </ion-list>
       </ion-row>
 
-      <ion-row>
+      <ion-col>
         <ion-button expand="full" (click)="onSave()">
           Salvar
         </ion-button>
-      </ion-row>
+      </ion-col>
 
     </ion-card>
   </form>
