@@ -25,7 +25,7 @@ export class CadastroPage implements OnInit {
       { type: "required", message: "Campo Obrigatório." },
       {
         type: "minlength",
-        message: "O telefone deve ter pelo menos 10 números."
+        message: "O telefone deve ter 11 números."
       }
     ],
     cpf: [
@@ -33,7 +33,7 @@ export class CadastroPage implements OnInit {
       { type: "pattern", message: "O CPF deve conter apenas números." },
       {
         type: "minlength",
-        message: "O CPF deve ter pelo menos 11 números."
+        message: "O CPF deve ter 11 números."
       }
     ],
     password: [
@@ -92,7 +92,7 @@ export class CadastroPage implements OnInit {
         ),
         telefone: new FormControl(
           null,
-          Validators.compose([Validators.minLength(14), Validators.required])
+          Validators.compose([Validators.minLength(15), Validators.required])
         ),
         perfis_id: new FormControl(1)
       },

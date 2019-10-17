@@ -6,6 +6,7 @@ import { environment } from "../../../environments/environment";
 import { CarrinhoCompraService } from "src/app/providers/services/carrinho-compra.service";
 import { PushNotificationService } from "src/app/providers/services/push-notification.service";
 import { Router } from "@angular/router";
+import { ToastController } from '@ionic/angular';
 
 @Injectable({ providedIn: "root" })
 @Component({
@@ -26,7 +27,8 @@ export class HomePage implements OnInit, OnDestroy {
     private produtosService: ProdutosService,
     private carrinhoCompraService: CarrinhoCompraService,
     private push: PushNotificationService,
-    private router: Router
+    private router: Router,
+    public toastController: ToastController
   ) {}
 
   ngOnInit() {}
@@ -72,6 +74,7 @@ export class HomePage implements OnInit, OnDestroy {
         } else {
           this.produtoCarrinho.push({ ...produto, qtd: 1 });
         }
+        this.presentToast();
         break;
       case "remove":
         if (this.produtoCarrinho[index]) {
@@ -90,6 +93,21 @@ export class HomePage implements OnInit, OnDestroy {
       carrinho: this.produtoCarrinho,
       qtd
     });
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Produto adicionado ao carrinho.',
+      duration: 1000,
+      color: 'primary',
+      buttons: [
+        {
+          side: 'start',
+          icon: 'cart',
+        }
+      ]
+    });
+    toast.present();
   }
 
   countQtdItemCarrinho(idProduto) {
