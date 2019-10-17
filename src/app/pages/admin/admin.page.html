@@ -98,19 +98,21 @@
       <ion-item *ngIf="(usuario$ | async)" style="margin-top: 20px;">
         <ion-col>
           <ion-item-group style="text-align: center; margin: 10px;">
-            <ion-label style="padding-bottom: 5px;">Usuário</ion-label>
+            <ion-row>
+              <ion-col style="text-align: end;">
+                <ion-label style="padding-bottom: 5px;">Usuário</ion-label>
+              </ion-col>
+              <ion-col style="max-width: 35%;">
+                <a ion-button style="font-size: 18px; color: green; max-width: 50px;"
+                  href="https://api.whatsapp.com/send?phone=55{{(usuario$ | async)?.telefone}}&text=">
+                  <ion-icon id="iconWhats" name="logo-whatsapp"></ion-icon>
+                </a>
+              </ion-col>
+            </ion-row>
             <ion-item-divider></ion-item-divider>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.id}} - {{(usuario$ | async)?.nome}}
             </ion-row>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.email}}
-            </ion-row>
-            <ion-row class="rowUsuario">
-              <!-- {{(usuario$ | async)?.telefone}} -->
-              <a ion-button style="font-size: 18px"
-                href="https://api.whatsapp.com/send?phone=55{{(usuario$ | async)?.telefone}}&text=">
-                <ion-icon id="iconWhats" name="logo-whatsapp"></ion-icon>
-              </a>
-
             </ion-row>
             <ion-row class="rowUsuario">{{(usuario$ | async)?.perfil?.descricao}}
             </ion-row>

@@ -28,20 +28,20 @@
     </ion-col>
     <ion-col>
       <ion-button style="justify-content: end;" expand="full" (click)="cadastrar(cadastrarProdutos)">
-        <ion-icon style="padding-right: 5px;" name="add"></ion-icon>Cadastrar
+        <ion-icon style="padding-right: 5px;" name="add"></ion-icon>Categoria
       </ion-button>
     </ion-col>
   </ion-row>
 
   <ion-card style="background-color: white;" *ngIf="listarProdutos">
 
-    <ion-button size="default" expand="full" (click)="openProdutoModal()">
+    <ion-button style="margin: 10px;" size="default" expand="full" (click)="openProdutoModal()">
       Adicionar Produto
     </ion-button>
 
-    <ion-card-content (click)="openProdutoModal(item)" *ngFor="let item of produtos$ | async">
-      {{item?.id}}. {{item?.nome}} - R${{item?.preco}} ({{item?.categoria?.nome}})
-    </ion-card-content>
+    <ion-item style="margin: 10px;" lines="none" (click)="openProdutoModal(item)" *ngFor="let item of produtos$ | async">
+      <small>{{item?.id}}. {{item?.nome}} - R${{item?.preco}} ({{item?.categoria?.nome}})</small>
+    </ion-item>
 
   </ion-card>
 

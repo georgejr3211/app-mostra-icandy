@@ -35,7 +35,7 @@
 
     <ion-grid *ngIf="(pedido$ | async)?.id" style="padding-top: 20px;">
       <ion-row style="justify-content: center;">
-        Situação do pedido
+        Situação do pedido #{{(pedido$ | async)?.id}}
       </ion-row>
     </ion-grid>
     <ion-grid *ngIf="(pedido$ | async)?.id" class="timeLine">
