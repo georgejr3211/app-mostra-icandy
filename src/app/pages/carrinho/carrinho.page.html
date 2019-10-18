@@ -27,7 +27,7 @@
         <ion-item-divider></ion-item-divider>
       </ion-item-group>
       <ion-row style="justify-content: center;">
-        <ion-button outline="true" size="small" style="margin-bottom: 15px;" (click)="escolherLocalEntrega()"
+        <ion-button size="small" style="margin-bottom: 15px;" (click)="escolherLocalEntrega()"
           expand="full">Escolher
           local</ion-button>
       </ion-row>
@@ -81,7 +81,7 @@
       <form [formGroup]="formCRUDCPF">
         <ion-item lines="none">
           <ion-label style="font-size: 12px" class="label">Comprador</ion-label>
-          <ion-input style="font-size:14px; text-align: center;" padding formControlName="cpf" id="cpf" class="input"
+          <ion-input autocomplete="nope" style="font-size:14px; text-align: center;" padding formControlName="cpf" id="cpf" class="input"
             type="string" placeholder="Informe seu CPF" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
         </ion-item>
         <div class="input-group error">
