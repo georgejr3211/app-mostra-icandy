@@ -20,22 +20,22 @@
 
     <ion-card>
       <ion-item-group style="text-align: center; margin: 10px;">
-        <ion-row style="justify-content: center;">
+        <ion-row style="justify-content: center; font-weight: bold;">
           <ion-icon color="primary" style="font-size: 20px; padding-right: 5px;" name="pin"></ion-icon>
           <ion-label style="padding-bottom: 5px; color: black">Local de Entrega</ion-label>
         </ion-row>
         <ion-item-divider></ion-item-divider>
       </ion-item-group>
       <!-- <ion-row style="justify-content: center;"> -->
-        <ion-button fill="outline" style="margin: 10px; margin-bottom: 15px;" (click)="escolherLocalEntrega()"
-          expand="block">Escolher
-          local</ion-button>
+      <ion-button fill="outline" style="margin: 10px; margin-bottom: 15px;" (click)="escolherLocalEntrega()"
+        expand="block">Escolher
+        local</ion-button>
       <!-- </ion-row> -->
     </ion-card>
 
     <ion-card>
       <ion-item-group style="text-align: center; margin: 10px;">
-        <ion-row style="justify-content: center;">
+        <ion-row style="justify-content: center; font-weight: bold;">
           <ion-icon style="font-size: 20px; padding-right: 5px; color: grey;" name="information-circle"></ion-icon>
           <ion-label style="padding-bottom: 5px; color: black">Informações do Pedido</ion-label>
         </ion-row>
@@ -55,7 +55,7 @@
 
     <ion-card>
       <ion-item-group style="text-align: center; margin: 10px;">
-        <ion-row style="justify-content: center;">
+        <ion-row style="justify-content: center; font-weight: bold;">
           <ion-icon style="font-size: 20px; padding-right: 5px; color: green;" name="cash"></ion-icon>
           <ion-label style="padding-bottom: 5px; color: black">Pagamento</ion-label>
         </ion-row>
@@ -71,18 +71,19 @@
           </ion-select>
         </ion-item>
         <ion-item lines="none">
-            <ion-label style="font-size: 14px">Troco?</ion-label>
-            <ion-input style="padding-left: 35px !important; font-size:14px; text-align: center !important;" padding type="text" #troco formControlName="troco" 
-            placeholder="Informe a quantia" class="ion-text-end"
-              [brmasker]="{money: true}">
-            </ion-input>
-          </ion-item>
+          <ion-label style="font-size: 14px">Troco?</ion-label>
+          <ion-input style="padding-left: 35px !important; font-size:14px; text-align: center !important;" padding
+            type="text" #troco formControlName="troco" placeholder="Informe a quantia" class="ion-text-end"
+            [brmasker]="{money: true}">
+          </ion-input>
+        </ion-item>
       </form>
       <form [formGroup]="formCRUDCPF">
         <ion-item lines="none">
           <ion-label style="font-size: 14px" class="label">Comprador</ion-label>
-          <ion-input autocomplete="nope" style="font-size:14px; text-align: center;" padding formControlName="cpf" id="cpf" class="input"
-            type="string" placeholder="Informe seu CPF" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+          <ion-input autocomplete="nope" style="font-size:14px; text-align: center;" padding formControlName="cpf"
+            id="cpf" class="input" type="string" placeholder="Informe seu CPF"
+            [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
         </ion-item>
         <div class="input-group error">
           <ng-container *ngFor="let validation of validation_messages.cpf">
@@ -97,19 +98,16 @@
 
     <ion-card>
       <ion-item-group style="text-align: center; margin: 10px;">
-        <ion-row style="justify-content: center;">
+        <ion-row style="justify-content: center; font-weight: bold;">
           <ion-icon style="font-size: 20px; padding-right: 5px; color: black;" name="add"></ion-icon>
-          <ion-label style="padding-bottom: 5px; color: #6f2367;">Adicional</ion-label>
+          <ion-label style="padding-bottom: 5px; color: black;">Adicional</ion-label>
         </ion-row>
         <ion-item-divider></ion-item-divider>
       </ion-item-group>
       <ion-item lines="none">
-        <ion-card-content>
-          <ion-label style="font-size: 14px">Testando como vai ficar essa merda</ion-label>
-        </ion-card-content>
-        <ion-label position="floating"><small>Ajude-nos a te encontrar facilmente, referencia:</small></ion-label>
-        <ion-textarea formControlName="observacao" rows="3" cols="20"></ion-textarea>
-      </ion-item>
+        <ion-label position="floating"><small>Ajude-nos a te encontrar facilmente, <br>ponto de referencia:</small></ion-label>
+        <ion-textarea  formControlName="observacao" rows="3" cols="20"></ion-textarea>
+      </ion-item> 
     </ion-card>
 
     <ion-label color="primary">
