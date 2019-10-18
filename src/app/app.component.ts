@@ -4,7 +4,6 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { PushNotificationService } from './providers/services/push-notification.service';
-import { Environment } from '@ionic-native/google-maps/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
@@ -21,7 +20,6 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private push: PushNotificationService,
-    private androidPermissions: AndroidPermissions,
     private geolocation: Geolocation,
     private locationAccuracy: LocationAccuracy
   ) {
@@ -32,7 +30,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.backButton.subscribeWithPriority(9999, () => { });
     this.platform.ready().then(() => {
-
+      this.statusBar.backgroundColorByHexString('#573D70');
       this.geolocation.getCurrentPosition();
       this.statusBar.styleDefault();
       this.splashScreen.hide();

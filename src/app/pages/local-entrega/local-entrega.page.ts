@@ -6,7 +6,7 @@ import {
   GoogleMaps, GoogleMapsEvent, LatLng, GoogleMapsAnimation, GoogleMapsMapTypeId, Marker, Geocoder, ILatLng
 } from '@ionic-native/google-maps/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
 import { LocalizacoesPedidosService } from 'src/app/providers/services/localizacoes-pedidos.service';
 
 declare const google: any;
@@ -29,12 +29,12 @@ export class LocalEntregaPage implements OnInit {
   destination: any;
 
   localUsuario;
-
   constructor(
     private geolocation: Geolocation,
     private ngZone: NgZone,
     private navCtrl: NavController,
-    private localizacaoPedidoService: LocalizacoesPedidosService
+    private localizacaoPedidoService: LocalizacoesPedidosService,
+    private loadingCtrl: LoadingController
   ) {
     console.log(this.googleAutoComplete);
   }
@@ -46,7 +46,10 @@ export class LocalEntregaPage implements OnInit {
     this.initMap();
   }
 
-  initMap() {
+  async initMap() {
+    this.loading = await this.loadingCtrl.create({ message: 'Por favor aguarde...' });
+    await this.loading.present();
+
     Environment.setEnv({
       API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyCONimGXbVJHJVAvK7bJzaqU4RyXt0PVg4',
       API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyCONimGXbVJHJVAvK7bJzaqU4RyXt0PVg4'
@@ -73,32 +76,44 @@ export class LocalEntregaPage implements OnInit {
     };
 
     this.map = GoogleMaps.create('map', mapOptions);
-    this.map.one(GoogleMapsEvent.MAP_READY);
-    this.currentPosition();
+    try {
+      await this.map.one(GoogleMapsEvent.MAP_READY);
+      this.currentPosition();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  currentPosition() {
-    this.map.clear();
-    this.localUsuario = null;
+  async currentPosition() {
+    try {
+      this.map.clear();
+      this.localUsuario = null;
 
-    this.geolocation.getCurrentPosition({ enableHighAccuracy: true })
-      .then(res => {
+      this.geolocation.getCurrentPosition({ enableHighAccuracy: true })
+        .then(res => {
 
-        const loc = new LatLng(res.coords.latitude, res.coords.longitude);
+          const loc = new LatLng(res.coords.latitude, res.coords.longitude);
 
-        this.map.moveCamera({
-          target: loc,
-          zoom: 18,
-          tilt: 10
+          this.map.moveCamera({
+            target: loc,
+            zoom: 18,
+            tilt: 10
+          });
+
+          this.localUsuario = {
+            latitude: res.coords.latitude,
+            longitude: res.coords.longitude
+          };
+
+          this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.BOUNCE, draggable: true });
+          this.loading.dismiss();
+
         });
+    } catch (error) {
+      console.log(error)
+    } finally {
+    }
 
-        this.localUsuario = {
-          latitude: res.coords.latitude,
-          longitude: res.coords.longitude
-        };
-
-        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.BOUNCE, draggable: false });
-      });
   }
 
   searchChanged() {
@@ -119,29 +134,5 @@ export class LocalEntregaPage implements OnInit {
     // this.modalCtrl.dismiss({ localUsuario: this.localUsuario });
   }
 
-  async goToAddress(item) {
-    this.map.clear();
-
-    this.search = '';
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({
-      address: item.description
-    }, (results, status) => {
-      if (status === 'OK') {
-        const lat = results[0].geometry.location.lat();
-        const lng = results[0].geometry.location.lng();
-        const loc = new LatLng(lat, lng);
-
-        this.map.moveCamera({
-          target: loc,
-          zoom: 15,
-          tilt: 10
-        });
-
-        this.originMaker = this.map.addMarkerSync({ position: loc, animation: GoogleMapsAnimation.DROP, draggable: false });
-      }
-    });
-
-  }
 
 }
