@@ -12,7 +12,7 @@
 <ion-content class="content">
   <ion-progress-bar *ngIf="!(pedido$ | async)?.length" type="indeterminate"></ion-progress-bar>
 
-  <ion-card-content style="max-height: 170px;">
+  <ion-card-content style="max-height: 250px;">
     <ion-list *ngFor="let item of pedido$ | async">
       <ion-row>
         <ion-col style="max-width: 35px;">
