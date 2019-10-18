@@ -170,12 +170,26 @@ export class CarrinhoPage implements OnInit {
 
     const data = { ...this.formCRUD.value, ...pedido };
     this.pedidoService.insert(data).subscribe(data => {
-      console.log('data', data);
       localStorage.setItem("id-ultimo-pedido", data.id);
       localStorage.removeItem('user/localizacao');
       this.localizacaoService.addLocalizacao(null);
       this.router.navigate([`./main/status/${data.id}`]);
-    });
+    },
+      async data => {
+        console.log(data);
+
+        const message = `
+          Sentimos muito, os seguintes produtos estão fora de estoque:
+          ${data.map(item => {
+          return `Item: ${item.nome} - Quantidade disponível: ${item.qtd_estoque}`
+        })}
+        `;
+
+        const alert = await this.alertController.create({
+          message, buttons: ['Ok']
+        });
+        alert.present();
+      });
     this.push.sendMessageToAdmins(
       this.adminsDevices,
       "Um novo pedido foi realizado!"
