@@ -98,7 +98,7 @@ export class HomePage implements OnInit, OnDestroy {
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'Produto adicionado ao carrinho.',
-      duration: 1000,
+      duration: 200,
       color: 'primary',
       buttons: [
         {
