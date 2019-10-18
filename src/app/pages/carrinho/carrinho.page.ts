@@ -64,7 +64,7 @@ export class CarrinhoPage implements OnInit {
         id: new FormControl(null, {}),
         formas_pagamento_id: new FormControl(1, Validators.required),
         observacao: new FormControl(null, {}),
-        troco: new FormControl({ value: null, disabled: true }),
+        troco: new FormControl({ value: null, disabled: false }),
         itens: new FormControl(null, Validators.required),
         localEntrega: new FormControl(3, Validators.required),
         valorTotal: new FormControl(null)
@@ -119,17 +119,17 @@ export class CarrinhoPage implements OnInit {
       );
   }
 
-  hasTroco(value) {
-    this.troco.setFocus();
+  // hasTroco(value) {
+  //   this.troco.setFocus();
 
-    const disabled = !value.detail.checked;
-    if (disabled) {
-      this.formCRUD.get("troco").setValue(null);
-      this.formCRUD.get("troco").disable();
-    } else {
-      this.formCRUD.get("troco").enable();
-    }
-  }
+  //   const disabled = !value.detail.checked;
+  //   if (disabled) {
+  //     this.formCRUD.get("troco").setValue(null);
+  //     this.formCRUD.get("troco").disable();
+  //   } else {
+  //     this.formCRUD.get("troco").enable();
+  //   }
+  // }
 
   createPedido() {
     if (this.formCRUDCPF.get('cpf').value) {
