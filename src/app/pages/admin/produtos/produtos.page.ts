@@ -44,6 +44,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
       restaurantes_id: new FormControl(1),
       ativo: new FormControl(1),
       foto: new FormControl(null),
+      qtd_estoque: new FormControl(null)
     }, { updateOn: 'change' });
   }
 
