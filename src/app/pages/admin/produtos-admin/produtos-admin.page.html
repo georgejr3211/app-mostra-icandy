@@ -62,7 +62,8 @@
             </ion-select>
           </ion-item>
           <ion-item *ngIf="!formCRUDCategoria.get('OPTION').value" lines="none" style="margin: 10px;">
-            <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome da Categoria"
+            <ion-label position="floating">Nome da categoria</ion-label>
+            <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome"
               required></ion-input>
           </ion-item>
 
@@ -79,7 +80,8 @@
 
           <ion-col *ngIf="formCRUDCategoria.get('OPTION').value" lines="none">
             <ion-item lines="none" style="margin: 10px;">
-              <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome da categoria"
+              <ion-label position="floating">Nome da categoria</ion-label>
+              <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome"
                 required></ion-input>
             </ion-item>
             <ion-item lines="none" style="margin: 10px;">
