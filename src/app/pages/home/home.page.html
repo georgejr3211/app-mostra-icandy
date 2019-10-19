@@ -16,7 +16,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-progress-bar *ngIf="!(produtos$ | async)?.length" type="indeterminate"></ion-progress-bar>
+  <ion-progress-bar *ngIf="!(produtos$ | async)" type="indeterminate"></ion-progress-bar>
 
   <ion-searchbar animated placeholder="Pesquisar" (ionChange)="onSearch($event.target.value)"></ion-searchbar>
   <ion-card *ngFor="let card of (produtos$ | async)">

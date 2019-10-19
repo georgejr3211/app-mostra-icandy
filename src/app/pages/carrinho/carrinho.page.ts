@@ -174,14 +174,18 @@ export class CarrinhoPage implements OnInit {
       localStorage.removeItem('user/localizacao');
       this.localizacaoService.addLocalizacao(null);
       this.router.navigate([`./main/status/${data.id}`]);
+      this.push.sendMessageToAdmins(
+        this.adminsDevices,
+        "Um novo pedido foi realizado!"
+      );
     },
       async data => {
         console.log(data);
 
         const message = `
-          Sentimos muito, os seguintes produtos estão fora de estoque:
-          ${data.map(item => {
-          return `Item: ${item.nome} - Quantidade disponível: ${item.qtd_estoque}`
+          Sentimos muito, os seguintes produtos estão fora de estoque: <br/>
+          ${data.error.map(item => {
+          return `<br /> Item: ${item.nome}<br /> Quantidade disponível: ${item.qtd_estoque} <br />`;
         })}
         `;
 
@@ -190,10 +194,6 @@ export class CarrinhoPage implements OnInit {
         });
         alert.present();
       });
-    this.push.sendMessageToAdmins(
-      this.adminsDevices,
-      "Um novo pedido foi realizado!"
-    );
     this.carrinhoCompraService.addProdutoCarrinho({ carrinho: [], qtd: 0 });
     this.formCRUDCPF.get("cpf").setValue(null);
   }
