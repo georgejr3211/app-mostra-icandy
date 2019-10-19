@@ -19,7 +19,7 @@
 
   <ion-progress-bar *ngIf="!(categorias$ | async)" type="indeterminate"></ion-progress-bar>
   <form [formGroup]="formData">
-    <ion-card padding>
+    <ion-card padding style="margin-bottom: 30px;">
       <ion-card-title class="ion-text-center">Foto do Produto</ion-card-title>
       <ion-row>
         <ion-item *ngIf="formData.get('foto')?.value">

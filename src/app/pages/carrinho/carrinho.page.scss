@@ -54,3 +54,28 @@
   line-height: 15px;
   margin: 5px 0 0;
 }
+
+.item-inner {
+  min-height: 1px !important;
+}
+
+.label-md {
+  margin-bottom: 1px !important;
+  margin-top: 1px !important;
+}
+
+ion-item-divider {
+  margin-top: 0px;
+  min-height: 1px !important;
+}
+
+// ion-row {
+//   font-family: Roboto;
+//   font-style: normal;
+//   font-weight: bold;
+//   font-size: 10px;
+//   line-height: 10px;
+//   letter-spacing: 0.1em;
+//   text-transform: uppercase;
+//   color: #6f2367;
+// }
