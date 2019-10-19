@@ -35,15 +35,16 @@
 
   <ion-card style="background-color: white;" *ngIf="listarProdutos">
 
-    <ion-button style="margin: 10px;" size="default" expand="full" (click)="openProdutoModal()">
-      Adicionar Produto
-    </ion-button>
-
-    <ion-item style="margin: 10px;" lines="none" (click)="openProdutoModal(item)" *ngFor="let item of produtos$ | async">
+    <ion-item style="margin: 10px;" lines="none" (click)="openProdutoModal(item)"
+      *ngFor="let item of produtos$ | async">
       <small>{{item?.id}}. {{item?.nome}} - R${{item?.preco}} ({{item?.categoria?.nome}})</small>
     </ion-item>
 
   </ion-card>
+
+  <ion-button style="margin: 10px;" size="default" expand="full" (click)="openProdutoModal()">
+    Adicionar Produto
+  </ion-button>
 
   <ion-card *ngIf="cadastrarProdutos" style="padding: 0;">
     <form [formGroup]="formCRUDCategoria" fxLayoutAlign="column">
@@ -63,8 +64,7 @@
           </ion-item>
           <ion-item *ngIf="!formCRUDCategoria.get('OPTION').value" lines="none" style="margin: 10px;">
             <ion-label position="floating">Nome da categoria</ion-label>
-            <ion-input padding formControlName="nome" class="input" type="text"
-              required></ion-input>
+            <ion-input padding formControlName="nome" class="input" type="text" required></ion-input>
           </ion-item>
 
           <ion-item *ngIf="formCRUDCategoria.get('OPTION').value" style="margin: 10px;">
@@ -81,8 +81,8 @@
           <ion-col *ngIf="formCRUDCategoria.get('OPTION').value" lines="none">
             <ion-item lines="none" style="margin: 10px;">
               <ion-label position="floating">Nome da categoria</ion-label>
-              <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome"
-                required></ion-input>
+              <ion-input padding formControlName="nome" class="input" type="text" placeholder="Nome" required>
+              </ion-input>
             </ion-item>
             <ion-item lines="none" style="margin: 10px;">
               <ion-label>Ativo</ion-label>

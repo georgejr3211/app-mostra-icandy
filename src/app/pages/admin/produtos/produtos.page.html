@@ -76,7 +76,7 @@
       </ion-row>
 
       <ion-col>
-        <ion-button expand="full" (click)="onSave()">
+        <ion-button [disabled]="!formData.valid" expand="full" (click)="onSave()">
           Salvar
         </ion-button>
       </ion-col>

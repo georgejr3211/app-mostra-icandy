@@ -7,6 +7,7 @@ import { CarrinhoCompraService } from "src/app/providers/services/carrinho-compr
 import { PushNotificationService } from "src/app/providers/services/push-notification.service";
 import { Router } from "@angular/router";
 import { ToastController } from '@ionic/angular';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: "root" })
 @Component({
@@ -22,6 +23,8 @@ export class HomePage implements OnInit, OnDestroy {
   produtoCarrinho = [];
   userId = `01d17a8c-2988-43a9-b549-c163cfe9fc27`;
   mensagem = ``;
+  zeraQtd: boolean;
+
   constructor(
     private userService: UsuariosService,
     private produtosService: ProdutosService,
@@ -29,12 +32,16 @@ export class HomePage implements OnInit, OnDestroy {
     private push: PushNotificationService,
     private router: Router,
     public toastController: ToastController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewDidEnter() {
     this.usuario$ = this.userService.usuarioLogado();
+
+    if (this.carrinhoCompraService.zeraQtd) {
+      this.produtoCarrinho = [];
+    }
 
     this.usuario$.subscribe(async data => {
       if (!data) {
@@ -48,6 +55,7 @@ export class HomePage implements OnInit, OnDestroy {
 
   onRefresh(event?) {
     this.produtos$ = this.produtosService.index();
+
     this.produtos$.subscribe(data => {
       if (data) {
         if (event) {
@@ -111,7 +119,9 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   countQtdItemCarrinho(idProduto) {
-    return this.produtoCarrinho.find(item => item.id === idProduto);
+    let data = this.produtoCarrinho.find(item => item.id === idProduto);
+
+    return data;
   }
 
   totalProduto(preco, idProduto) {
@@ -132,5 +142,5 @@ export class HomePage implements OnInit, OnDestroy {
     this.push.sendMessage(this.userId, this.mensagem);
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 }

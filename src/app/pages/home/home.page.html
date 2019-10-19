@@ -50,7 +50,9 @@
           <ion-col class="btn-add-remove">
             <ion-icon style="color: #ff4545; font-size: 22px;" (click)="onChangeValor('remove', card)"
               name="remove-circle"></ion-icon>
-            <span style="line-height: 24px;">{{ countQtdItemCarrinho(card.id)?.qtd || 0 }}</span>
+            <span style="line-height: 24px;">
+              {{ countQtdItemCarrinho(card.id, produtos)?.qtd || 0 }}
+            </span>
             <ion-icon style="color: #45a845; font-size: 22px;" (click)="onChangeValor('add', card)" name="add-circle">
             </ion-icon>
           </ion-col>

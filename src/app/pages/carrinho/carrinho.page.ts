@@ -12,6 +12,7 @@ import { FormasPagamentoService } from 'src/app/providers/services/formas-pagame
 import { PushNotificationService } from 'src/app/providers/services/push-notification.service';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 import { LocalizacoesPedidosService } from 'src/app/providers/services/localizacoes-pedidos.service';
+import { HomePage } from '../home/home.page';
 
 @Component({
   selector: "app-carrinho",
@@ -45,6 +46,7 @@ export class CarrinhoPage implements OnInit {
   pedidoLoc$: Observable<any>;
 
   @ViewChild('troco', { static: false }) troco: IonInput;
+  @ViewChild(HomePage, { static: false }) homePage: HomePage;
 
   constructor(
     private carrinhoCompraService: CarrinhoCompraService,
@@ -194,7 +196,8 @@ export class CarrinhoPage implements OnInit {
         });
         alert.present();
       });
-    this.carrinhoCompraService.addProdutoCarrinho({ carrinho: [], qtd: 0 });
+    this.carrinhoCompraService.addProdutoCarrinho(null);
+    this.carrinhoCompraService.zeraQtd = true;
     this.formCRUDCPF.get("cpf").setValue(null);
   }
 

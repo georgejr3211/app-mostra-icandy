@@ -7,7 +7,8 @@ import { Observable, of, Subject, BehaviorSubject } from 'rxjs';
 export class CarrinhoCompraService {
 
   private subject = new BehaviorSubject<any[]>(null);
-
+  zeraQtd: boolean;
+  
   constructor() {
   }
 

@@ -53,7 +53,8 @@ export class LocalEntregaPage implements OnInit {
     Environment.setEnv({
       API_KEY_FOR_BROWSER_DEBUG: 'AIzaSyCONimGXbVJHJVAvK7bJzaqU4RyXt0PVg4',
       API_KEY_FOR_BROWSER_RELEASE: 'AIzaSyCONimGXbVJHJVAvK7bJzaqU4RyXt0PVg4'
-    })
+    });
+
     const mapOptions: GoogleMapOptions = {
       mapType: GoogleMapsMapTypeId.ROADMAP,
 
@@ -72,11 +73,10 @@ export class LocalEntregaPage implements OnInit {
         zoom: true,
         rotate: true
       },
-      draggable: false
     };
 
-    this.map = GoogleMaps.create('map', mapOptions);
     try {
+      this.map = GoogleMaps.create('map', mapOptions);
       await this.map.one(GoogleMapsEvent.MAP_READY);
       this.currentPosition();
     } catch (error) {

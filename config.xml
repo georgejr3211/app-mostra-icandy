@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.icandy" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="io.ionic.icandy" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>iCandy - Facthus 2019</name>
-    <description>iCandy - Delivery</description>
+    <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://localhost:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -108,5 +108,4 @@
     <allow-navigation href="http://localhost:8100" sessionid="64d6fb2b" />
     <allow-navigation href="http://localhost:8101" sessionid="d3e16027" />
     <access launch-external="yes" origin="whatsapp://*" />
-    <allow-navigation href="http://10.3.12.156:8100" sessionid="d7ad6ebb" />
 </widget>

@@ -4,13 +4,15 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { UsuariosService } from '../services/usuarios.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TokenInterceptor implements HttpInterceptor {
   constructor(private router: Router,
-    public toastController: ToastController) { }
+    public toastController: ToastController,
+    private usuarioService: UsuariosService) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<any> {
 

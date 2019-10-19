@@ -1,6 +1,6 @@
 import { AlertController } from '@ionic/angular';
 import { ProdutosService } from 'src/app/providers/services/produtos.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { CameraService } from 'src/app/providers/services/camera.service';
 import { CategoriasService } from 'src/app/providers/services/categorias.service';
@@ -37,14 +37,14 @@ export class ProdutosPage implements OnInit, AfterViewInit {
   ngOnInit() {
     this.formData = new FormGroup({
       id: new FormControl(null),
-      nome: new FormControl(null),
-      preco: new FormControl(null),
-      foto_produto: new FormControl(null),
-      categorias_id: new FormControl(null),
+      nome: new FormControl(null, Validators.required),
+      preco: new FormControl(null, Validators.required),
+      foto_produto: new FormControl(null, Validators.required),
+      categorias_id: new FormControl(null, Validators.required),
       restaurantes_id: new FormControl(1),
       ativo: new FormControl(1),
       foto: new FormControl(null),
-      qtd_estoque: new FormControl(null)
+      qtd_estoque: new FormControl(null, Validators.required)
     }, { updateOn: 'change' });
   }
 
@@ -76,6 +76,9 @@ export class ProdutosPage implements OnInit, AfterViewInit {
   }
 
   selectImage() {
+    this.formData.get('foto_produto').setValue(null);
+    this.cameraService.subject.next(null);
+
     this.cameraService.selectImage()
       .then(data => {
         this.cameraService.getCurrentImage().subscribe(c => {
@@ -116,7 +119,8 @@ export class ProdutosPage implements OnInit, AfterViewInit {
       .then(async data => {
         const msg = this.cameraService.method === 'POST' ? 'Produto cadastrado com sucesso' : 'Produto atualizado com sucesso';
         const alert = await this.alertCtrl.create({
-          message: msg
+          message: msg,
+          buttons: ['OK']
         });
 
         alert.present();
@@ -128,6 +132,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
 
         alert.present();
       });
+
   }
 
 }
