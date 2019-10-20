@@ -58,6 +58,7 @@ export class CadastroPage implements OnInit {
   formCRUD: FormGroup;
 
   retorno$;
+  isLoading = false;
 
   constructor(
     private facade: UsuariosService,
@@ -103,6 +104,7 @@ export class CadastroPage implements OnInit {
   ngOnInit() { }
 
   criarConta() {
+      this.isLoading = true;
       this.formatTelefone();
       this.retorno$ = this.facade.insert(this.formCRUD.value);
 
@@ -116,11 +118,13 @@ export class CadastroPage implements OnInit {
                 localStorage.setItem("auth/token", token);
                 this.router.navigate(["/main/home"]);
               } else {
+                this.isLoading = false;
                 console.log("sem Token");
                 return;
               }
             });
         } else {
+          this.isLoading = false;
           this.presentAlertErro();
         }
       });
