@@ -26,8 +26,12 @@
           <ion-img [src]="images + formData?.get('foto')?.value"></ion-img>
         </ion-item>
 
-        <ion-item *ngIf="formData?.get('foto_produto')?.value">
+        <!-- <ion-item *ngIf="formData?.get('foto_produto')?.value">
           <ion-img [src]="formData?.get('foto_produto')?.value"></ion-img>
+        </ion-item> -->
+
+        <ion-item *ngIf="fotoProduto$ | async">
+          <ion-img [src]="fotoProduto$ | async"></ion-img>
         </ion-item>
 
       </ion-row>
@@ -44,7 +48,8 @@
 
           <ion-item>
             <ion-label>Categoria</ion-label>
-            <ion-select class="input" style="width: 100%; text-align: center; padding-bottom: 5px;" placeholder="Selecione a Categoria" formControlName="categorias_id">
+            <ion-select class="input" style="width: 100%; text-align: center; padding-bottom: 5px;"
+              placeholder="Selecione a Categoria" formControlName="categorias_id">
               <ion-select-option [value]="cat?.id" *ngFor="let cat of (categorias$ | async)">{{ cat.id }} -
                 {{ cat?.nome }}
               </ion-select-option>

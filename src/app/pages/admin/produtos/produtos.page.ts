@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { FileTransferObject, FileTransfer, FileUploadOptions } from '@ionic-native/file-transfer/ngx';
 import { ModalController, NavParams } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
+import { File } from '@ionic-native/file/ngx';
 
 @Component({
   selector: 'app-produtos',
@@ -19,6 +20,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
 
   formData: FormGroup;
   categorias$: Observable<any[]>;
+  fotoProduto$: Observable<any>;
 
   constructor(
     private cameraService: CameraService,
@@ -27,6 +29,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
     private fileTransfer: FileTransfer,
     private modalCtrl: ModalController,
     private navParams: NavParams,
+    private file: File,
     private alertCtrl: AlertController
   ) {
     this.cameraService.field = 'foto_produto';
@@ -51,6 +54,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
   ionViewDidEnter() {
     this.categorias$ = this.categoriaService.index();
     this.formData.patchValue(this.navParams.data);
+    this.fotoProduto$ = this.cameraService.getCurrentImage();
   }
 
   ngAfterViewInit() {
@@ -78,13 +82,11 @@ export class ProdutosPage implements OnInit, AfterViewInit {
   selectImage() {
     this.cameraService.subject.next(null);
 
-    this.cameraService.selectImage()
-      .then(data => {
-        this.cameraService.getCurrentImage().subscribe(c => {
-          if (!c) { return; }
-          this.formData.get('foto_produto').setValue(c);
-        });
-      });
+    this.cameraService.selectImage();
+    this.cameraService.getCurrentImage().subscribe(data => {
+      if (!data) { return; }
+      this.formData.get('foto_produto').setValue(data);
+    })
   }
 
   dismiss() {

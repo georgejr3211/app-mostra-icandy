@@ -2,7 +2,7 @@ import { Injectable, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -29,23 +29,32 @@ export class CameraService {
     private transfer: FileTransfer,
     private file: File,
     private facade: UsuariosService,
-    private facadeProduto: ProdutosService
+    private facadeProduto: ProdutosService,
+    private alertCtrl: AlertController
   ) { }
 
-  pickImage(sourceType) {
+  async pickImage(sourceType) {
     const options: CameraOptions = {
       quality: 50,
       sourceType: sourceType,
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
+      encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
       correctOrientation: true,
+      saveToPhotoAlbum: true,
+      // allowEdit: true,
     };
+
+    const alert = await this.alertCtrl.create({
+      message: 'Por favor aguarde...'
+    });
+    alert.present();
 
     this.camera.getPicture(options).then(
       imageData => {
-        this.currentImage = "data:image/jpeg;base64," + imageData;
+        this.currentImage = "data:image/png;base64," + imageData;
         this.uploadImage();
+        alert.dismiss();
       },
       err => {
         console.log("Camera issue:" + err);
