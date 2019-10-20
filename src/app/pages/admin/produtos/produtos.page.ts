@@ -76,7 +76,6 @@ export class ProdutosPage implements OnInit, AfterViewInit {
   }
 
   selectImage() {
-    this.formData.get('foto_produto').setValue(null);
     this.cameraService.subject.next(null);
 
     this.cameraService.selectImage()
