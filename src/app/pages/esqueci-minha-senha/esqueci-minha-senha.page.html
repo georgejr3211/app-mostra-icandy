@@ -1,6 +1,6 @@
 <ion-header translucent>
   <ion-toolbar color="primary">
-    <ion-title style="font-size: 12px;">Recuperar senha</ion-title>
+    <ion-title>Recuperar senha</ion-title>
     <ion-buttons slot="start">
         <ion-button (click)="dismiss()">
             <ion-icon name="arrow-round-back"></ion-icon>
@@ -10,9 +10,9 @@
   </ion-toolbar>
 </ion-header>
 <ion-content padding>
-  <form style="width: 100%;" [formGroup]="formCRUD">
+  <form [formGroup]="formCRUD">
     <ion-input padding formControlName="email" class="input" type="email" clearInput placeholder="E-mail"></ion-input>
-      <ion-button class="btn-login" expand="full" (click)="recuperarSenha()">Recuperar senha</ion-button>
+      <ion-button class="btn-login" expand="full" (click)="recuperarSenha()">Confirmar</ion-button>
 
   </form>
 </ion-content>
