@@ -7,7 +7,6 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { UsuariosService } from './usuarios.service';
-import { ProdutosService } from './produtos.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,6 @@ export class CameraService {
     private transfer: FileTransfer,
     private file: File,
     private facade: UsuariosService,
-    private facadeProduto: ProdutosService,
     private alertCtrl: AlertController
   ) { }
 
@@ -45,16 +43,11 @@ export class CameraService {
       // allowEdit: true,
     };
 
-    const alert = await this.alertCtrl.create({
-      message: 'Por favor aguarde...'
-    });
-    alert.present();
 
     this.camera.getPicture(options).then(
       imageData => {
         this.currentImage = "data:image/png;base64," + imageData;
         this.uploadImage();
-        alert.dismiss();
       },
       err => {
         console.log("Camera issue:" + err);
@@ -64,7 +57,7 @@ export class CameraService {
 
   async selectImage() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Select Image source",
+      header: "Selecionar imagem",
       buttons: [
         {
           text: "Carregar da galeria",

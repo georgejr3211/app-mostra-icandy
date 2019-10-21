@@ -1,4 +1,4 @@
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { ProdutosService } from 'src/app/providers/services/produtos.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
@@ -30,7 +30,8 @@ export class ProdutosPage implements OnInit, AfterViewInit {
     private modalCtrl: ModalController,
     private navParams: NavParams,
     private file: File,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) {
     this.cameraService.field = 'foto_produto';
     this.cameraService.urlFoto = '/v1/produtos';
@@ -93,7 +94,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
     this.modalCtrl.dismiss();
   }
 
-  uploadImage(obj) {
+  async uploadImage(obj) {
     let url = `${this.cameraService.apiURL}${this.cameraService.urlFoto}`;
     if (this.formData.get('id').value) {
       url += `/${this.formData.get('id').value}`;
@@ -106,7 +107,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
     const options: FileUploadOptions = {
       fileKey: this.cameraService.field,
-      fileName: `${this.formData.get('nome').value}.jpg`,
+      fileName: `${this.formData.get('nome').value}.png`,
       headers: {
         Connection: 'close',
         'x-access-token': localStorage.getItem('auth/token')
@@ -115,7 +116,10 @@ export class ProdutosPage implements OnInit, AfterViewInit {
       params: obj
     }
 
-
+    const loading = await this.loadingCtrl.create({
+      message: 'Por favor aguarde...',
+    })
+    loading.present();
     fileTransfer.upload(this.formData.get('foto_produto').value, url, options)
       .then(async data => {
         const msg = this.cameraService.method === 'POST' ? 'Produto cadastrado com sucesso' : 'Produto atualizado com sucesso';
@@ -124,14 +128,16 @@ export class ProdutosPage implements OnInit, AfterViewInit {
           buttons: ['OK']
         });
 
+        loading.dismiss();
         alert.present();
+        this.modalCtrl.dismiss();
       })
       .catch(async error => {
         const alert = await this.alertCtrl.create({
           message: 'Houve um erro ao tentar cadastrar o produto, consulte o log da API'
         });
-
         alert.present();
+        loading.dismiss();
       });
 
   }
