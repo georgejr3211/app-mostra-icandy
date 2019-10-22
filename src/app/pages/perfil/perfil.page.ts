@@ -5,6 +5,7 @@ import { Observable } from "rxjs/internal/Observable";
 import { Router } from '@angular/router';
 import { CameraService } from 'src/app/providers/services/camera.service';
 import { environment } from 'src/environments/environment';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: "app-perfil",
@@ -44,7 +45,8 @@ export class PerfilPage implements OnInit, AfterViewInit {
   constructor(
     private facade: UsuariosService,
     private router: Router,
-    private camera: CameraService
+    private camera: CameraService,
+    private loadingCtrl: LoadingController
   ) {
     this.formCRUD = new FormGroup(
       {
@@ -91,7 +93,7 @@ export class PerfilPage implements OnInit, AfterViewInit {
     this.formCRUD.disable();
   }
 
-  onEdit(data?) {
+  async onEdit(data?) {
     this.formCRUD.get('id').enable();
 
     if (data) {
@@ -103,7 +105,12 @@ export class PerfilPage implements OnInit, AfterViewInit {
     } else {
       this.formatTelefone();
       console.log('formCRUD', this.formCRUD.value);
-      this.facade.update(this.formCRUD.value).subscribe();
+      const loading = await this.loadingCtrl.create({ message: 'Por favor aguarde...' })
+      loading.present();
+      this.facade.update(this.formCRUD.value).subscribe(data => {
+        if (!data) { return; }
+        loading.dismiss();
+      });
       this.formCRUD.disable();
       return (this.canEdit = false);
     }

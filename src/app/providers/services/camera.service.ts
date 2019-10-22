@@ -2,7 +2,7 @@ import { Injectable, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { ActionSheetController, AlertController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController } from '@ionic/angular';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -22,13 +22,12 @@ export class CameraService {
   method;
 
   constructor(
-    private http: HttpClient,
     private camera: Camera,
     public actionSheetController: ActionSheetController,
     private transfer: FileTransfer,
     private file: File,
     private facade: UsuariosService,
-    private alertCtrl: AlertController
+    private loadingCtrl: LoadingController
   ) { }
 
   async pickImage(sourceType) {
@@ -80,12 +79,12 @@ export class CameraService {
     await actionSheet.present();
   }
 
-  uploadImage() {
+  async uploadImage() {
     const fileTransfer: FileTransferObject = this.transfer.create();
 
     let options: FileUploadOptions = {
       fileKey: this.field,
-      fileName: `${this.nomeUsuario}.jpg`,
+      fileName: `${this.nomeUsuario}.png`,
       headers: {
         Connection: 'close',
         'x-access-token': localStorage.getItem('auth/token')
@@ -96,10 +95,15 @@ export class CameraService {
     const url = `${this.apiURL}${this.urlFoto}`;
     try {
       if (this.field === 'foto_usuario') {
+        const loading = await this.loadingCtrl.create({ message: 'Por favor aguarde...' });
+
+        loading.present();
+
         fileTransfer.upload(this.currentImage, url, options)
           .then(() => {
             this.facade.usuarioLogado().subscribe((data: any) => {
-              if (!data) { return; }
+              // if (!data) { return; }
+              loading.dismiss();
               this.subject.next(data.foto);
             });
           });

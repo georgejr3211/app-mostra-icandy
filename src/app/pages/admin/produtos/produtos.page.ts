@@ -56,6 +56,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
     this.categorias$ = this.categoriaService.index();
     this.formData.patchValue(this.navParams.data);
     this.fotoProduto$ = this.cameraService.getCurrentImage();
+    this.cameraService.subject.next(null);
   }
 
   ngAfterViewInit() {
@@ -81,7 +82,6 @@ export class ProdutosPage implements OnInit, AfterViewInit {
   }
 
   selectImage() {
-    this.cameraService.subject.next(null);
 
     this.cameraService.selectImage();
     this.cameraService.getCurrentImage().subscribe(data => {
