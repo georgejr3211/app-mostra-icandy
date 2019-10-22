@@ -26,8 +26,8 @@
       </ng-container>
     </div>
 
-    <ion-input padding formControlName="telefone" id="telefone" class="input" type="text"
-      placeholder="WhatsApp para contato" [brmasker]="{phone: true}" required>
+    <ion-input padding formControlName="telefone" id="telefone" class="input" type="tel"
+      placeholder="Telefone (WhatsApp)" [brmasker]="{phone: true}" required>
     </ion-input>
     <div class="input-group error">
       <ng-container *ngFor="let validation of validation_messages.telefone">

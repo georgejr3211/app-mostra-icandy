@@ -1,4 +1,4 @@
-import { ModalController, NavController, IonInput } from "@ionic/angular";
+import { ModalController, NavController, IonInput, LoadingController } from "@ionic/angular";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Observable } from 'rxjs/internal/Observable';
@@ -58,7 +58,7 @@ export class CarrinhoPage implements OnInit {
     private router: Router,
     private push: PushNotificationService,
     private usuario: UsuariosService,
-    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController,
     private nav: NavController
   ) {
     this.formCRUD = new FormGroup(
@@ -167,14 +167,16 @@ export class CarrinhoPage implements OnInit {
     this.formCRUDCPF.get("cpf").setValidators(Validators.minLength(14));
   }
 
-  canCreatePedido() {
+  async canCreatePedido() {
     const pedido = JSON.parse(localStorage.getItem('user/localizacao'));
-
+    const loading = await this.loadingCtrl.create({ message: 'Por favor aguarde...' });
     const data = { ...this.formCRUD.value, ...pedido };
     this.pedidoService.insert(data).subscribe(data => {
+      loading.dismiss();
       localStorage.setItem("id-ultimo-pedido", data.id);
       localStorage.removeItem('user/localizacao');
       this.localizacaoService.addLocalizacao(null);
+      
       this.router.navigate([`./main/status/${data.id}`]);
       this.push.sendMessageToAdmins(
         this.adminsDevices,

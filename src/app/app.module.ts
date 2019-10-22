@@ -43,7 +43,7 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
     Geolocation,
     GoogleMaps,
     LocationAccuracy,
-    AndroidPermissions
+    AndroidPermissions,
   ],
   bootstrap: [AppComponent]
 })

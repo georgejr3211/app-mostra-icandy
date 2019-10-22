@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { CarrinhoCompraService } from 'src/app/providers/services/carrinho-compra.service';
 import { map } from 'rxjs/operators';
-import { PedidosService } from 'src/app/providers/services/pedidos.service';
 import { UsuariosService } from 'src/app/providers/services/usuarios.service';
 import { Router } from '@angular/router';
 
@@ -18,9 +17,9 @@ export class TabsComponent implements OnInit {
   constructor(
     private menuCtrl: MenuController,
     private carrinhoCompra: CarrinhoCompraService,
-    private facade: PedidosService,
     private usuario: UsuariosService,
-    private router: Router
+    private router: Router,
+    private navCtrl: NavController,
   ) { }
 
   ngOnInit() {
@@ -41,9 +40,25 @@ export class TabsComponent implements OnInit {
     
   }
 
+  onNavigateHome() {
+
+  }
+
+  onNavigateCarrinho() {
+
+  }
+
   onNavigateStatus() {
     const idUltimoPedido = localStorage.getItem('id-ultimo-pedido');
-    this.router.navigate([`/main/status/${idUltimoPedido}`]);
+    this.navCtrl.navigateForward([`/main/status/${idUltimoPedido}`]);
+  }
+
+  onNavigateHistorico() {
+
+  }
+
+  onNavigatePerfil() {
+
   }
 
   onNavigateAdmin() {
