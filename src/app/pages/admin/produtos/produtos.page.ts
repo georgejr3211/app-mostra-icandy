@@ -43,7 +43,7 @@ export class ProdutosPage implements OnInit, AfterViewInit {
       id: new FormControl(null),
       nome: new FormControl(null, Validators.required),
       preco: new FormControl(null, Validators.required),
-      foto_produto: new FormControl(null, Validators.required),
+      foto_produto: new FormControl(null),
       categorias_id: new FormControl(null, Validators.required),
       restaurantes_id: new FormControl(1),
       ativo: new FormControl(1),
