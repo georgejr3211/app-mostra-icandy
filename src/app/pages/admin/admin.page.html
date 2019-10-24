@@ -25,6 +25,10 @@
           </ion-row>
           <ion-row class="row">Usuário -> {{(pedido$ | async)?.usuario?.nome}}
           </ion-row>
+          <ion-row class="row">Método de Entrega -> <span *ngIf="(metodoEntrega$ | async)?.metodo_entrega === 1">Retirar
+              no Local</span>
+            <span *ngIf="(metodoEntrega$ | async)?.metodo_entrega === 2">Combinar pelo WhatsApp</span>
+          </ion-row>
           <ion-row class="row">Observação -> {{(pedido$ | async)?.observacao}}
           </ion-row>
           <ion-row class="row">Troco -> R$ {{(pedido$ | async)?.troco}}

@@ -7,7 +7,7 @@ import { RestaurantesService } from 'src/app/providers/services/restaurantes.ser
 import { AvaliacoesService } from './../../providers/services/avaliacoes.service';
 import { PedidosService } from './../../providers/services/pedidos.service';
 import { StatusService } from './../../providers/services/status.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as io from 'socket.io-client';
 import { LoadingController, ToastController, Platform } from '@ionic/angular';
 
@@ -41,10 +41,17 @@ export class StatusPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     public loadingCtrl: LoadingController,
     public toastCtrl: ToastController,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
+    const { metodo_entrega } = this.activatedRoute.snapshot.queryParams;
+
+    if (metodo_entrega === '2') {
+      console.log('metodo', metodo_entrega);
+      window.open('https://api.whatsapp.com/send?phone=553498872066&text=Olá, iCandy acabei de realizar o pedido e estou no seguinte local:');
+    }
   }
 
   ionViewDidEnter() {
@@ -61,7 +68,6 @@ export class StatusPage implements OnInit {
     this.status$ = this.statusService.index();
     this.avaliacoes$ = this.avaliacoesService.index();
     this.restaurantes$ = this.restaurantesService.index();
-
 
     this.socket.on(id, () => {
       this.status$ = this.statusService.index();

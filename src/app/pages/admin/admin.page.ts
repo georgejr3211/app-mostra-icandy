@@ -39,7 +39,7 @@ export class AdminPage implements OnInit {
 
   formCRUDUsuario: FormGroup;
   formCRUDPedido: FormGroup;
-
+  metodoEntrega$: Observable<any>;
   constructor(
     private facadeUsuarios: UsuariosService,
     private facadePedidos: PedidosService,
@@ -55,7 +55,6 @@ export class AdminPage implements OnInit {
     localStorage.getItem('auth/token');
 
     this.status$ = this.facadeStatus.index();
-
     this.formCRUDUsuario = new FormGroup(
       {
         ativo: new FormControl(null)
@@ -105,7 +104,10 @@ export class AdminPage implements OnInit {
     this.router.navigate(['/main/list']);
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.metodoEntrega$ = this.localizacaoPedidoService.index(this.dataParams.id);
+    this.metodoEntrega$.subscribe(data => console.log('data', data));
+  }
 
   ionViewDidEnter() {
 
@@ -113,7 +115,6 @@ export class AdminPage implements OnInit {
 
   onClickLocalizacaoUsuario() {
     this.localizacaoPedidoService.index(this.dataParams.id).subscribe(data => {
-      console.log('data', data);
       if (!data) {
         return;
       }

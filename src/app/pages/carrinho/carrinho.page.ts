@@ -175,13 +175,14 @@ export class CarrinhoPage implements OnInit {
     const pedido = JSON.parse(localStorage.getItem('user/localizacao'));
     const loading = await this.loadingCtrl.create({ message: 'Por favor aguarde...' });
     const data = { ...this.formCRUD.value, ...pedido };
+    console.log('data', data);
     this.pedidoService.insert(data).subscribe(data => {
       loading.dismiss();
       localStorage.setItem("id-ultimo-pedido", data.id);
       localStorage.removeItem('user/localizacao');
       this.localizacaoService.addLocalizacao(null);
 
-      this.router.navigate([`./main/status/${data.id}`]);
+      this.router.navigate([`./main/status/${data.id}`], { queryParams: { metodo_entrega: this.formCRUD.get('metodo_entrega').value } });
       this.push.sendMessageToAdmins(
         this.adminsDevices,
         "Um novo pedido foi realizado!"
