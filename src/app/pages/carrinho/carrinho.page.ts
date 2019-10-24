@@ -68,8 +68,9 @@ export class CarrinhoPage implements OnInit {
         observacao: new FormControl(null, {}),
         troco: new FormControl({ value: null, disabled: false }),
         itens: new FormControl(null, Validators.required),
-        localEntrega: new FormControl(3, Validators.required),
-        valorTotal: new FormControl(null)
+        localEntrega: new FormControl(3),
+        valorTotal: new FormControl(null),
+        metodo_entrega: new FormControl(1, Validators.required)
       },
       { updateOn: "change" }
     );
@@ -132,6 +133,9 @@ export class CarrinhoPage implements OnInit {
   //     this.formCRUD.get("troco").enable();
   //   }
   // }
+  onSelectLocal(data) {
+    this.formCRUD.get('metodo_entrega').setValue(data.detail.value);
+  }
 
   createPedido() {
     if (this.formCRUDCPF.get('cpf').value) {
@@ -176,7 +180,7 @@ export class CarrinhoPage implements OnInit {
       localStorage.setItem("id-ultimo-pedido", data.id);
       localStorage.removeItem('user/localizacao');
       this.localizacaoService.addLocalizacao(null);
-      
+
       this.router.navigate([`./main/status/${data.id}`]);
       this.push.sendMessageToAdmins(
         this.adminsDevices,

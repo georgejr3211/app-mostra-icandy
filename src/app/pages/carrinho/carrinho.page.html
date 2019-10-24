@@ -17,6 +17,18 @@
         </ion-select>
       </ion-item> -->
 
+    <!-- <ion-card>
+      <ion-item-group style="text-align: center; margin: 10px;">
+        <ion-row style="justify-content: center; font-weight: bold;">
+          <ion-icon color="primary" style="font-size: 20px; padding-right: 5px;" name="pin"></ion-icon>
+          <ion-label style="padding-bottom: 5px; color: black">Local de Entrega</ion-label>
+        </ion-row>
+        <ion-item-divider></ion-item-divider>
+      </ion-item-group>
+      <ion-button fill="outline" style="margin: 10px; margin-bottom: 15px;" (click)="escolherLocalEntrega()"
+        expand="block">Escolher
+        local</ion-button>
+    </ion-card> -->
 
     <ion-card>
       <ion-item-group style="text-align: center; margin: 10px;">
@@ -26,11 +38,20 @@
         </ion-row>
         <ion-item-divider></ion-item-divider>
       </ion-item-group>
-      <!-- <ion-row style="justify-content: center;"> -->
-      <ion-button fill="outline" style="margin: 10px; margin-bottom: 15px;" (click)="escolherLocalEntrega()"
-        expand="block">Escolher
-        local</ion-button>
-      <!-- </ion-row> -->
+
+      <ion-list>
+        <ion-radio-group name="auto" (ionChange)="onSelectLocal($event)">
+          <ion-item>
+            <ion-label>Retirar no local da compra</ion-label>
+            <ion-radio [checked]="true" value="1"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Combinar local de entrega pelo WhatsApp</ion-label>
+            <ion-radio value="2"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </ion-list>
+
     </ion-card>
 
     <ion-card>
@@ -105,14 +126,15 @@
         <ion-item-divider></ion-item-divider>
       </ion-item-group>
       <ion-item lines="none">
-        <ion-label position="floating"><small>Ajude-nos a te encontrar facilmente, <br>ponto de referencia:</small></ion-label>
-        <ion-textarea  formControlName="observacao" rows="3" cols="20"></ion-textarea>
-      </ion-item> 
+        <ion-label position="floating"><small>Ajude-nos a te encontrar facilmente, <br>ponto de referencia:</small>
+        </ion-label>
+        <ion-textarea formControlName="observacao" rows="3" cols="20"></ion-textarea>
+      </ion-item>
     </ion-card>
 
     <ion-label color="primary">
-      <ion-button id="btnPagamento" expand="full"
-        [disabled]="(!formCRUD.valid || !formCRUDCPF.valid || !(pedidoLoc$ | async))" (click)="createPedido()">Comprar
+      <ion-button id="btnPagamento" expand="full" [disabled]="(!formCRUD.valid || !formCRUDCPF.valid)"
+        (click)="createPedido()">Comprar
       </ion-button>
     </ion-label>
   </form>
