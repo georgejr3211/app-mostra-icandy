@@ -1,10 +1,10 @@
 <ion-tabs color="primary">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="home">
+    <ion-tab-button (click)="onNavigateHome()">
       <ion-icon name="home"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="carrinho">
+    <ion-tab-button (click)="onNavigateCarrinho()">
       <ion-icon name="cart"></ion-icon>
       <ion-badge>{{(totalItensCarrinho$ | async)}}</ion-badge>
     </ion-tab-button>
@@ -13,11 +13,11 @@
       <ion-icon name="list-box"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="historico">
+    <ion-tab-button (click)="onNavigateHistorico()">
       <ion-icon name="folder-open"></ion-icon>
     </ion-tab-button>
 
-    <ion-tab-button tab="perfil">
+    <ion-tab-button (click)="onNavigatePerfil()">
       <ion-icon name="contact"></ion-icon>
     </ion-tab-button>
 

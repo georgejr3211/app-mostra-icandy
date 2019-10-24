@@ -44,6 +44,7 @@ export class CarrinhoPage implements OnInit {
   adminsDevices = [];
   canAdd = true;
   pedidoLoc$: Observable<any>;
+  isLoading = false;
 
   @ViewChild('troco', { static: false }) troco: IonInput;
   @ViewChild(HomePage, { static: false }) homePage: HomePage;
@@ -138,6 +139,7 @@ export class CarrinhoPage implements OnInit {
   }
 
   createPedido() {
+    this.present();
     if (this.formCRUDCPF.get('cpf').value) {
       this.usuario$ = this.usuario.usuarioLogado();
       this.usuario$.subscribe(data => {
@@ -182,6 +184,7 @@ export class CarrinhoPage implements OnInit {
       this.localizacaoService.addLocalizacao(null);
 
       this.router.navigate([`./main/status/${data.id}`]);
+      this.dismiss();
       this.push.sendMessageToAdmins(
         this.adminsDevices,
         "Um novo pedido foi realizado!"
@@ -217,5 +220,27 @@ export class CarrinhoPage implements OnInit {
 
   escolherLocalEntrega() {
     this.nav.navigateForward("/main/local-entrega");
+  }
+
+  async present() {
+    this.isLoading = true;
+    return await this.loadingCtrl.create({
+      spinner: 'crescent',
+      duration: 5000,
+      message: 'Carregando...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    }).then(a => {
+      a.present().then(() => {
+        if (!this.isLoading) {
+          a.dismiss();
+        }
+      });
+    });
+  }
+
+  async dismiss() {
+    this.isLoading = false;
+    return await this.loadingCtrl.dismiss();
   }
 }
