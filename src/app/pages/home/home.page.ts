@@ -6,8 +6,8 @@ import { environment } from "../../../environments/environment";
 import { CarrinhoCompraService } from "src/app/providers/services/carrinho-compra.service";
 import { PushNotificationService } from "src/app/providers/services/push-notification.service";
 import { Router } from "@angular/router";
-import { ToastController } from '@ionic/angular';
-import { map } from 'rxjs/operators';
+import { ToastController } from "@ionic/angular";
+import { map } from "rxjs/operators";
 
 @Injectable({ providedIn: "root" })
 @Component({
@@ -32,9 +32,9 @@ export class HomePage implements OnInit, OnDestroy {
     private push: PushNotificationService,
     private router: Router,
     public toastController: ToastController
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ionViewDidEnter() {
     this.usuario$ = this.userService.usuarioLogado();
@@ -58,9 +58,14 @@ export class HomePage implements OnInit, OnDestroy {
 
     this.produtos$.subscribe(data => {
       if (data) {
-        if (event) {
-          event.detail.complete();
-        }
+        // if (event) {
+        //   event.detail.complete();
+        // }
+        event.target.disabled = true;
+        event.target.complete();
+        setTimeout(() => {
+          event.target.disabled = false;
+        }, 100);
       }
     });
   }
@@ -105,13 +110,13 @@ export class HomePage implements OnInit, OnDestroy {
 
   async presentToast() {
     const toast = await this.toastController.create({
-      message: 'Produto adicionado ao carrinho.',
+      message: "Produto adicionado ao carrinho.",
       duration: 200,
-      color: 'primary',
+      color: "primary",
       buttons: [
         {
-          side: 'start',
-          icon: 'cart',
+          side: "start",
+          icon: "cart"
         }
       ]
     });
@@ -142,5 +147,5 @@ export class HomePage implements OnInit, OnDestroy {
     this.push.sendMessage(this.userId, this.mensagem);
   }
 
-  ngOnDestroy() { }
+  ngOnDestroy() {}
 }
